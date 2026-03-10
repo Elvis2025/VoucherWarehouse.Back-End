@@ -1,8 +1,10 @@
-﻿using Abp.Modules;
+﻿using Abp.Dependency;
+using Abp.Modules;
 using Abp.Reflection.Extensions;
-using VoucherWarehouse.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using VoucherWarehouse.Configuration;
+using VoucherWarehouse.TenantLogoFileManager;
 
 namespace VoucherWarehouse.Web.Host.Startup
 {
@@ -22,6 +24,7 @@ namespace VoucherWarehouse.Web.Host.Startup
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(VoucherWarehouseWebHostModule).GetAssembly());
+            IocManager.Register<ITenantLogoFileManagerAppService, TenantLogoFileManagerAppService>(DependencyLifeStyle.Transient);
         }
     }
 }

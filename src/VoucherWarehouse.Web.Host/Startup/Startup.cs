@@ -79,6 +79,8 @@ namespace VoucherWarehouse.Web.Host.Startup
                     )
                 )
             );
+
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
