@@ -5,14 +5,14 @@ using Abp.Domain.Uow;
 using Abp.Extensions;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
-using VoucherWarehouse.EntityFrameworkCore;
-using VoucherWarehouse.EntityFrameworkCore.Seed;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.EntityFrameworkCore;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed;
+using IBS.VoucherWarehouse.MultiTenancy;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
 
-namespace VoucherWarehouse.Migrator;
+namespace IBS.VoucherWarehouse.Migrator;
 
 public class MultiTenantMigrateExecuter : ITransientDependency
 {

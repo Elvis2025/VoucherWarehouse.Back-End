@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace VoucherWarehouse;
+namespace IBS.VoucherWarehouse;
 
 /// <summary>
 /// Central point for application version.

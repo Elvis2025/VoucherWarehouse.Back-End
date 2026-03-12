@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VoucherWarehouse.Migrations;
+namespace IBS.VoucherWarehouse.Migrations;
 
 public partial class Upgraded_To_Abp_5_9 : Migration
 {

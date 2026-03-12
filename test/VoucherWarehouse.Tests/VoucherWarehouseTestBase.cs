@@ -5,17 +5,17 @@ using Abp.Events.Bus.Entities;
 using Abp.MultiTenancy;
 using Abp.Runtime.Session;
 using Abp.TestBase;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.EntityFrameworkCore;
-using VoucherWarehouse.EntityFrameworkCore.Seed.Host;
-using VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.EntityFrameworkCore;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Tests;
+namespace IBS.VoucherWarehouse.Tests;
 
 public abstract class VoucherWarehouseTestBase : AbpIntegratedTestBase<VoucherWarehouseTestModule>
 {

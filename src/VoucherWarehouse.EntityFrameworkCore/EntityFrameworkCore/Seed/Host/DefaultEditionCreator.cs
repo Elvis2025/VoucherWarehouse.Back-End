@@ -1,10 +1,10 @@
 using Abp.Application.Editions;
 using Abp.Application.Features;
-using VoucherWarehouse.Editions;
+using IBS.VoucherWarehouse.Editions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace VoucherWarehouse.EntityFrameworkCore.Seed.Host;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host;
 
 public class DefaultEditionCreator
 {

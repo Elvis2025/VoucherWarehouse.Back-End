@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Authorization;
+﻿namespace IBS.VoucherWarehouse.Authorization;
 
 public static class PermissionNames
 {

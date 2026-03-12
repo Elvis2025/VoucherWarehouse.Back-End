@@ -1,9 +1,4 @@
-using Abp.Authorization.Users;
-using Abp.AutoMapper;
-using Abp.MultiTenancy;
-using System.ComponentModel.DataAnnotations;
-
-namespace VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto;
 
 [AutoMapTo(typeof(Tenant))]
 public class CreateTenantDto

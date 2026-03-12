@@ -2,10 +2,10 @@
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
-using VoucherWarehouse.Modules.CoreSystem.Users;
-using VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+using IBS.VoucherWarehouse.Modules.CoreSystem.Users;
+using IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
-namespace VoucherWarehouse.Tests.Users;
+namespace IBS.VoucherWarehouse.Tests.Users;
 
 public class UserAppService_Tests : VoucherWarehouseTestBase
 {

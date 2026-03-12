@@ -1,10 +1,10 @@
 using Abp.Configuration;
 using Abp.Zero.Configuration;
-using VoucherWarehouse.Authorization.Accounts.Dto;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Accounts.Dto;
+using IBS.VoucherWarehouse.Authorization.Users;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Authorization.Accounts;
+namespace IBS.VoucherWarehouse.Authorization.Accounts;
 
 public class AccountAppService : VoucherWarehouseAppServiceBase, IAccountAppService
 {

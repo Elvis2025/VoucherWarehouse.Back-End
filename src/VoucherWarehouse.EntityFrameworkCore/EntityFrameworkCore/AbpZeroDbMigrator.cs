@@ -3,7 +3,7 @@ using Abp.EntityFrameworkCore;
 using Abp.MultiTenancy;
 using Abp.Zero.EntityFrameworkCore;
 
-namespace VoucherWarehouse.EntityFrameworkCore;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore;
 
 public class AbpZeroDbMigrator : AbpZeroDbMigrator<VoucherWarehouseDbContext>
 {

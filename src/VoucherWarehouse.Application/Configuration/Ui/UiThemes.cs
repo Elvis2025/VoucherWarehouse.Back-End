@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VoucherWarehouse.Configuration.Ui;
+namespace IBS.VoucherWarehouse.Configuration.Ui;
 
 public static class UiThemes
 {

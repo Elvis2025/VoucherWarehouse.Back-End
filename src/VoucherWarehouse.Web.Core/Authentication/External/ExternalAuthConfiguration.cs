@@ -1,15 +1,14 @@
 ﻿using Abp.Dependency;
 using System.Collections.Generic;
 
-namespace VoucherWarehouse.Authentication.External
-{
-    public class ExternalAuthConfiguration : IExternalAuthConfiguration, ISingletonDependency
-    {
-        public List<ExternalLoginProviderInfo> Providers { get; }
+namespace IBS.VoucherWarehouse.Authentication.External;
 
-        public ExternalAuthConfiguration()
-        {
-            Providers = new List<ExternalLoginProviderInfo>();
-        }
+public class ExternalAuthConfiguration : IExternalAuthConfiguration, ISingletonDependency
+{
+    public List<ExternalLoginProviderInfo> Providers { get; }
+
+    public ExternalAuthConfiguration()
+    {
+        Providers = new List<ExternalLoginProviderInfo>();
     }
 }

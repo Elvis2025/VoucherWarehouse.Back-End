@@ -5,14 +5,15 @@ using Abp.Runtime.Security;
 using Abp.Timing;
 using Abp.Zero;
 using Abp.Zero.Configuration;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.Configuration;
-using VoucherWarehouse.Localization;
-using VoucherWarehouse.MultiTenancy;
-using VoucherWarehouse.Timing;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Configuration;
+using IBS.VoucherWarehouse.Features;
+using IBS.VoucherWarehouse.Localization;
+using IBS.VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Timing;
 
-namespace VoucherWarehouse;
+namespace IBS.VoucherWarehouse;
 
 [DependsOn(typeof(AbpZeroCoreModule))]
 public class VoucherWarehouseCoreModule : AbpModule
@@ -35,6 +36,8 @@ public class VoucherWarehouseCoreModule : AbpModule
         AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);
 
         Configuration.Settings.Providers.Add<AppSettingProvider>();
+        Configuration.Features.Providers.Add<AppFeatureProvider>();
+
 
         Configuration.Localization.Languages.Add(new LanguageInfo("fa", "فارسی", "famfamfam-flags ir"));
 

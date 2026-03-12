@@ -1,7 +1,7 @@
 ﻿using Abp.Configuration;
 using System.Collections.Generic;
 
-namespace VoucherWarehouse.Configuration;
+namespace IBS.VoucherWarehouse.Configuration;
 
 public class AppSettingProvider : SettingProvider
 {

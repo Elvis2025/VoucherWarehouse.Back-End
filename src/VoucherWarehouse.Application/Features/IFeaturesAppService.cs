@@ -1,6 +1,6 @@
-﻿using VoucherWarehouse.Features.Dto;
+﻿using IBS.VoucherWarehouse.Features.Dto;
 
-namespace VoucherWarehouse.Features;
+namespace IBS.VoucherWarehouse.Features;
 
 public interface IFeaturesAppService : IApplicationService
 {

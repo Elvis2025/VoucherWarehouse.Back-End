@@ -1,7 +1,7 @@
 ﻿using Abp.MultiTenancy;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Authorization.Accounts.Dto;
+namespace IBS.VoucherWarehouse.Authorization.Accounts.Dto;
 
 public class IsTenantAvailableInput
 {

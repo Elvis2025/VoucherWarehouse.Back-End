@@ -1,10 +1,10 @@
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Roles;
-using VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Roles;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
 
 public class RoleDto : EntityDto<int>
 {

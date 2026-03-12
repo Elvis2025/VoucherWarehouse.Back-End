@@ -2,13 +2,13 @@
 using Abp.Domain.Uow;
 using Abp.EntityFrameworkCore.Uow;
 using Abp.MultiTenancy;
-using VoucherWarehouse.EntityFrameworkCore.Seed.Host;
-using VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Transactions;
 
-namespace VoucherWarehouse.EntityFrameworkCore.Seed;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore.Seed;
 
 public static class SeedHelper
 {

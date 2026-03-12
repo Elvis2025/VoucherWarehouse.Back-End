@@ -2,7 +2,7 @@ using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.AutoMapper;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
 
 [AutoMapFrom(typeof(Permission))]
 public class PermissionDto : EntityDto<long>

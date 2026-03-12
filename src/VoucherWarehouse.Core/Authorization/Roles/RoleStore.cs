@@ -1,9 +1,9 @@
 using Abp.Authorization.Roles;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 
-namespace VoucherWarehouse.Authorization.Roles;
+namespace IBS.VoucherWarehouse.Authorization.Roles;
 
 public class RoleStore : AbpRoleStore<Role, User>
 {

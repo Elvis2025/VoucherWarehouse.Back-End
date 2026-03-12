@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace VoucherWarehouse.Migrations;
+namespace IBS.VoucherWarehouse.Migrations;
 
 /// <inheritdoc />
 public partial class UpgradedToAbp80 : Migration

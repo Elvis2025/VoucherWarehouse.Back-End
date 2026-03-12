@@ -1,12 +1,12 @@
-﻿using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.Editions;
-using VoucherWarehouse.MultiTenancy;
+﻿using IBS.VoucherWarehouse.Authorization;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Editions;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace VoucherWarehouse.Identity;
+namespace IBS.VoucherWarehouse.Identity;
 
 public static class IdentityRegistrar
 {

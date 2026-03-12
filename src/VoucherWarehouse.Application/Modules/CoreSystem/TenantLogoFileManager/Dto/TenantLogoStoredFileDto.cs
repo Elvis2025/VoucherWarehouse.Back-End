@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager.Dto;
+﻿namespace IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager.Dto;
 
 public sealed record class TenantLogoStoredFileDto
 {

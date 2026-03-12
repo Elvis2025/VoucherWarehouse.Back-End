@@ -1,9 +1,9 @@
 ﻿using Abp.Authorization;
+using IBS.VoucherWarehouse.Authorization.Abstractions;
 using System;
-using VoucherWarehouse.Authorization.Abstractions;
-using static VoucherWarehouse.Modules.CoreSystem.CoreSystemNamePermissions;
+using static IBS.VoucherWarehouse.Modules.CoreSystem.CoreSystemNamePermissions;
 
-namespace VoucherWarehouse.Modules.CoreSystem;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem;
 
 public sealed class CoreSystemPermissions : PermissionBase
 {

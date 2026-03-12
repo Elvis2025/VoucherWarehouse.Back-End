@@ -1,8 +1,8 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 
-namespace VoucherWarehouse.Sessions.Dto;
+namespace IBS.VoucherWarehouse.Sessions.Dto;
 
 [AutoMapFrom(typeof(User))]
 public class UserLoginInfoDto : EntityDto<long>

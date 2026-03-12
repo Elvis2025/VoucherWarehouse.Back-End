@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using VoucherWarehouse.EntityFrameworkCore;
+using IBS.VoucherWarehouse.EntityFrameworkCore;
 
-namespace VoucherWarehouse.Migrations
+namespace IBS.VoucherWarehouse.Migrations
 {
     [DbContext(typeof(VoucherWarehouseDbContext))]
     [Migration("20170424115119_Initial_Migrations")]

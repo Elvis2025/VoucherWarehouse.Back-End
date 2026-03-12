@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Authentication.External
-{
-    public interface IExternalAuthManager
-    {
-        Task<bool> IsValidUser(string provider, string providerKey, string providerAccessCode);
+namespace IBS.VoucherWarehouse.Authentication.External;
 
-        Task<ExternalAuthUserInfo> GetUserInfo(string provider, string accessCode);
-    }
+public interface IExternalAuthManager
+{
+    Task<bool> IsValidUser(string provider, string providerKey, string providerAccessCode);
+
+    Task<ExternalAuthUserInfo> GetUserInfo(string provider, string accessCode);
 }

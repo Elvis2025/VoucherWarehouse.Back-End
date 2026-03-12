@@ -1,9 +1,9 @@
 ﻿using Abp.Dependency;
-using VoucherWarehouse.Identity;
+using IBS.VoucherWarehouse.Identity;
 using Castle.Windsor.MsDependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace VoucherWarehouse.Migrator.DependencyInjection;
+namespace IBS.VoucherWarehouse.Migrator.DependencyInjection;
 
 public static class ServiceCollectionRegistrar
 {

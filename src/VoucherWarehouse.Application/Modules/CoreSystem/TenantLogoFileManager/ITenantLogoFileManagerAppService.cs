@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager.Dto;
+using IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager.Dto;
 
-namespace VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
 
 public interface ITenantLogoFileManagerAppService
 {

@@ -1,10 +1,10 @@
 ﻿using Abp.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.Modules.CoreSystem;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Modules.CoreSystem;
+using IBS.VoucherWarehouse.MultiTenancy;
 
-namespace VoucherWarehouse.Authorization;
+namespace IBS.VoucherWarehouse.Authorization;
 
 public class VoucherWarehouseAuthorizationProvider : AuthorizationProvider
 {

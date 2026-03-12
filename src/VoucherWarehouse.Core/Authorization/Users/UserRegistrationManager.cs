@@ -3,8 +3,8 @@ using Abp.Domain.Services;
 using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using Abp.UI;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Authorization.Users;
+namespace IBS.VoucherWarehouse.Authorization.Users;
 
 public class UserRegistrationManager : DomainService
 {

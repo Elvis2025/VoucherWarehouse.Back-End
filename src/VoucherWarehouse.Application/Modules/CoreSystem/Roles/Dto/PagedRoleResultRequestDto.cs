@@ -1,7 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Runtime.Validation;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
 
 public class PagedRoleResultRequestDto : PagedResultRequestDto, IShouldNormalize
 {

@@ -4,7 +4,7 @@ using Abp.Dependency;
 using Abp.UI;
 using System;
 
-namespace VoucherWarehouse.Authorization;
+namespace IBS.VoucherWarehouse.Authorization;
 
 public class AbpLoginResultTypeHelper : AbpServiceBase, ITransientDependency
 {

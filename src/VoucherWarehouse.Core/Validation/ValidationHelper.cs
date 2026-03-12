@@ -1,7 +1,7 @@
 ﻿using Abp.Extensions;
 using System.Text.RegularExpressions;
 
-namespace VoucherWarehouse.Validation;
+namespace IBS.VoucherWarehouse.Validation;
 
 public static class ValidationHelper
 {

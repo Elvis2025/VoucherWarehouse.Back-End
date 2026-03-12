@@ -6,12 +6,12 @@ using Abp.Dependency;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Zero.Configuration;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.AspNetCore.Identity;
 
-namespace VoucherWarehouse.Authorization;
+namespace IBS.VoucherWarehouse.Authorization;
 
 public class LogInManager : AbpLogInManager<Tenant, Role, User>
 {

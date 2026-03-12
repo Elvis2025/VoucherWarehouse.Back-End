@@ -1,11 +1,8 @@
 ﻿using Abp.Authorization;
-using Abp.Localization;
-
+using IBS.VoucherWarehouse.Authorization.Abstractions;
 using System;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Abstractions;
 
-namespace VoucherWarehouse.Authorization.Roles;
+namespace IBS.VoucherWarehouse.Authorization.Roles;
 
 public class RolePermissions : PermissionBase
 {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace VoucherWarehouse.Migrations;
+namespace IBS.VoucherWarehouse.Migrations;
 
 public partial class Upgrade_To_ABP_73 : Migration
 {

@@ -1,13 +1,13 @@
 ﻿using Abp.Dependency;
-using VoucherWarehouse.EntityFrameworkCore;
-using VoucherWarehouse.Identity;
+using IBS.VoucherWarehouse.EntityFrameworkCore;
+using IBS.VoucherWarehouse.Identity;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor.MsDependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace VoucherWarehouse.Tests.DependencyInjection;
+namespace IBS.VoucherWarehouse.Tests.DependencyInjection;
 
 public static class ServiceCollectionRegistrar
 {

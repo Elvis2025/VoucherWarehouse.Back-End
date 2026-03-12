@@ -1,11 +1,11 @@
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Users;
 using Abp.AutoMapper;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 [AutoMapFrom(typeof(User))]
 public class UserDto : EntityDto<long>

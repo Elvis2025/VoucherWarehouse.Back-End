@@ -1,7 +1,7 @@
 ﻿using Abp.Dependency;
 using System;
 
-namespace VoucherWarehouse.Timing;
+namespace IBS.VoucherWarehouse.Timing;
 
 public class AppTimes : ISingletonDependency
 {

@@ -1,14 +1,10 @@
 ﻿using Abp.Authorization;
 using Abp.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization;
+using IBS.VoucherWarehouse.Authorization.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Abstractions;
 
-namespace VoucherWarehouse.MultiTenancy;
+namespace IBS.VoucherWarehouse.MultiTenancy;
 
 public sealed class TenantPermissions : PermissionBase
 {

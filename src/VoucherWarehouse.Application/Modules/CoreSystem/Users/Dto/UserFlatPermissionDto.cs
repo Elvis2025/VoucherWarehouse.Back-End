@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 [Serializable]
 public sealed record class UserFlatPermissionDto

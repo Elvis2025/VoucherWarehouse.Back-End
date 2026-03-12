@@ -1,15 +1,9 @@
 ﻿using Abp.Authorization;
-using Abp.Localization;
-
+using IBS.VoucherWarehouse.Authorization.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Abstractions;
 
-namespace VoucherWarehouse.Authorization.Users;
+
+namespace IBS.VoucherWarehouse.Authorization.Users;
 
 public sealed class UsersPermissions : PermissionBase
 {

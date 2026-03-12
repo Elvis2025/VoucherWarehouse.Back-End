@@ -1,7 +1,7 @@
 ﻿using Abp.MultiTenancy;
 using Abp.Zero.Configuration;
 
-namespace VoucherWarehouse.Authorization.Roles;
+namespace IBS.VoucherWarehouse.Authorization.Roles;
 
 public static class AppRoleConfig
 {

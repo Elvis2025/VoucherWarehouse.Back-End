@@ -1,9 +1,9 @@
 ﻿using Abp.Authorization;
 using Abp.Runtime.Session;
-using VoucherWarehouse.Configuration.Dto;
+using IBS.VoucherWarehouse.Configuration.Dto;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Configuration;
+namespace IBS.VoucherWarehouse.Configuration;
 
 [AbpAuthorize]
 public class ConfigurationAppService : VoucherWarehouseAppServiceBase, IConfigurationAppService

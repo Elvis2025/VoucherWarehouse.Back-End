@@ -1,16 +1,16 @@
 ﻿using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Domain.Uow;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace VoucherWarehouse.Identity;
+namespace IBS.VoucherWarehouse.Identity;
 
 public class SignInManager : AbpSignInManager<Tenant, Role, User>
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Features.Dto;
+namespace IBS.VoucherWarehouse.Features.Dto;
 
 public sealed record class AddFeaturesToOneTenantInputDto
 {

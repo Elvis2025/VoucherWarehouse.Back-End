@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Features.Dto;
+﻿namespace IBS.VoucherWarehouse.Features.Dto;
 
 public sealed record class FeatureDto
 {

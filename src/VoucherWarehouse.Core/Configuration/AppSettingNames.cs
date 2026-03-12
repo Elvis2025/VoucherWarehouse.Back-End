@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Configuration;
+﻿namespace IBS.VoucherWarehouse.Configuration;
 
 public static class AppSettingNames
 {

@@ -1,4 +1,4 @@
-namespace VoucherWarehouse.Authorization.Roles;
+namespace IBS.VoucherWarehouse.Authorization.Roles;
 
 public static class StaticRoleNames
 {

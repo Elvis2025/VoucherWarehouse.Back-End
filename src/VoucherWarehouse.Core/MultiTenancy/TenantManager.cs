@@ -1,10 +1,10 @@
 ﻿using Abp.Application.Features;
 using Abp.Domain.Repositories;
 using Abp.MultiTenancy;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.Editions;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Editions;
 
-namespace VoucherWarehouse.MultiTenancy;
+namespace IBS.VoucherWarehouse.MultiTenancy;
 
 public class TenantManager : AbpTenantManager<Tenant, User>
 {

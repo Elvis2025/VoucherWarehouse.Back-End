@@ -1,8 +1,8 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.MultiTenancy;
 
-namespace VoucherWarehouse.Sessions.Dto;
+namespace IBS.VoucherWarehouse.Sessions.Dto;
 
 [AutoMapFrom(typeof(Tenant))]
 public class TenantLoginInfoDto : EntityDto

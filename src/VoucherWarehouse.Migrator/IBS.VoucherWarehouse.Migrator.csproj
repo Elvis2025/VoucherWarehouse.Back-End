@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <AssemblyName>VoucherWarehouse.Migrator</AssemblyName>
+    <AssemblyName>IBS.VoucherWarehouse.Migrator</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>VoucherWarehouse.Migrator</PackageId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -18,7 +18,7 @@
     <PackageReference Include="Abp.Castle.Log4Net" Version="10.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VoucherWarehouse.Core\VoucherWarehouse.Core.csproj" />
-    <ProjectReference Include="..\VoucherWarehouse.EntityFrameworkCore\VoucherWarehouse.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\VoucherWarehouse.Core\IBS.VoucherWarehouse.Core.csproj" />
+    <ProjectReference Include="..\VoucherWarehouse.EntityFrameworkCore\IBS.VoucherWarehouse.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>

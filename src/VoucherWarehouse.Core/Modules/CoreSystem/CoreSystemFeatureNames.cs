@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Authorization.Modules.CoreSystem;
+﻿namespace IBS.VoucherWarehouse.Authorization.Modules.CoreSystem;
 
 public static class CoreSystemFeatureNames
 {

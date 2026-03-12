@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Sessions.Dto;
+﻿namespace IBS.VoucherWarehouse.Sessions.Dto;
 
 public class GetCurrentLoginInformationsOutput
 {

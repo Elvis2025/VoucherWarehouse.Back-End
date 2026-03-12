@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VoucherWarehouse.Net.MimeTypes;
+namespace IBS.VoucherWarehouse.Net.MimeTypes;
 
 /* Copied from:
  * http://stackoverflow.com/questions/10362140/asp-mvc-are-there-any-constants-for-the-default-content-types */
