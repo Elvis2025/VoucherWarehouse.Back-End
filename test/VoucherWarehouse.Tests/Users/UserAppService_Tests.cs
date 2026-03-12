@@ -1,9 +1,9 @@
-﻿using VoucherWarehouse.Users;
-using VoucherWarehouse.Users.Dto;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
+using VoucherWarehouse.Modules.CoreSystem.Users;
+using VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 namespace VoucherWarehouse.Tests.Users;
 

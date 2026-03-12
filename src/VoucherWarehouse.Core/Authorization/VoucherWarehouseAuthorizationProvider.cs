@@ -1,6 +1,8 @@
 ﻿using Abp.Authorization;
-using Abp.Localization;
-using Abp.MultiTenancy;
+using VoucherWarehouse.Authorization.Roles;
+using VoucherWarehouse.Authorization.Users;
+using VoucherWarehouse.Modules.CoreSystem;
+using VoucherWarehouse.MultiTenancy;
 
 namespace VoucherWarehouse.Authorization;
 
@@ -8,14 +10,11 @@ public class VoucherWarehouseAuthorizationProvider : AuthorizationProvider
 {
     public override void SetPermissions(IPermissionDefinitionContext context)
     {
-        context.CreatePermission(PermissionNames.Pages_Users, L("Users"));
-        context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
-        context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
-        context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
+        TenantPermissions.Instance.Set(context);
+        UsersPermissions.Instance.Set(context);
+        RolePermissions.Instance.Set(context);
+        CoreSystemPermissions.Instance.Set(context);
     }
 
-    private static ILocalizableString L(string name)
-    {
-        return new LocalizableString(name, VoucherWarehouseConsts.LocalizationSourceName);
-    }
+   
 }

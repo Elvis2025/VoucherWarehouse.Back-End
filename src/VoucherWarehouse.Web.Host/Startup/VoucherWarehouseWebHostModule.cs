@@ -4,7 +4,7 @@ using Abp.Reflection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using VoucherWarehouse.Configuration;
-using VoucherWarehouse.TenantLogoFileManager;
+using VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
 
 namespace VoucherWarehouse.Web.Host.Startup
 {

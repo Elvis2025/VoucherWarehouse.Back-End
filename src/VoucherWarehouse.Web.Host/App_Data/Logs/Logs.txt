@@ -15685,3 +15685,700 @@ INFO  2026-03-10 16:53:41,431 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics -
 INFO  2026-03-10 16:53:41,465 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/uploads/tenants/3/tenant-logo-3-7ec3d96894b54355b22f9c7d121abca9.webp - - -
 INFO  2026-03-10 16:53:41,475 [8    ] NetCore.StaticFiles.StaticFileMiddleware - The file /uploads/tenants/3/tenant-logo-3-7ec3d96894b54355b22f9c7d121abca9.webp was not modified
 INFO  2026-03-10 16:53:41,477 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/uploads/tenants/3/tenant-logo-3-7ec3d96894b54355b22f9c7d121abca9.webp - 304 - image/webp 12.5244ms
+DEBUG 2026-03-12 01:44:14,988 [2    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2026-03-12 01:44:15,530 [2    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2026-03-12 01:44:15,543 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.Web.Host.Startup.VoucherWarehouseWebHostModule, VoucherWarehouse.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,545 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseWebCoreModule, VoucherWarehouse.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,545 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseApplicationModule, VoucherWarehouse.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,546 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseCoreModule, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,546 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,547 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,547 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,548 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,548 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,548 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,549 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,549 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,549 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,549 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,550 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:15,551 [2    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2026-03-12 01:44:15,699 [2    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:44:15,699 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:44:15,699 [2    ] o.Configuration.LanguageManagementConfig - Converted VoucherWarehouse (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:44:15,699 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:44:16,079 [2    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseDbContext, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:44:16,233 [2    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2026-03-12 01:44:16,280 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2026-03-12 01:44:16,288 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2026-03-12 01:44:16,294 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: VoucherWarehouse
+DEBUG 2026-03-12 01:44:16,297 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2026-03-12 01:44:16,304 [2    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2026-03-12 01:44:16,313 [2    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[VoucherWarehouse.MultiTenancy.Tenant, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[VoucherWarehouse.Authorization.Users.User, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2026-03-12 01:44:16,330 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 7 classes define auto mapping attributes
+DEBUG 2026-03-12 01:44:16,330 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2026-03-12 01:44:16,333 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.UserLoginInfoDto
+DEBUG 2026-03-12 01:44:16,333 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.CreateUserDto
+DEBUG 2026-03-12 01:44:16,333 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto
+DEBUG 2026-03-12 01:44:16,334 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Roles.Dto.PermissionDto
+DEBUG 2026-03-12 01:44:16,334 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2026-03-12 01:44:16,334 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.TenantDto
+ERROR 2026-03-12 01:44:27,649 [2    ] .EntityFrameworkCore.Database.Connection - An error occurred using the connection to database 'VoucherWarehouseDb' on server 'localhost'.
+ERROR 2026-03-12 01:44:27,649 [8    ] .EntityFrameworkCore.Database.Connection - An error occurred using the connection to database 'VoucherWarehouseDb' on server 'localhost'.
+WARN  2026-03-12 01:44:47,645 [8    ] Abp.BackgroundJobs.BackgroundJobManager  - System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "VoucherWarehouseDb" requested by the login. The login failed.
+Login failed for user 'ELVISJ\Elvis Jesús'.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.<>c__DisplayClass28_0.<BeginTransaction>b__0(DatabaseFacade database)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+ClientConnectionId:8e333057-d901-4b6c-9661-9a38dacd0878
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.BeginTransaction(DatabaseFacade databaseFacade, IsolationLevel isolationLevel)
+   at Abp.EntityFrameworkCore.Uow.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver)
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext](Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkExtensions.GetDbContext[TDbContext](IActiveUnitOfWork unitOfWork, Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkDbContextProvider`1.GetDbContext(Nullable`1 multiTenancySide)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetContext()
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetQueryable>b__7_0(Type key)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetQueryable()
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAll()
+   at Abp.BackgroundJobs.BackgroundJobStore.<>c__DisplayClass7_0.<GetWaitingJobsAsync>b__0()
+   at Abp.Domain.Uow.UnitOfWorkManagerExtensions.WithUnitOfWork[TResult](IUnitOfWorkManager manager, Func`1 action, UnitOfWorkOptions options)
+   at Abp.BackgroundJobs.BackgroundJobStore.GetWaitingJobsAsync(Int32 maxResultCount)
+   at Abp.BackgroundJobs.BackgroundJobManager.DoWorkAsync()
+   at Abp.Threading.BackgroundWorkers.AsyncPeriodicBackgroundWorkerBase.Timer_Elapsed(AbpAsyncTimer timer)
+System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "VoucherWarehouseDb" requested by the login. The login failed.
+Login failed for user 'ELVISJ\Elvis Jesús'.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.<>c__DisplayClass28_0.<BeginTransaction>b__0(DatabaseFacade database)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+ClientConnectionId:8e333057-d901-4b6c-9661-9a38dacd0878
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.BeginTransaction(DatabaseFacade databaseFacade, IsolationLevel isolationLevel)
+   at Abp.EntityFrameworkCore.Uow.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver)
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext](Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkExtensions.GetDbContext[TDbContext](IActiveUnitOfWork unitOfWork, Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkDbContextProvider`1.GetDbContext(Nullable`1 multiTenancySide)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetContext()
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.<GetQueryable>b__7_0(Type key)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetQueryable()
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.GetAll()
+   at Abp.BackgroundJobs.BackgroundJobStore.<>c__DisplayClass7_0.<GetWaitingJobsAsync>b__0()
+   at Abp.Domain.Uow.UnitOfWorkManagerExtensions.WithUnitOfWork[TResult](IUnitOfWorkManager manager, Func`1 action, UnitOfWorkOptions options)
+   at Abp.BackgroundJobs.BackgroundJobStore.GetWaitingJobsAsync(Int32 maxResultCount)
+   at Abp.BackgroundJobs.BackgroundJobManager.DoWorkAsync()
+   at Abp.Threading.BackgroundWorkers.AsyncPeriodicBackgroundWorkerBase.Timer_Elapsed(AbpAsyncTimer timer)
+FATAL 2026-03-12 01:44:47,660 [2    ] Abp.AbpBootstrapper                      - System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "VoucherWarehouseDb" requested by the login. The login failed.
+Login failed for user 'ELVISJ\Elvis Jesús'.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.<>c__DisplayClass28_0.<BeginTransaction>b__0(DatabaseFacade database)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+ClientConnectionId:8e333057-d901-4b6c-9661-9a38dacd0878
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.BeginTransaction(DatabaseFacade databaseFacade, IsolationLevel isolationLevel)
+   at Abp.EntityFrameworkCore.Uow.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver)
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext](Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkExtensions.GetDbContext[TDbContext](IActiveUnitOfWork unitOfWork, Nullable`1 multiTenancySide, String name)
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.WithDbContext[TDbContext](IIocResolver iocResolver, Action`1 contextAction) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 39
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.SeedHostDb(IIocResolver iocResolver) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 17
+   at VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule.PostInitialize() in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\VoucherWarehouseEntityFrameworkModule.cs:line 46
+   at Abp.Modules.AbpModuleManager.<>c.<StartModules>b__15_2(AbpModuleInfo module)
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at Abp.Modules.AbpModuleManager.StartModules()
+   at Abp.AbpBootstrapper.Initialize()
+System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "VoucherWarehouseDb" requested by the login. The login failed.
+Login failed for user 'ELVISJ\Elvis Jesús'.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.<>c__DisplayClass28_0.<BeginTransaction>b__0(DatabaseFacade database)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+ClientConnectionId:8e333057-d901-4b6c-9661-9a38dacd0878
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.BeginTransaction(DatabaseFacade databaseFacade, IsolationLevel isolationLevel)
+   at Abp.EntityFrameworkCore.Uow.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver)
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext](Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkExtensions.GetDbContext[TDbContext](IActiveUnitOfWork unitOfWork, Nullable`1 multiTenancySide, String name)
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.WithDbContext[TDbContext](IIocResolver iocResolver, Action`1 contextAction) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 39
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.SeedHostDb(IIocResolver iocResolver) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 17
+   at VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule.PostInitialize() in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\VoucherWarehouseEntityFrameworkModule.cs:line 46
+   at Abp.Modules.AbpModuleManager.<>c.<StartModules>b__15_2(AbpModuleInfo module)
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at Abp.Modules.AbpModuleManager.StartModules()
+   at Abp.AbpBootstrapper.Initialize()
+FATAL 2026-03-12 01:44:48,950 [2    ] Microsoft.AspNetCore.Hosting.Diagnostics - Application startup exception
+System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "VoucherWarehouseDb" requested by the login. The login failed.
+Login failed for user 'ELVISJ\Elvis Jesús'.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.<>c__DisplayClass28_0.<BeginTransaction>b__0(DatabaseFacade database)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+ClientConnectionId:8e333057-d901-4b6c-9661-9a38dacd0878
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.BeginTransaction(DatabaseFacade databaseFacade, IsolationLevel isolationLevel)
+   at Abp.EntityFrameworkCore.Uow.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver)
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext](Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkExtensions.GetDbContext[TDbContext](IActiveUnitOfWork unitOfWork, Nullable`1 multiTenancySide, String name)
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.WithDbContext[TDbContext](IIocResolver iocResolver, Action`1 contextAction) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 39
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.SeedHostDb(IIocResolver iocResolver) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 17
+   at VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule.PostInitialize() in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\VoucherWarehouseEntityFrameworkModule.cs:line 46
+   at Abp.Modules.AbpModuleManager.<>c.<StartModules>b__15_2(AbpModuleInfo module)
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at Abp.Modules.AbpModuleManager.StartModules()
+   at Abp.AbpBootstrapper.Initialize()
+   at Abp.AspNetCore.AbpApplicationBuilderExtensions.InitializeAbp(IApplicationBuilder app)
+   at Abp.AspNetCore.AbpApplicationBuilderExtensions.UseAbp(IApplicationBuilder app, Action`1 optionsAction)
+   at VoucherWarehouse.Web.Host.Startup.Startup.Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.Web.Host\Startup\Startup.cs:line 88
+   at InvokeStub_Startup.Configure(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.AspNetCore.Hosting.ConfigureBuilder.Invoke(Object instance, IApplicationBuilder builder)
+   at Microsoft.WebTools.BrowserLink.Net.HostingStartup.<>c__DisplayClass1_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.WebTools.ApiEndpointDiscovery.HostingStartup.<>c__DisplayClass2_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.HostingStartup.<>c__DisplayClass1_0.<Configure>b__0(IApplicationBuilder app) in /_3/HostingStartup.cs:line 59
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+ERROR 2026-03-12 01:44:48,958 [2    ] crosoft.Extensions.Hosting.Internal.Host - Hosting failed to start
+System.InvalidOperationException: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot open database "VoucherWarehouseDb" requested by the login. The login failed.
+Login failed for user 'ELVISJ\Elvis Jesús'.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.CompleteLogin(Boolean enlistOK)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.<>c__DisplayClass28_0.<BeginTransaction>b__0(DatabaseFacade database)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+ClientConnectionId:8e333057-d901-4b6c-9661-9a38dacd0878
+Error Number:4060,State:1,Class:11
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.BeginTransaction(DatabaseFacade databaseFacade, IsolationLevel isolationLevel)
+   at Abp.EntityFrameworkCore.Uow.DbContextEfCoreTransactionStrategy.CreateDbContext[TDbContext](String connectionString, IDbContextResolver dbContextResolver)
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.GetOrCreateDbContext[TDbContext](Nullable`1 multiTenancySide, String name)
+   at Abp.EntityFrameworkCore.Uow.UnitOfWorkExtensions.GetDbContext[TDbContext](IActiveUnitOfWork unitOfWork, Nullable`1 multiTenancySide, String name)
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.WithDbContext[TDbContext](IIocResolver iocResolver, Action`1 contextAction) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 39
+   at VoucherWarehouse.EntityFrameworkCore.Seed.SeedHelper.SeedHostDb(IIocResolver iocResolver) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\Seed\SeedHelper.cs:line 17
+   at VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule.PostInitialize() in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.EntityFrameworkCore\EntityFrameworkCore\VoucherWarehouseEntityFrameworkModule.cs:line 46
+   at Abp.Modules.AbpModuleManager.<>c.<StartModules>b__15_2(AbpModuleInfo module)
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at Abp.Modules.AbpModuleManager.StartModules()
+   at Abp.AbpBootstrapper.Initialize()
+   at Abp.AspNetCore.AbpApplicationBuilderExtensions.InitializeAbp(IApplicationBuilder app)
+   at Abp.AspNetCore.AbpApplicationBuilderExtensions.UseAbp(IApplicationBuilder app, Action`1 optionsAction)
+   at VoucherWarehouse.Web.Host.Startup.Startup.Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory) in C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.Web.Host\Startup\Startup.cs:line 88
+   at InvokeStub_Startup.Configure(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.AspNetCore.Hosting.ConfigureBuilder.Invoke(Object instance, IApplicationBuilder builder)
+   at Microsoft.WebTools.BrowserLink.Net.HostingStartup.<>c__DisplayClass1_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.WebTools.ApiEndpointDiscovery.HostingStartup.<>c__DisplayClass2_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.HostingStartup.<>c__DisplayClass1_0.<Configure>b__0(IApplicationBuilder app) in /_3/HostingStartup.cs:line 59
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+DEBUG 2026-03-12 01:46:13,637 [2    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2026-03-12 01:46:13,677 [2    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2026-03-12 01:46:13,687 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.Web.Host.Startup.VoucherWarehouseWebHostModule, VoucherWarehouse.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,688 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseWebCoreModule, VoucherWarehouse.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,688 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseApplicationModule, VoucherWarehouse.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,689 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseCoreModule, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,689 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,689 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,689 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,690 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,690 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,690 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,691 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,691 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,691 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,691 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,692 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:13,693 [2    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2026-03-12 01:46:13,735 [2    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:46:13,735 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:46:13,735 [2    ] o.Configuration.LanguageManagementConfig - Converted VoucherWarehouse (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:46:13,735 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:46:14,010 [2    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseDbContext, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:46:14,142 [2    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2026-03-12 01:46:14,175 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2026-03-12 01:46:14,180 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2026-03-12 01:46:14,183 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: VoucherWarehouse
+DEBUG 2026-03-12 01:46:14,186 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2026-03-12 01:46:14,193 [2    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2026-03-12 01:46:14,198 [2    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[VoucherWarehouse.MultiTenancy.Tenant, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[VoucherWarehouse.Authorization.Users.User, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2026-03-12 01:46:14,214 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 7 classes define auto mapping attributes
+DEBUG 2026-03-12 01:46:14,214 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2026-03-12 01:46:14,217 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.UserLoginInfoDto
+DEBUG 2026-03-12 01:46:14,217 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.CreateUserDto
+DEBUG 2026-03-12 01:46:14,217 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto
+DEBUG 2026-03-12 01:46:14,217 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Roles.Dto.PermissionDto
+DEBUG 2026-03-12 01:46:14,217 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2026-03-12 01:46:14,217 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.TenantDto
+INFO  2026-03-12 01:46:16,229 [2    ] tCore.Builder.RequestLocalizationOptions - Supported Request Localization Cultures: en,es-MX,fr,de,it,nl,pt-BR,tr,ru,ar,fa,ja,zh-Hans
+WARN  2026-03-12 01:46:16,598 [2    ] Microsoft.AspNetCore.Server.Kestrel      - Overriding address(es) 'http://localhost:44310/'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+INFO  2026-03-12 01:46:16,645 [2    ] Microsoft.Hosting.Lifetime               - Now listening on: http://localhost:44310
+INFO  2026-03-12 01:46:16,707 [2    ] Microsoft.Hosting.Lifetime               - Application started. Press Ctrl+C to shut down.
+INFO  2026-03-12 01:46:16,710 [2    ] Microsoft.Hosting.Lifetime               - Hosting environment: Development
+INFO  2026-03-12 01:46:16,744 [2    ] Microsoft.Hosting.Lifetime               - Content root path: C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.Web.Host
+INFO  2026-03-12 01:46:17,013 [6    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/ - - -
+INFO  2026-03-12 01:46:17,477 [15   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:46:17,529 [15   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller VoucherWarehouse.Web.Host.Controllers.HomeController (VoucherWarehouse.Web.Host).
+INFO  2026-03-12 01:46:17,755 [13   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2026-03-12 01:46:17,766 [13   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host) in 228.136ms
+INFO  2026-03-12 01:46:17,768 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:46:17,779 [13   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/ - 302 - - 779.2050ms
+INFO  2026-03-12 01:46:17,796 [16   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-03-12 01:46:17,800 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/_vs/browserLink - - -
+INFO  2026-03-12 01:46:17,807 [16   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript;+charset=utf-8 12.0489ms
+INFO  2026-03-12 01:46:17,929 [16   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 129.7382ms
+INFO  2026-03-12 01:46:17,938 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/AntiForgery/SetCookie - - -
+INFO  2026-03-12 01:46:17,943 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:46:17,949 [8    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "SetCookie", controller = "AntiForgery", area = ""}. Executing controller action with signature Void SetCookie() on controller VoucherWarehouse.Web.Host.Controllers.AntiForgeryController (VoucherWarehouse.Web.Host).
+INFO  2026-03-12 01:46:17,964 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - - -
+INFO  2026-03-12 01:46:18,010 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:46:18,022 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 56.3345ms
+INFO  2026-03-12 01:46:18,028 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host) in 76.596ms
+INFO  2026-03-12 01:46:18,033 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:46:18,036 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/AntiForgery/SetCookie - 200 - application/json;+charset=utf-8 97.7304ms
+DEBUG 2026-03-12 01:51:44,170 [2    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2026-03-12 01:51:44,274 [2    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2026-03-12 01:51:44,285 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.Web.Host.Startup.VoucherWarehouseWebHostModule, VoucherWarehouse.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,286 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseWebCoreModule, VoucherWarehouse.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,286 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseApplicationModule, VoucherWarehouse.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,287 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseCoreModule, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,287 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,287 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,287 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,288 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,288 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,289 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,289 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,289 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,289 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,290 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,290 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,291 [2    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2026-03-12 01:51:44,345 [2    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:51:44,345 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:51:44,345 [2    ] o.Configuration.LanguageManagementConfig - Converted VoucherWarehouse (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:51:44,345 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 01:51:44,626 [2    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseDbContext, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 01:51:44,757 [2    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2026-03-12 01:51:44,790 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2026-03-12 01:51:44,795 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2026-03-12 01:51:44,799 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: VoucherWarehouse
+DEBUG 2026-03-12 01:51:44,801 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2026-03-12 01:51:44,811 [2    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2026-03-12 01:51:44,818 [2    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[VoucherWarehouse.MultiTenancy.Tenant, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[VoucherWarehouse.Authorization.Users.User, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2026-03-12 01:51:44,835 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 7 classes define auto mapping attributes
+DEBUG 2026-03-12 01:51:44,835 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2026-03-12 01:51:44,838 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.UserLoginInfoDto
+DEBUG 2026-03-12 01:51:44,838 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.CreateUserDto
+DEBUG 2026-03-12 01:51:44,839 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto
+DEBUG 2026-03-12 01:51:44,839 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Roles.Dto.PermissionDto
+DEBUG 2026-03-12 01:51:44,839 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2026-03-12 01:51:44,839 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.TenantDto
+INFO  2026-03-12 01:51:46,824 [2    ] tCore.Builder.RequestLocalizationOptions - Supported Request Localization Cultures: en,es-MX,fr,de,it,nl,pt-BR,tr,ru,ar,fa,ja,zh-Hans
+WARN  2026-03-12 01:51:47,064 [2    ] Microsoft.AspNetCore.Server.Kestrel      - Overriding address(es) 'http://localhost:44310/'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+INFO  2026-03-12 01:51:47,094 [2    ] Microsoft.Hosting.Lifetime               - Now listening on: http://localhost:44310
+INFO  2026-03-12 01:51:47,148 [2    ] Microsoft.Hosting.Lifetime               - Application started. Press Ctrl+C to shut down.
+INFO  2026-03-12 01:51:47,151 [2    ] Microsoft.Hosting.Lifetime               - Hosting environment: Development
+INFO  2026-03-12 01:51:47,153 [2    ] Microsoft.Hosting.Lifetime               - Content root path: C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.Web.Host
+INFO  2026-03-12 01:51:47,327 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/ - - -
+INFO  2026-03-12 01:51:47,765 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:51:47,827 [14   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller VoucherWarehouse.Web.Host.Controllers.HomeController (VoucherWarehouse.Web.Host).
+INFO  2026-03-12 01:51:48,064 [14   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2026-03-12 01:51:48,072 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host) in 238.0646ms
+INFO  2026-03-12 01:51:48,094 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:51:48,104 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/ - 302 - - 784.2162ms
+INFO  2026-03-12 01:51:48,120 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-03-12 01:51:48,126 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript;+charset=utf-8 8.1219ms
+INFO  2026-03-12 01:51:48,129 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/_vs/browserLink - - -
+INFO  2026-03-12 01:51:48,161 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 32.4031ms
+INFO  2026-03-12 01:51:48,180 [17   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/AntiForgery/SetCookie - - -
+INFO  2026-03-12 01:51:48,185 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:51:48,191 [17   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "SetCookie", controller = "AntiForgery", area = ""}. Executing controller action with signature Void SetCookie() on controller VoucherWarehouse.Web.Host.Controllers.AntiForgeryController (VoucherWarehouse.Web.Host).
+INFO  2026-03-12 01:51:48,210 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - - -
+INFO  2026-03-12 01:51:48,254 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:51:48,264 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host) in 70.8577ms
+INFO  2026-03-12 01:51:48,267 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 01:51:48,270 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/AntiForgery/SetCookie - 200 - application/json;+charset=utf-8 89.0475ms
+INFO  2026-03-12 01:51:48,274 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 64.0907ms
+INFO  2026-03-12 01:53:39,488 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/AbpUserConfiguration/GetAll - - -
+INFO  2026-03-12 01:53:39,504 [14   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:39,512 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/AbpUserConfiguration/GetAll - 204 - - 25.3218ms
+INFO  2026-03-12 01:53:39,520 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/AbpUserConfiguration/GetAll - - -
+INFO  2026-03-12 01:53:39,525 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:39,663 [8    ] uthentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'p2X86NzJjTDeHTqSTtoXBMR_AldaMmq0jsMir3PjBro'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+INFO  2026-03-12 01:53:39,667 [8    ] uthentication.JwtBearer.JwtBearerHandler - JwtBearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'p2X86NzJjTDeHTqSTtoXBMR_AldaMmq0jsMir3PjBro'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+INFO  2026-03-12 01:53:39,675 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2026-03-12 01:53:39,683 [8    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpUserConfiguration", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.JsonResult] GetAll() on controller Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController (Abp.AspNetCore).
+INFO  2026-03-12 01:53:39,967 [8    ] rastructure.SystemTextJsonResultExecutor - Executing JsonResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:53:40,042 [8    ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) in 356.8366ms
+INFO  2026-03-12 01:53:40,045 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2026-03-12 01:53:40,052 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/AbpUserConfiguration/GetAll - 200 - application/json;+charset=utf-8 528.9032ms
+INFO  2026-03-12 01:53:40,057 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - - -
+INFO  2026-03-12 01:53:40,059 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:40,064 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - 204 - - 4.2804ms
+INFO  2026-03-12 01:53:40,068 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - - -
+INFO  2026-03-12 01:53:40,070 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:40,074 [8    ] uthentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'p2X86NzJjTDeHTqSTtoXBMR_AldaMmq0jsMir3PjBro'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+INFO  2026-03-12 01:53:40,077 [8    ] uthentication.JwtBearer.JwtBearerHandler - JwtBearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'p2X86NzJjTDeHTqSTtoXBMR_AldaMmq0jsMir3PjBro'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+INFO  2026-03-12 01:53:40,083 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:53:40,091 [8    ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetCurrentLoginInformations", controller = "Session"}. Executing controller action with signature System.Threading.Tasks.Task`1[VoucherWarehouse.Sessions.Dto.GetCurrentLoginInformationsOutput] GetCurrentLoginInformations() on controller VoucherWarehouse.Sessions.SessionAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 01:53:40,118 [8    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:53:40,152 [8    ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application) in 57.4804ms
+INFO  2026-03-12 01:53:40,154 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:53:40,159 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - 200 - application/json;+charset=utf-8 90.1900ms
+INFO  2026-03-12 01:53:50,652 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/TokenAuth/Authenticate - - -
+INFO  2026-03-12 01:53:50,655 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:50,658 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/TokenAuth/Authenticate - 204 - - 6.3894ms
+INFO  2026-03-12 01:53:50,660 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:44310/api/TokenAuth/Authenticate - application/json 77
+INFO  2026-03-12 01:53:50,661 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:50,664 [8    ] uthentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'p2X86NzJjTDeHTqSTtoXBMR_AldaMmq0jsMir3PjBro'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+INFO  2026-03-12 01:53:50,666 [8    ] uthentication.JwtBearer.JwtBearerHandler - JwtBearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'p2X86NzJjTDeHTqSTtoXBMR_AldaMmq0jsMir3PjBro'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+INFO  2026-03-12 01:53:50,667 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Controllers.TokenAuthController.Authenticate (VoucherWarehouse.Web.Core)'
+INFO  2026-03-12 01:53:50,702 [8    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Authenticate", controller = "TokenAuth", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[VoucherWarehouse.Models.TokenAuth.AuthenticateResultModel] Authenticate(VoucherWarehouse.Models.TokenAuth.AuthenticateModel) on controller VoucherWarehouse.Controllers.TokenAuthController (VoucherWarehouse.Web.Core).
+INFO  2026-03-12 01:53:51,209 [17   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:53:51,212 [17   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Controllers.TokenAuthController.Authenticate (VoucherWarehouse.Web.Core) in 507.9065ms
+INFO  2026-03-12 01:53:51,248 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Controllers.TokenAuthController.Authenticate (VoucherWarehouse.Web.Core)'
+INFO  2026-03-12 01:53:51,250 [17   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:44310/api/TokenAuth/Authenticate - 200 - application/json;+charset=utf-8 589.9684ms
+INFO  2026-03-12 01:53:51,449 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/AbpUserConfiguration/GetAll - - -
+INFO  2026-03-12 01:53:51,452 [23   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:51,457 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/AbpUserConfiguration/GetAll - 204 - - 5.4537ms
+INFO  2026-03-12 01:53:51,465 [17   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/AbpUserConfiguration/GetAll - - -
+INFO  2026-03-12 01:53:51,469 [17   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:51,519 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2026-03-12 01:53:51,523 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpUserConfiguration", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.JsonResult] GetAll() on controller Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController (Abp.AspNetCore).
+INFO  2026-03-12 01:53:51,680 [14   ] rastructure.SystemTextJsonResultExecutor - Executing JsonResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:53:51,684 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) in 158.9946ms
+INFO  2026-03-12 01:53:51,687 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2026-03-12 01:53:51,691 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/AbpUserConfiguration/GetAll - 200 - application/json;+charset=utf-8 225.4398ms
+INFO  2026-03-12 01:53:51,694 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - - -
+INFO  2026-03-12 01:53:51,696 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:51,698 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - 204 - - 3.7058ms
+INFO  2026-03-12 01:53:51,700 [25   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - - -
+INFO  2026-03-12 01:53:51,704 [25   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:51,707 [25   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:53:51,710 [25   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetCurrentLoginInformations", controller = "Session"}. Executing controller action with signature System.Threading.Tasks.Task`1[VoucherWarehouse.Sessions.Dto.GetCurrentLoginInformationsOutput] GetCurrentLoginInformations() on controller VoucherWarehouse.Sessions.SessionAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 01:53:51,721 [8    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:53:51,724 [8    ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application) in 12.2226ms
+INFO  2026-03-12 01:53:51,726 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:53:51,728 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - 200 - application/json;+charset=utf-8 27.7946ms
+INFO  2026-03-12 01:53:59,092 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - - -
+INFO  2026-03-12 01:53:59,094 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:59,096 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - 204 - - 4.8595ms
+INFO  2026-03-12 01:53:59,099 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - - -
+INFO  2026-03-12 01:53:59,102 [8    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:53:59,108 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAllAsync (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:53:59,124 [8    ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetAll", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Abp.Application.Services.Dto.PagedResultDto`1[VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto]] GetAllAsync(VoucherWarehouse.Modules.CoreSystem.Users.Dto.PagedUserResultRequestDto) on controller VoucherWarehouse.Modules.CoreSystem.Users.UserAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 01:54:00,391 [17   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:54:00,399 [17   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAllAsync (VoucherWarehouse.Application) in 1273.0761ms
+INFO  2026-03-12 01:54:00,401 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAllAsync (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:54:00,403 [17   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - 200 - application/json;+charset=utf-8 1304.2073ms
+INFO  2026-03-12 01:54:05,435 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/Get?Id=1 - - -
+INFO  2026-03-12 01:54:05,437 [14   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:54:05,439 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/Get?Id=1 - 204 - - 4.2305ms
+INFO  2026-03-12 01:54:05,443 [25   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/User/Get?Id=1 - - -
+INFO  2026-03-12 01:54:05,445 [25   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:54:05,449 [25   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAsync (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:54:05,457 [25   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "Get", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto] GetAsync(Abp.Application.Services.Dto.EntityDto`1[System.Int64]) on controller VoucherWarehouse.Modules.CoreSystem.Users.UserAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 01:54:05,509 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:54:05,511 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAsync (VoucherWarehouse.Application) in 51.9483ms
+INFO  2026-03-12 01:54:05,513 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAsync (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:54:05,515 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/User/Get?Id=1 - 200 - application/json;+charset=utf-8 72.4216ms
+INFO  2026-03-12 01:54:05,519 [25   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/GetRoles - - -
+INFO  2026-03-12 01:54:05,521 [25   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:54:05,524 [25   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/GetRoles - 204 - - 5.1243ms
+INFO  2026-03-12 01:54:05,526 [25   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/User/GetRoles - - -
+INFO  2026-03-12 01:54:05,528 [25   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 01:54:05,531 [25   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetRoles (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:54:05,536 [25   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetRoles", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Abp.Application.Services.Dto.ListResultDto`1[VoucherWarehouse.Modules.CoreSystem.Roles.Dto.RoleDto]] GetRoles() on controller VoucherWarehouse.Modules.CoreSystem.Users.UserAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 01:54:05,568 [23   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 01:54:05,573 [23   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetRoles (VoucherWarehouse.Application) in 34.2774ms
+INFO  2026-03-12 01:54:05,574 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetRoles (VoucherWarehouse.Application)'
+INFO  2026-03-12 01:54:05,576 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/User/GetRoles - 200 - application/json;+charset=utf-8 50.3017ms
+INFO  2026-03-12 01:55:28,220 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - - -
+INFO  2026-03-12 01:55:28,235 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 15.7154ms
+DEBUG 2026-03-12 02:08:13,389 [2    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2026-03-12 02:08:13,451 [2    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2026-03-12 02:08:13,462 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.Web.Host.Startup.VoucherWarehouseWebHostModule, VoucherWarehouse.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,463 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseWebCoreModule, VoucherWarehouse.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,464 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseApplicationModule, VoucherWarehouse.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,464 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.VoucherWarehouseCoreModule, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,464 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,464 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,465 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,465 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,466 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseEntityFrameworkModule, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,466 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,467 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,467 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,468 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,468 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,468 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:13,469 [2    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2026-03-12 02:08:13,550 [2    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 02:08:13,551 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 02:08:13,551 [2    ] o.Configuration.LanguageManagementConfig - Converted VoucherWarehouse (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 02:08:13,551 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-03-12 02:08:13,961 [2    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: VoucherWarehouse.EntityFrameworkCore.VoucherWarehouseDbContext, VoucherWarehouse.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-03-12 02:08:14,111 [2    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2026-03-12 02:08:14,158 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2026-03-12 02:08:14,166 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2026-03-12 02:08:14,171 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: VoucherWarehouse
+DEBUG 2026-03-12 02:08:14,173 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2026-03-12 02:08:14,181 [2    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2026-03-12 02:08:14,191 [2    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[VoucherWarehouse.MultiTenancy.Tenant, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[VoucherWarehouse.Authorization.Users.User, VoucherWarehouse.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2026-03-12 02:08:14,210 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 7 classes define auto mapping attributes
+DEBUG 2026-03-12 02:08:14,210 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2026-03-12 02:08:14,213 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Sessions.Dto.UserLoginInfoDto
+DEBUG 2026-03-12 02:08:14,213 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.CreateUserDto
+DEBUG 2026-03-12 02:08:14,213 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto
+DEBUG 2026-03-12 02:08:14,213 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.Roles.Dto.PermissionDto
+DEBUG 2026-03-12 02:08:14,213 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2026-03-12 02:08:14,213 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto.TenantDto
+INFO  2026-03-12 02:08:16,926 [2    ] tCore.Builder.RequestLocalizationOptions - Supported Request Localization Cultures: en,es-MX,fr,de,it,nl,pt-BR,tr,ru,ar,fa,ja,zh-Hans
+WARN  2026-03-12 02:08:17,854 [2    ] Microsoft.AspNetCore.Server.Kestrel      - Overriding address(es) 'http://localhost:44310/'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+INFO  2026-03-12 02:08:17,890 [2    ] Microsoft.Hosting.Lifetime               - Now listening on: http://localhost:44310
+INFO  2026-03-12 02:08:17,940 [2    ] Microsoft.Hosting.Lifetime               - Application started. Press Ctrl+C to shut down.
+INFO  2026-03-12 02:08:17,942 [2    ] Microsoft.Hosting.Lifetime               - Hosting environment: Development
+INFO  2026-03-12 02:08:17,972 [2    ] Microsoft.Hosting.Lifetime               - Content root path: C:\Users\18498\Desktop\IBS\App\Voucher Warehouse\VoucherWarehouse.Back-End\src\VoucherWarehouse.Web.Host
+INFO  2026-03-12 02:08:18,673 [16   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/ - - -
+INFO  2026-03-12 02:08:19,207 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 02:08:19,347 [8    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller VoucherWarehouse.Web.Host.Controllers.HomeController (VoucherWarehouse.Web.Host).
+INFO  2026-03-12 02:08:19,630 [8    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2026-03-12 02:08:19,640 [8    ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host) in 284.8802ms
+INFO  2026-03-12 02:08:19,642 [8    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Web.Host.Controllers.HomeController.Index (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 02:08:19,653 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/ - 302 - - 992.7972ms
+INFO  2026-03-12 02:08:19,687 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-03-12 02:08:19,699 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/_vs/browserLink - - -
+INFO  2026-03-12 02:08:19,704 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript;+charset=utf-8 20.4025ms
+INFO  2026-03-12 02:08:19,746 [6    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 47.8594ms
+INFO  2026-03-12 02:08:19,767 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/AntiForgery/SetCookie - - -
+INFO  2026-03-12 02:08:19,774 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 02:08:19,784 [10   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "SetCookie", controller = "AntiForgery", area = ""}. Executing controller action with signature Void SetCookie() on controller VoucherWarehouse.Web.Host.Controllers.AntiForgeryController (VoucherWarehouse.Web.Host).
+INFO  2026-03-12 02:08:19,800 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - - -
+INFO  2026-03-12 02:08:19,843 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 02:08:19,856 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host) in 68.471ms
+INFO  2026-03-12 02:08:19,860 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Web.Host.Controllers.AntiForgeryController.SetCookie (VoucherWarehouse.Web.Host)'
+INFO  2026-03-12 02:08:19,864 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/AntiForgery/SetCookie - 200 - application/json;+charset=utf-8 97.1771ms
+INFO  2026-03-12 02:08:19,878 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 79.0977ms
+INFO  2026-03-12 02:08:33,985 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - - -
+INFO  2026-03-12 02:08:34,013 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 27.9882ms
+INFO  2026-03-12 02:09:09,583 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - - -
+INFO  2026-03-12 02:09:09,594 [3    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 47.2572ms
+INFO  2026-03-12 02:10:49,986 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/AbpUserConfiguration/GetAll - - -
+INFO  2026-03-12 02:10:49,993 [22   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 02:10:49,999 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/AbpUserConfiguration/GetAll - 204 - - 12.5747ms
+INFO  2026-03-12 02:10:50,006 [3    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/AbpUserConfiguration/GetAll - - -
+INFO  2026-03-12 02:10:50,011 [3    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 02:10:50,178 [22   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2026-03-12 02:10:50,191 [22   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpUserConfiguration", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.JsonResult] GetAll() on controller Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController (Abp.AspNetCore).
+INFO  2026-03-12 02:10:50,571 [16   ] rastructure.SystemTextJsonResultExecutor - Executing JsonResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 02:10:50,614 [16   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) in 420.9289ms
+INFO  2026-03-12 02:10:50,617 [16   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2026-03-12 02:10:50,619 [16   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/AbpUserConfiguration/GetAll - 200 - application/json;+charset=utf-8 614.4818ms
+INFO  2026-03-12 02:10:50,624 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - - -
+INFO  2026-03-12 02:10:50,626 [22   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 02:10:50,628 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - 204 - - 4.4658ms
+INFO  2026-03-12 02:10:50,630 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - - -
+INFO  2026-03-12 02:10:50,633 [22   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 02:10:50,636 [22   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application)'
+INFO  2026-03-12 02:10:50,641 [22   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetCurrentLoginInformations", controller = "Session"}. Executing controller action with signature System.Threading.Tasks.Task`1[VoucherWarehouse.Sessions.Dto.GetCurrentLoginInformationsOutput] GetCurrentLoginInformations() on controller VoucherWarehouse.Sessions.SessionAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 02:10:50,663 [22   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 02:10:50,676 [22   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application) in 32.9317ms
+INFO  2026-03-12 02:10:50,679 [22   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Sessions.SessionAppService.GetCurrentLoginInformations (VoucherWarehouse.Application)'
+INFO  2026-03-12 02:10:50,682 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/Session/GetCurrentLoginInformations - 200 - application/json;+charset=utf-8 51.3256ms
+INFO  2026-03-12 02:10:50,797 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - - -
+INFO  2026-03-12 02:10:50,799 [10   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 02:10:50,801 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - 204 - - 4.1529ms
+INFO  2026-03-12 02:10:50,803 [3    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - - -
+INFO  2026-03-12 02:10:50,806 [3    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2026-03-12 02:10:50,817 [3    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAllAsync (VoucherWarehouse.Application)'
+INFO  2026-03-12 02:10:50,830 [3    ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetAll", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Abp.Application.Services.Dto.PagedResultDto`1[VoucherWarehouse.Modules.CoreSystem.Users.Dto.UserDto]] GetAllAsync(VoucherWarehouse.Modules.CoreSystem.Users.Dto.PagedUserResultRequestDto) on controller VoucherWarehouse.Modules.CoreSystem.Users.UserAppService (VoucherWarehouse.Application).
+INFO  2026-03-12 02:10:52,143 [22   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-03-12 02:10:52,154 [22   ] c.Infrastructure.ControllerActionInvoker - Executed action VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAllAsync (VoucherWarehouse.Application) in 1321.8148ms
+INFO  2026-03-12 02:10:52,157 [22   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'VoucherWarehouse.Modules.CoreSystem.Users.UserAppService.GetAllAsync (VoucherWarehouse.Application)'
+INFO  2026-03-12 02:10:52,161 [22   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:44310/api/services/app/User/GetAll?Keyword=&Sorting=&SkipCount=0&MaxResultCount=10 - 200 - application/json;+charset=utf-8 1355.8965ms
