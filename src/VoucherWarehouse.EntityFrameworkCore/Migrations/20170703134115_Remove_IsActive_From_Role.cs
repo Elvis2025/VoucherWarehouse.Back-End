@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VoucherWarehouse.Migrations;
+namespace IBS.VoucherWarehouse.Migrations;
 
 public partial class Remove_IsActive_From_Role : Migration
 {

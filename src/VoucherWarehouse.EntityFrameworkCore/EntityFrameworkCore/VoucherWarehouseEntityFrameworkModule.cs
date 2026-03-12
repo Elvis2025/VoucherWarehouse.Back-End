@@ -2,9 +2,9 @@
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.EntityFrameworkCore;
-using VoucherWarehouse.EntityFrameworkCore.Seed;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed;
 
-namespace VoucherWarehouse.EntityFrameworkCore;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore;
 
 [DependsOn(
     typeof(VoucherWarehouseCoreModule),

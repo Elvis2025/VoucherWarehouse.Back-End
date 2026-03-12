@@ -3,7 +3,7 @@ using Abp.Reflection.Extensions;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Concurrent;
 
-namespace VoucherWarehouse.Configuration;
+namespace IBS.VoucherWarehouse.Configuration;
 
 public static class AppConfigurations
 {

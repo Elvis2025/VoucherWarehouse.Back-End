@@ -6,13 +6,13 @@ using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
-using VoucherWarehouse.EntityFrameworkCore;
-using VoucherWarehouse.Tests.DependencyInjection;
+using IBS.VoucherWarehouse.EntityFrameworkCore;
+using IBS.VoucherWarehouse.Tests.DependencyInjection;
 using Castle.MicroKernel.Registration;
 using NSubstitute;
 using System;
 
-namespace VoucherWarehouse.Tests;
+namespace IBS.VoucherWarehouse.Tests;
 
 [DependsOn(
     typeof(VoucherWarehouseApplicationModule),

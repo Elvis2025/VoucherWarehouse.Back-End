@@ -3,7 +3,7 @@ using Abp.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace VoucherWarehouse.Authorization.Users;
+namespace IBS.VoucherWarehouse.Authorization.Users;
 
 public class User : AbpUser<User>
 {

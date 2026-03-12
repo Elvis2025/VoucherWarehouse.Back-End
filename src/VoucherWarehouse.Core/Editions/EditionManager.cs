@@ -3,7 +3,7 @@ using Abp.Application.Features;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 
-namespace VoucherWarehouse.Editions;
+namespace IBS.VoucherWarehouse.Editions;
 
 public class EditionManager : AbpEditionManager
 {

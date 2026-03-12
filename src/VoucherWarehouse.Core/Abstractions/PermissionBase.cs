@@ -1,13 +1,7 @@
 ﻿using Abp.Authorization;
 using Abp.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VoucherWarehouse;
 
-namespace VoucherWarehouse.Authorization.Abstractions;
+namespace IBS.VoucherWarehouse.Authorization.Abstractions;
 
 public abstract class PermissionBase
 {

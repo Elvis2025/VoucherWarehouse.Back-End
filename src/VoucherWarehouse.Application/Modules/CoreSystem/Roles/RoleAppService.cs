@@ -1,21 +1,4 @@
-﻿using Abp.Application.Services;
-using Abp.Application.Services.Dto;
-using Abp.Authorization;
-using Abp.Domain.Repositories;
-using Abp.Extensions;
-using Abp.IdentityFramework;
-using Abp.Linq.Extensions;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Threading.Tasks;
-
-namespace VoucherWarehouse.Modules.CoreSystem.Roles;
+﻿namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles;
 
 [AbpAuthorize(PermissionNames.Pages_Roles)]
 public class RoleAppService : AsyncCrudAppService<Role, RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>, IRoleAppService

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Configuration.Dto;
+namespace IBS.VoucherWarehouse.Configuration.Dto;
 
 public class ChangeUiThemeInput
 {

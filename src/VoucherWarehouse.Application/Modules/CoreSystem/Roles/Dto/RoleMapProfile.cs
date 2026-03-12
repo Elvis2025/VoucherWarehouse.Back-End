@@ -1,10 +1,4 @@
-using Abp.Authorization;
-using Abp.Authorization.Roles;
-using VoucherWarehouse.Authorization.Roles;
-using AutoMapper;
-using System.Linq;
-
-namespace VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
 
 public class RoleMapProfile : Profile
 {

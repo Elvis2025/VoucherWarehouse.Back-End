@@ -5,7 +5,7 @@ using Abp.Net.Mail;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace VoucherWarehouse.EntityFrameworkCore.Seed.Host;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host;
 
 public class DefaultSettingsCreator
 {

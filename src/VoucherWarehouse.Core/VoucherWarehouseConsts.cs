@@ -1,6 +1,6 @@
-﻿using VoucherWarehouse.Debugging;
+﻿using IBS.VoucherWarehouse.Debugging;
 
-namespace VoucherWarehouse;
+namespace IBS.VoucherWarehouse;
 
 public class VoucherWarehouseConsts
 {

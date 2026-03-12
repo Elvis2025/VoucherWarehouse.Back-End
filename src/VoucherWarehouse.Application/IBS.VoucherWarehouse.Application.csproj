@@ -3,14 +3,19 @@
     <VersionPrefix>1.0.0.0</VersionPrefix>
     <TargetFramework>net9.0</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <AssemblyName>VoucherWarehouse.Application</AssemblyName>
-    <PackageId>VoucherWarehouse.Application</PackageId>
+    <AssemblyName>IBS.VoucherWarehouse.Application</AssemblyName>
+    <PackageId>IBS.VoucherWarehouse.Application</PackageId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <RootNamespace>VoucherWarehouse</RootNamespace>
+    <RootNamespace>IBS.VoucherWarehouse</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VoucherWarehouse.Core\VoucherWarehouse.Core.csproj" />
+    <ProjectReference Include="..\VoucherWarehouse.Core\IBS.VoucherWarehouse.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\VoucherWarehouse\TaxVouchersTypes\" />
+    <Folder Include="Modules\VoucherWarehouse\TaxVoucher\" />
+    <Folder Include="Modules\VoucherWarehouse\Dto\" />
   </ItemGroup>
 </Project>

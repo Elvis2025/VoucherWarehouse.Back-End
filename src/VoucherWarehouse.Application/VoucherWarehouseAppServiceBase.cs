@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse;
+﻿namespace IBS.VoucherWarehouse;
 
 /// <summary>
 /// Derive your application services from this class.

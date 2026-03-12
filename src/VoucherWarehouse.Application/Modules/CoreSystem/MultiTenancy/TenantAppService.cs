@@ -7,16 +7,16 @@ using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.Editions;
+using IBS.VoucherWarehouse.Authorization;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Editions;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Modules.CoreSystem.MultiTenancy;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.MultiTenancy;
 
 [AbpAuthorize(PermissionNames.Pages_Tenants)]
 public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, PagedTenantResultRequestDto, CreateTenantDto, TenantDto>, ITenantAppService

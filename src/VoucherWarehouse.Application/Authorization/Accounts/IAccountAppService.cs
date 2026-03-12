@@ -1,8 +1,8 @@
 ﻿using Abp.Application.Services;
-using VoucherWarehouse.Authorization.Accounts.Dto;
+using IBS.VoucherWarehouse.Authorization.Accounts.Dto;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Authorization.Accounts;
+namespace IBS.VoucherWarehouse.Authorization.Accounts;
 
 public interface IAccountAppService : IApplicationService
 {

@@ -9,9 +9,9 @@ using Abp.Linq.Extensions;
 using Abp.Localization;
 using Abp.Runtime.Session;
 using Abp.UI;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +20,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users;
 
 [AbpAuthorize(PermissionNames.Pages_Users)]
 public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService

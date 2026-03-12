@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
+﻿namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
 
 public class FlatPermissionDto
 {

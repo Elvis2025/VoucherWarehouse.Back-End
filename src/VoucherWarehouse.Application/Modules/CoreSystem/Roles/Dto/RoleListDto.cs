@@ -2,7 +2,7 @@
 using Abp.Domain.Entities.Auditing;
 using System;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles.Dto;
 
 public class RoleListDto : EntityDto, IHasCreationTime
 {

@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Authorization.Accounts.Dto;
+﻿namespace IBS.VoucherWarehouse.Authorization.Accounts.Dto;
 
 public class RegisterOutput
 {

@@ -1,11 +1,4 @@
-﻿using Abp.Auditing;
-using Abp.Authorization.Users;
-using Abp.Extensions;
-using VoucherWarehouse.Validation;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace VoucherWarehouse.Authorization.Accounts.Dto;
+﻿namespace IBS.VoucherWarehouse.Authorization.Accounts.Dto;
 
 public class RegisterInput : IValidatableObject
 {

@@ -1,7 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Runtime.Validation;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 //custom PagedResultRequestDto
 public class PagedUserResultRequestDto : PagedResultRequestDto, IShouldNormalize

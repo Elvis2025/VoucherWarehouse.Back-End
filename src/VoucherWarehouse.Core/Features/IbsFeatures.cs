@@ -2,9 +2,9 @@
 using Abp.Runtime.Validation;
 using Abp.UI.Inputs;
 using System;
-using VoucherWarehouse.Authorization.Abstractions;
+using IBS.VoucherWarehouse.Authorization.Abstractions;
 
-namespace VoucherWarehouse.Features;
+namespace IBS.VoucherWarehouse.Features;
 
 public sealed class IbsFeatures : FeatureBase
 {

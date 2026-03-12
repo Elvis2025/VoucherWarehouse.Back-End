@@ -1,8 +1,8 @@
 ﻿using Abp.Application.Features;
-using VoucherWarehouse.Authorization.Modules.CoreSystem;
-using VoucherWarehouse.Features;
-
-namespace IBS.IThotSystem.Features;
+using IBS.VoucherWarehouse.Authorization.Modules.CoreSystem;
+using IBS.VoucherWarehouse.Features;
+      
+namespace IBS.VoucherWarehouse.Features;
 
 public class AppFeatureProvider : FeatureProvider
 {

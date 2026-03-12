@@ -1,8 +1,8 @@
 ﻿using Abp.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Authorization.Roles;
+namespace IBS.VoucherWarehouse.Authorization.Roles;
 
 public class Role : AbpRole<User>
 {

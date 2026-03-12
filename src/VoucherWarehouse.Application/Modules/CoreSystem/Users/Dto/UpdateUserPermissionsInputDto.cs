@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+﻿namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 public sealed record class UpdateUserPermissionsInputDto : IEntityDto
 {

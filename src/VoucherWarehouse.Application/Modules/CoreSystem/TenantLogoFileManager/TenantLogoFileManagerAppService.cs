@@ -4,9 +4,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager.Dto;
+using IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager.Dto;
 
-namespace VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
 
 public class TenantLogoFileManagerAppService : ITenantLogoFileManagerAppService
 {

@@ -1,15 +1,14 @@
 ﻿using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Authentication.External
+namespace IBS.VoucherWarehouse.Authentication.External;
+
+public interface IExternalAuthProviderApi
 {
-    public interface IExternalAuthProviderApi
-    {
-        ExternalLoginProviderInfo ProviderInfo { get; }
+    ExternalLoginProviderInfo ProviderInfo { get; }
 
-        Task<bool> IsValidUser(string userId, string accessCode);
+    Task<bool> IsValidUser(string userId, string accessCode);
 
-        Task<ExternalAuthUserInfo> GetUserInfo(string accessCode);
+    Task<ExternalAuthUserInfo> GetUserInfo(string accessCode);
 
-        void Initialize(ExternalLoginProviderInfo providerInfo);
-    }
+    void Initialize(ExternalLoginProviderInfo providerInfo);
 }

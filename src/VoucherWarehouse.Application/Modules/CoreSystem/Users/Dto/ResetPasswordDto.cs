@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 public class ResetPasswordDto
 {

@@ -1,8 +1,7 @@
 ﻿using Abp.Application.Features;
 using Abp.Localization;
-using VoucherWarehouse;
 
-namespace VoucherWarehouse.Authorization.Abstractions;
+namespace IBS.VoucherWarehouse.Authorization.Abstractions;
 
 public abstract class FeatureBase
 {

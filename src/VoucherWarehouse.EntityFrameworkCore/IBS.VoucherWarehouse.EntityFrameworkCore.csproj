@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <RootNamespace>VoucherWarehouse</RootNamespace>
+    <RootNamespace>IBS.VoucherWarehouse</RootNamespace>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -24,6 +24,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VoucherWarehouse.Core\VoucherWarehouse.Core.csproj" />
+    <ProjectReference Include="..\VoucherWarehouse.Core\IBS.VoucherWarehouse.Core.csproj" />
   </ItemGroup>
 </Project>

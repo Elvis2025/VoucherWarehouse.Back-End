@@ -5,12 +5,12 @@ using Abp.Domain.Uow;
 using Abp.Organizations;
 using Abp.Runtime.Caching;
 using Abp.Zero.Configuration;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
-namespace VoucherWarehouse.Authorization.Roles;
+namespace IBS.VoucherWarehouse.Authorization.Roles;
 
 public class RoleManager : AbpRoleManager<Role, User>
 {

@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace VoucherWarehouse.Tests;
+namespace IBS.VoucherWarehouse.Tests;
 
 public sealed class MultiTenantFactAttribute : FactAttribute
 {

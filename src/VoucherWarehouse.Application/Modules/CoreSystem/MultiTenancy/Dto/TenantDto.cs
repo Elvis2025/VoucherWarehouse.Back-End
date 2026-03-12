@@ -3,7 +3,7 @@ using Abp.AutoMapper;
 using Abp.MultiTenancy;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto;
 
 [AutoMapFrom(typeof(Tenant))]
 public class TenantDto : EntityDto

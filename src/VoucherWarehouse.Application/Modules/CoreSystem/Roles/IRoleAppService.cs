@@ -2,7 +2,7 @@
 using Abp.Application.Services.Dto;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Roles;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Roles;
 
 public interface IRoleAppService : IAsyncCrudAppService<RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>
 {

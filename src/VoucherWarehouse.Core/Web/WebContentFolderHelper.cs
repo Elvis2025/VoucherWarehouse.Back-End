@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace VoucherWarehouse.Web;
+namespace IBS.VoucherWarehouse.Web;
 
 /// <summary>
 /// This class is used to find root path of the web project in;

@@ -2,10 +2,10 @@ using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.AutoMapper;
 using Abp.Runtime.Validation;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users.Dto;
 
 [AutoMapTo(typeof(User))]
 public class CreateUserDto : IShouldNormalize

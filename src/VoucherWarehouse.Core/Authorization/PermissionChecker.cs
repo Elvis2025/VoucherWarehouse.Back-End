@@ -1,8 +1,8 @@
 ﻿using Abp.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
 
-namespace VoucherWarehouse.Authorization;
+namespace IBS.VoucherWarehouse.Authorization;
 
 public class PermissionChecker : PermissionChecker<Role, User>
 {

@@ -1,4 +1,4 @@
-namespace VoucherWarehouse.Configuration.Ui;
+namespace IBS.VoucherWarehouse.Configuration.Ui;
 
 public class UiThemeInfo
 {

@@ -3,7 +3,7 @@ using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Repositories;
 
-namespace VoucherWarehouse.EntityFrameworkCore.Repositories;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore.Repositories;
 
 /// <summary>
 /// Base class for custom repositories of the application.

@@ -1,7 +1,7 @@
 ﻿using Abp.MultiTenancy;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization.Users;
 
-namespace VoucherWarehouse.MultiTenancy;
+namespace IBS.VoucherWarehouse.MultiTenancy;
 
 public class Tenant : AbpTenant<User>
 {

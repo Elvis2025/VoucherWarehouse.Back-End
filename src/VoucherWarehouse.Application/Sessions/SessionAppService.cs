@@ -1,9 +1,9 @@
 ﻿using Abp.Auditing;
-using VoucherWarehouse.Sessions.Dto;
+using IBS.VoucherWarehouse.Sessions.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Sessions;
+namespace IBS.VoucherWarehouse.Sessions;
 
 public class SessionAppService : VoucherWarehouseAppServiceBase, ISessionAppService
 {

@@ -2,15 +2,15 @@
 using Abp.Authorization.Roles;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
-using VoucherWarehouse.Authorization;
-using VoucherWarehouse.Authorization.Roles;
-using VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Authorization;
+using IBS.VoucherWarehouse.Authorization.Roles;
+using IBS.VoucherWarehouse.Authorization.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Linq;
 
-namespace VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
 
 public class TenantRoleAndUserBuilder
 {

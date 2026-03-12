@@ -1,9 +1,9 @@
 ﻿using Abp.AutoMapper;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using VoucherWarehouse.Authorization;
+using IBS.VoucherWarehouse.Authorization;
 
-namespace VoucherWarehouse;
+namespace IBS.VoucherWarehouse;
 
 [DependsOn(
     typeof(VoucherWarehouseCoreModule),

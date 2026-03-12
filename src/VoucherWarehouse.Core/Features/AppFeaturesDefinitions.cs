@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Features;
+namespace IBS.VoucherWarehouse.Features;
 
 public static class AppFeaturesDefinitions
 {

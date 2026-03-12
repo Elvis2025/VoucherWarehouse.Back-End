@@ -1,7 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Runtime.Validation;
 
-namespace VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.MultiTenancy.Dto;
 
 public class PagedTenantResultRequestDto : PagedResultRequestDto, IShouldNormalize
 {

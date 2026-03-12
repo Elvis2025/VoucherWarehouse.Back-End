@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VoucherWarehouse.Sessions.Dto;
+namespace IBS.VoucherWarehouse.Sessions.Dto;
 
 public class ApplicationInfoDto
 {

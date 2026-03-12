@@ -3,10 +3,10 @@ using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.MultiTenancy;
 using Abp.Runtime.Caching;
-using VoucherWarehouse.Authorization.Users;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.MultiTenancy;
 
-namespace VoucherWarehouse.Features;
+namespace IBS.VoucherWarehouse.Features;
 
 public class FeatureValueStore : AbpFeatureValueStore<Tenant, User>
 {

@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.Debugging;
+﻿namespace IBS.VoucherWarehouse.Debugging;
 
 public static class DebugHelper
 {

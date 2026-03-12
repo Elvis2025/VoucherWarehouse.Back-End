@@ -1,7 +1,7 @@
-﻿using VoucherWarehouse.Configuration.Dto;
+﻿using IBS.VoucherWarehouse.Configuration.Dto;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Configuration;
+namespace IBS.VoucherWarehouse.Configuration;
 
 public interface IConfigurationAppService
 {

@@ -1,13 +1,13 @@
 using Abp.Events.Bus;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using VoucherWarehouse.Configuration;
-using VoucherWarehouse.EntityFrameworkCore;
-using VoucherWarehouse.Migrator.DependencyInjection;
 using Castle.MicroKernel.Registration;
+using IBS.VoucherWarehouse.Configuration;
+using IBS.VoucherWarehouse.Migrator.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using IBS.VoucherWarehouse.EntityFrameworkCore;
 
-namespace VoucherWarehouse.Migrator;
+namespace IBS.VoucherWarehouse.Migrator;
 
 [DependsOn(typeof(VoucherWarehouseEntityFrameworkModule))]
 public class VoucherWarehouseMigratorModule : AbpModule

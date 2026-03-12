@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace VoucherWarehouse.Authentication.External
+namespace IBS.VoucherWarehouse.Authentication.External;
+
+public interface IExternalAuthConfiguration
 {
-    public interface IExternalAuthConfiguration
-    {
-        List<ExternalLoginProviderInfo> Providers { get; }
-    }
+    List<ExternalLoginProviderInfo> Providers { get; }
 }

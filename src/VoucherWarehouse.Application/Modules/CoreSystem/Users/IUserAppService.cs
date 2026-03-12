@@ -2,7 +2,7 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using System.Threading.Tasks;
 
-namespace VoucherWarehouse.Modules.CoreSystem.Users;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.Users;
 
 public interface IUserAppService : IAsyncCrudAppService<UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>
 {

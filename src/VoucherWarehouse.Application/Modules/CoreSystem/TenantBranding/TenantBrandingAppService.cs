@@ -1,19 +1,19 @@
 ﻿using Abp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using VoucherWarehouse.Modules.CoreSystem.TenantBranding.Dto;
-using VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
+using IBS.VoucherWarehouse.Modules.CoreSystem.TenantBranding.Dto;
+using IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
 
-namespace VoucherWarehouse.Modules.CoreSystem.TenantBranding;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.TenantBranding;
 
 public class TenantBrandingAppService : VoucherWarehouseAppServiceBase, ITenantBrandingAppService
 {
-    private readonly IRepository<VoucherWarehouse.MultiTenancy.TenantBranding, long> _tenantBrandingRepository;
+    private readonly IRepository<IBS.VoucherWarehouse.MultiTenancy.TenantBranding, long> _tenantBrandingRepository;
     private readonly ITenantLogoFileManagerAppService _tenantLogoFileManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public TenantBrandingAppService(
-        IRepository<VoucherWarehouse.MultiTenancy.TenantBranding, long> tenantBrandingRepository,
+        IRepository<IBS.VoucherWarehouse.MultiTenancy.TenantBranding, long> tenantBrandingRepository,
         ITenantLogoFileManagerAppService tenantLogoFileManager,
         IHttpContextAccessor httpContextAccessor)
     {
@@ -26,7 +26,7 @@ public class TenantBrandingAppService : VoucherWarehouseAppServiceBase, ITenantB
     public async Task<TenantBrandingDto> UploadLogoAsync([FromForm] UploadTenantLogoInputDto inputDto)
     {
         var tenantId = inputDto.TenantId <= 0 ? AbpSession.GetTenantId() : inputDto.TenantId;
-        VoucherWarehouse.MultiTenancy.TenantBranding branding = new();
+        IBS.VoucherWarehouse.MultiTenancy.TenantBranding branding = new();
         using (CurrentUnitOfWork.SetTenantId(tenantId))
         {
             branding = await _tenantBrandingRepository.FirstOrDefaultAsync(x => x.TenantId == tenantId);
@@ -40,7 +40,7 @@ public class TenantBrandingAppService : VoucherWarehouseAppServiceBase, ITenantB
 
             if (branding == null)
             {
-                branding = new VoucherWarehouse.MultiTenancy.TenantBranding
+                branding = new IBS.VoucherWarehouse.MultiTenancy.TenantBranding
                 {
                     TenantId = tenantId,
                     LogoPath = storedFile.RelativePath,
@@ -93,7 +93,7 @@ public class TenantBrandingAppService : VoucherWarehouseAppServiceBase, ITenantB
 
     public async Task<TenantBrandingDto> GetCurrentTenantBrandingLogoByTenantIdAsync(int tenantId)
     {
-        VoucherWarehouse.MultiTenancy.TenantBranding branding = new();
+        IBS.VoucherWarehouse.MultiTenancy.TenantBranding branding = new();
 
         using (CurrentUnitOfWork.SetTenantId(tenantId))
         {
@@ -132,7 +132,7 @@ public class TenantBrandingAppService : VoucherWarehouseAppServiceBase, ITenantB
         await _tenantBrandingRepository.UpdateAsync(branding);
     }
 
-    private TenantBrandingDto MapToDto(VoucherWarehouse.MultiTenancy.TenantBranding branding)
+    private TenantBrandingDto MapToDto(IBS.VoucherWarehouse.MultiTenancy.TenantBranding branding)
     {
         var request = _httpContextAccessor.HttpContext?.Request;
 

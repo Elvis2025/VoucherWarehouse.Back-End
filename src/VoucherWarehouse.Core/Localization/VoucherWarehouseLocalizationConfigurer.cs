@@ -3,7 +3,7 @@ using Abp.Localization.Dictionaries;
 using Abp.Localization.Dictionaries.Xml;
 using Abp.Reflection.Extensions;
 
-namespace VoucherWarehouse.Localization;
+namespace IBS.VoucherWarehouse.Localization;
 
 public static class VoucherWarehouseLocalizationConfigurer
 {

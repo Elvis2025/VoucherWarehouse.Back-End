@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
-namespace VoucherWarehouse.EntityFrameworkCore;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore;
 
 public static class VoucherWarehouseDbContextConfigurer
 {

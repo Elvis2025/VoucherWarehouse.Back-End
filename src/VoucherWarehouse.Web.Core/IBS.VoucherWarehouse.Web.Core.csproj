@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.0.0.0</VersionPrefix>
     <TargetFramework>net9.0</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <AssemblyName>VoucherWarehouse.Web.Core</AssemblyName>
-    <PackageId>VoucherWarehouse.Web.Core</PackageId>
+    <AssemblyName>IBS.VoucherWarehouse.Web.Core</AssemblyName>
+    <PackageId>IBS.VoucherWarehouse.Web.Core</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -14,13 +14,12 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
-    <RootNamespace>VoucherWarehouse</RootNamespace>
-    <LangVersion>7.2</LangVersion>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>IBS.VoucherWarehouse</RootNamespace>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VoucherWarehouse.Application\VoucherWarehouse.Application.csproj" />
-    <ProjectReference Include="..\VoucherWarehouse.EntityFrameworkCore\VoucherWarehouse.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\VoucherWarehouse.Application\IBS.VoucherWarehouse.Application.csproj" />
+    <ProjectReference Include="..\VoucherWarehouse.EntityFrameworkCore\IBS.VoucherWarehouse.EntityFrameworkCore.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />

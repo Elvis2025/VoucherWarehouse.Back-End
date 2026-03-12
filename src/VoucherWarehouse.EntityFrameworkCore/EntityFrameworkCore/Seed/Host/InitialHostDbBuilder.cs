@@ -1,4 +1,4 @@
-﻿namespace VoucherWarehouse.EntityFrameworkCore.Seed.Host;
+﻿namespace IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host;
 
 public class InitialHostDbBuilder
 {

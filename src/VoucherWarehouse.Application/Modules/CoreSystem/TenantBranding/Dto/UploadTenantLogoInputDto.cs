@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace VoucherWarehouse.Modules.CoreSystem.TenantBranding.Dto;
+namespace IBS.VoucherWarehouse.Modules.CoreSystem.TenantBranding.Dto;
 
 public sealed record class UploadTenantLogoInputDto
 {

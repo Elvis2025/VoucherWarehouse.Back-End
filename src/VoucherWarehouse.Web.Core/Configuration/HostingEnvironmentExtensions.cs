@@ -2,13 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace VoucherWarehouse.Configuration
+namespace IBS.VoucherWarehouse.Configuration;
+
+public static class HostingEnvironmentExtensions
 {
-    public static class HostingEnvironmentExtensions
+    public static IConfigurationRoot GetAppConfiguration(this IWebHostEnvironment env)
     {
-        public static IConfigurationRoot GetAppConfiguration(this IWebHostEnvironment env)
-        {
-            return AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName, env.IsDevelopment());
-        }
+        return AppConfigurations.Get(env.ContentRootPath, env.EnvironmentName, env.IsDevelopment());
     }
 }

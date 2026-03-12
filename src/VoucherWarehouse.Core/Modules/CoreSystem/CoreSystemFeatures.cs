@@ -1,10 +1,9 @@
 ﻿using Abp.Application.Features;
 using Abp.UI.Inputs;
-
+using IBS.VoucherWarehouse.Authorization.Abstractions;
 using System;
-using VoucherWarehouse.Authorization.Abstractions;
 
-namespace VoucherWarehouse.Authorization.Modules.CoreSystem;
+namespace IBS.VoucherWarehouse.Authorization.Modules.CoreSystem;
 
 public sealed class CoreSystemFeatures : FeatureBase
 {

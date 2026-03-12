@@ -3,7 +3,7 @@ using Abp.Timing;
 using Castle.Core.Logging;
 using System;
 
-namespace VoucherWarehouse.Migrator;
+namespace IBS.VoucherWarehouse.Migrator;
 
 public class Log : ITransientDependency
 {

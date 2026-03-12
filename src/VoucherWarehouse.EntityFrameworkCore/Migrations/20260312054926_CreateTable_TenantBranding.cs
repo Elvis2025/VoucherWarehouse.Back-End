@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VoucherWarehouse.Migrations;
+namespace IBS.VoucherWarehouse.Migrations;
 
 /// <inheritdoc />
 public partial class CreateTable_TenantBranding : Migration

@@ -1,9 +1,9 @@
-﻿using VoucherWarehouse.Sessions;
+﻿using IBS.VoucherWarehouse.Sessions;
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace VoucherWarehouse.Tests.Sessions;
+namespace IBS.VoucherWarehouse.Tests.Sessions;
 
 public class SessionAppService_Tests : VoucherWarehouseTestBase
 {

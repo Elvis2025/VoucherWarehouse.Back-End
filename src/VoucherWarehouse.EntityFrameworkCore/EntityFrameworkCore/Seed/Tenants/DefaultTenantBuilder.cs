@@ -1,10 +1,10 @@
 ﻿using Abp.MultiTenancy;
-using VoucherWarehouse.Editions;
-using VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Editions;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
+namespace IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
 
 public class DefaultTenantBuilder
 {

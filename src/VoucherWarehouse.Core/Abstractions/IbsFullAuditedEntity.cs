@@ -1,7 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 
-namespace VoucherWarehouse.Authorization.Abstractions;
+namespace IBS.VoucherWarehouse.Authorization.Abstractions;
 
 public abstract class IbsFullAuditedEntity<TEntity> : FullAuditedEntity<TEntity>, IMayHaveTenant
 {

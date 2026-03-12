@@ -5,7 +5,7 @@ using Abp.Dependency;
 using Castle.Facilities.Logging;
 using System;
 
-namespace VoucherWarehouse.Migrator;
+namespace IBS.VoucherWarehouse.Migrator;
 
 public class Program
 {
