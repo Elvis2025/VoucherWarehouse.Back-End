@@ -24,7 +24,8 @@ public class Startup
 {
     private const string _defaultCorsPolicyName = "localhost";
 
-    private const string _apiVersion = "v1";
+    private const string _swaggerApiVersion = "v1";
+    private const string _ibsApiVersion = "v1.0.0.0";
 
     private readonly IConfigurationRoot _appConfiguration;
     private readonly IWebHostEnvironment _hostingEnvironment;
@@ -112,9 +113,9 @@ public class Startup
         app.UseSwaggerUI(options =>
         {
             // specifying the Swagger JSON endpoint.
-            options.SwaggerEndpoint($"/swagger/{_apiVersion}/swagger.json", $"VoucherWarehouse API {_apiVersion}");
+            options.SwaggerEndpoint($"/swagger/{_swaggerApiVersion}/swagger.json", $"IBS · Voucher Warehouse API {_ibsApiVersion}");
             options.IndexStream = () => Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream("VoucherWarehouse.Web.Host.wwwroot.swagger.ui.index.html");
+                .GetManifestResourceStream("IBS.VoucherWarehouse.Web.Host.wwwroot.swagger.ui.index.html");
             options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.
         }); // URL: /swagger
     }
@@ -123,17 +124,17 @@ public class Startup
     {
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc(_apiVersion, new OpenApiInfo
+            options.SwaggerDoc(_swaggerApiVersion, new OpenApiInfo
             {
-                Version = _apiVersion,
-                Title = " IBS Voucher Warehouse API",
-                Description = "VoucherWarehouse",
+                Version = _ibsApiVersion,
+                Title = "IBS · Voucher Warehouse API",
+                Description = "Voucher Warehouse",
                 // uncomment if needed TermsOfService = new Uri("https://example.com/terms"),
                 Contact = new OpenApiContact
                 {
-                    Name = "IBS.VoucherWarehouse",
+                    Name = "IBS · Voucher Warehouse",
                     Email = string.Empty,
-                    Url = new Uri("https://twitter.com/aspboilerplate"),
+                    Url = new Uri("http://localhost:4200"),
                 },
                 License = new OpenApiLicense
                 {

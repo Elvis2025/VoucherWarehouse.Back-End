@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using IBS.VoucherWarehouse.Authorization.Roles;
 using IBS.VoucherWarehouse.Authorization.Users;
-using IBS.VoucherWarehouse.Modules.VoucherWarehouse;
 using IBS.VoucherWarehouse.MultiTenancy;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 
 namespace IBS.VoucherWarehouse.EntityFrameworkCore;
 

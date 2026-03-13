@@ -13,7 +13,7 @@ public static class VoucherWarehouseLocalizationConfigurer
             new DictionaryBasedLocalizationSource(VoucherWarehouseConsts.LocalizationSourceName,
                 new XmlEmbeddedFileLocalizationDictionaryProvider(
                     typeof(VoucherWarehouseLocalizationConfigurer).GetAssembly(),
-                    "VoucherWarehouse.Localization.SourceFiles"
+                    "IBS.VoucherWarehouse.Localization.SourceFiles"
                 )
             )
         );

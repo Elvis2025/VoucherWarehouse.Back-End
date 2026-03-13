@@ -4,7 +4,7 @@ using System;
 
 namespace IBS.VoucherWarehouse.Abstractions;
 
-public abstract record class BaseEntityDto<TKey> : IFullAudited, IMayHaveTenant, ISoftDelete, IPassivable
+public abstract record class BaseEntityDto<TKey> : IEntity<TKey>,IFullAudited, IMayHaveTenant, ISoftDelete, IPassivable
 {
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
@@ -15,4 +15,10 @@ public abstract record class BaseEntityDto<TKey> : IFullAudited, IMayHaveTenant,
     public bool IsDeleted { get; set; }
     public int? TenantId { get; set; }
     public bool IsActive { get; set; }
+    public TKey Id { get; set; }
+
+    public bool IsTransient()
+    {
+        throw new NotImplementedException();
+    }
 }

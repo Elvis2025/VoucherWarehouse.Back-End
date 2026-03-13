@@ -20,7 +20,7 @@ public static class WebContentDirectoryFinder
         }
 
         var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
-        while (!DirectoryContains(directoryInfo.FullName, "VoucherWarehouse.sln"))
+        while (!DirectoryContains(directoryInfo.FullName, "IBS.VoucherWarehouse.sln"))
         {
             if (directoryInfo.Parent == null)
             {
@@ -42,7 +42,7 @@ public static class WebContentDirectoryFinder
             return webHostFolder;
         }
 
-        throw new Exception("Could not find root folder of the web project!");
+        throw new Exception("Could not find root folder of the web project!"+ webHostFolder);
     }
 
     private static bool DirectoryContains(string directory, string fileName)

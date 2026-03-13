@@ -116,5 +116,6 @@
     <text name="Clear">Borrar</text>
     <text name="ResetPasswordStepOneInfo">1. Ingrese su contraseña de administrador</text>
     <text name="ResetPasswordStepTwoInfo">2. Copie esta contraseña aleatoria para poder enviársela al usuario</text>
+	  <text name="UsersActivation">Activacion de usuario</text>
   </texts>
 </localizationDictionary>

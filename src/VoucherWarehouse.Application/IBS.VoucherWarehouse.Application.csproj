@@ -14,6 +14,7 @@
     <ProjectReference Include="..\VoucherWarehouse.Core\IBS.VoucherWarehouse.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Common\Mapping\Extensions\" />
     <Folder Include="Modules\VoucherWarehouse\TaxVouchersTypes\" />
     <Folder Include="Modules\VoucherWarehouse\TaxVoucher\" />
     <Folder Include="Modules\VoucherWarehouse\Dto\" />
