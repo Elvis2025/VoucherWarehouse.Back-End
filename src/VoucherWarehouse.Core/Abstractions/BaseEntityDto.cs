@@ -1,10 +1,11 @@
-﻿using Abp.Domain.Entities;
+﻿using Abp.Application.Services.Dto;
+using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using System;
 
 namespace IBS.VoucherWarehouse.Abstractions;
 
-public abstract record class BaseEntityDto<TKey> : IEntity<TKey>,IFullAudited, IMayHaveTenant, ISoftDelete, IPassivable
+public abstract record class BaseEntityDto<TKey> : IEntityDto<TKey>,IFullAudited, IMayHaveTenant, ISoftDelete, IPassivable
 {
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }

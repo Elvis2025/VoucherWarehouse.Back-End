@@ -6,6 +6,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Map
 
 public class EcfApiAuthenticationMapping : IbsTwoWayMapperBase<Models.EcfApiAuthentication, EcfApiAuthenticationDto>
 {
+
     protected override EcfApiAuthenticationDto CreateDestination(Models.EcfApiAuthentication source) => new EcfApiAuthenticationDto();
 
     protected override Models.EcfApiAuthentication CreateSource(EcfApiAuthenticationDto destination)=> new Models.EcfApiAuthentication();

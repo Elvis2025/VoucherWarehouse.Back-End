@@ -4,5 +4,6 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Ser
 
 public interface IEcfApiAuthenticationAppService : ITransientDependency
 {
+    Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync(LoginInputDto loginViewModel);
     Task<AuthenticateInputDto> GetEcfUserAuthenticationAsync();
 }

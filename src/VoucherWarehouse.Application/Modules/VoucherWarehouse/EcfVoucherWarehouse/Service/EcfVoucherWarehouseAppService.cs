@@ -1,104 +1,117 @@
 ﻿using Abp.Runtime.Caching;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Mappers;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Service;
-
+[AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Default)]
 public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEcfVoucherWarehouseAppService
 {
+    private readonly IRepository<Models.EcfVoucherWarehouse> ecfVoucherWarehouseRepository;
     private readonly IEcfApiAuthenticationAppService ecfApiAuthenticationService;
     private readonly ICacheManager cacheManager;
 
-    public EcfVoucherWarehouseAppService(IEcfApiAuthenticationAppService ecfApiAuthenticationService, ICacheManager cacheManager)
+    public EcfVoucherWarehouseAppService(IRepository<Models.EcfVoucherWarehouse> ecfVoucherWarehouseRepository, IEcfApiAuthenticationAppService ecfApiAuthenticationService, ICacheManager cacheManager)
     {
+        this.ecfVoucherWarehouseRepository = ecfVoucherWarehouseRepository;
         this.ecfApiAuthenticationService = ecfApiAuthenticationService;
         this.cacheManager = cacheManager;
     }
 
-
-
-
-    public async Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync(LoginInputDto loginViewModel)
+    #region CRUD Async
+    [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Read)]
+    public async Task<EcfVoucherWarehouseOutputDto> GetAsync(EntityDto<int> input)
     {
-        AuthenticateInputDto _authenticateAPIParams = new AuthenticateInputDto();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync(); 
-        string result = string.Empty;
-        AuthenticationResponseOutputDto _result = new AuthenticationResponseOutputDto();
-
         try
         {
-            //Validate Token Expiration
-            var getCache = GetAuthenticateDataFromCACHE();
-            if (getCache != null && !string.IsNullOrEmpty(getCache.Token) && getCache.Expires > DateTime.Now)
-            {
-                //Si el Token sigue Vigente de vuelvo el Token Existente, De lo contrario Genero uno Nuevo
-                _result.Result = getCache;
-            }
-            else
-            {
-                string jsonObject = System.Text.Json.JsonSerializer.Serialize(loginViewModel);
-                string url = @_authenticateAPIParams.AuthenticateUrlIbsApiDgii + "Authenticate";
+            var ecfVoucherWarehouse = await ecfVoucherWarehouseRepository.GetAsync(input.Id);
 
-                var client = new System.Net.Http.HttpClient();
-                var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, content);
-
-                result = await response.Content.ReadAsStringAsync();
-
-                _result = JsonConvert.DeserializeObject<AuthenticationResponseOutputDto>(result);
-
-                //Saving New Token to Chache
-                if (_result.Result != null)
-                {
-                    if (!string.IsNullOrEmpty(_result.Result.Token))
-                    {
-                        SavingAuthenticateDataToCACHE(_result.Result);
-
-                    }
-                }
-            }
-
+            return MapEntityToOutputTwoWay.Auto.Map(ecfVoucherWarehouse);
         }
-        catch (System.Exception ex)
+        catch (Exception)
         {
-            result = ex.Message.ToString();
-            _result = new AuthenticationResponseOutputDto { Error = new ErrorResponse { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+
+            throw;
         }
-
-        return _result;
     }
-    public void SavingAuthenticateDataToCACHE(ResultResponse input)
+    [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Read)]
+    public async Task<PagedResultDto<EcfVoucherWarehouseOutputDto>> GetAllAsync(EcfVoucherWarehouseInputDto input)
     {
-
-        if (!string.IsNullOrEmpty(input.Token))
+        try
         {
-            //Se le restan 10 Segundos a la Expiracion del Token para Tener ese Margen al Momento de la Validacoin
-            input.Expires = input.Expires.AddSeconds(-10);
-            input.Issued = input.Issued.AddSeconds(-10);
-            cacheManager.GetCache("MyCache").Set("ResultResponse", input, TimeSpan.FromMinutes(60.0));
+            var ecfVoucherWarehouse = await ecfVoucherWarehouseRepository.GetAllListAsync();
 
+            return MapEntityToOutputTwoWay.Auto.MapToPagedResult(ecfVoucherWarehouse, ecfVoucherWarehouse.Count);
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
-    public ResultResponse GetAuthenticateDataFromCACHE()
+    [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Create)]
+    public async Task<EcfVoucherWarehouseOutputDto> CreateAsync(EcfVoucherWarehouseCreateDto input)
     {
-        ResultResponse output = new ResultResponse();
+        try
+        {
+            var enitity = MapEntityToCreateTwoWay.Auto.ReverseMap(input);
 
-        var _result = cacheManager.GetCache("MyCache").GetOrDefault("ResultResponse");
-        if (_result != null) { output = (ResultResponse)_result; }
+            var ecfVoucherWarehouse = await ecfVoucherWarehouseRepository.InsertAsync(MapEntityToCreateTwoWay.Auto.ReverseMap(input));
 
-        return output;
+            return MapEntityToOutputTwoWay.Auto.Map(ecfVoucherWarehouse);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Update)]
+    public async Task<EcfVoucherWarehouseOutputDto> UpdateAsync(EcfVoucherWarehouseUpdateDto input)
+    {
+        try
+        {
+            var enitity = MapEntityToUpdateTwoWay.Auto.ReverseMap(input);
+
+            var ecfVoucherWarehouse = await ecfVoucherWarehouseRepository.UpdateAsync(MapEntityToUpdateTwoWay.Auto.ReverseMap(input));
+
+            return MapEntityToOutputTwoWay.Auto.Map(ecfVoucherWarehouse);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Delete)]
+    public async Task DeleteAsync(EntityDto<int> input)
+    {
+        try
+        {
+
+            await ecfVoucherWarehouseRepository.DeleteAsync(input.Id);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
 
-    public async Task<EcfVoucherOutputDto> ReceiveCreditNoteECFAsync(ReceiveCreditNoteECFInputDto input)
+    #endregion
+
+
+
+    public async Task<EcfVoucherOutputDto> SendCreditNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input)
     {
 
         AuthenticateInputDto _authenticateAPIParams = new();
         _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
-        var __result = await AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -131,11 +144,163 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         return output;
     }
 
-    public async Task<EcfVoucherOutputDto> ReceiveCommercialApprovalECF(CommercialApprovalEcfInputDto input)
+    public async Task<EcfVoucherOutputDto> SendDebitNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input)
+    {
+        AuthenticateInputDto _authenticateAPIParams = new();
+        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        string result = string.Empty;
+        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        try
+        {
+            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
+            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceiveDebitNoteEcf";
+
+            var client = new System.Net.Http.HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            var response = client.PostAsync(url, content).Result;
+
+            result = response.Content.ReadAsStringAsync().Result;
+
+            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+            //Error no manejado
+            if (output.Result == null && output.Error == null)
+            {
+                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
+            }
+        }
+        catch (System.Exception ex)
+        {
+            result = ex.ToString();
+            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+        }
+        return output;
+    }
+
+    public async Task<EcfVoucherOutputDto> SendSalesEcfToDGIIAsync(ReceiveSalesEcfInputDto input)
+    {
+        AuthenticateInputDto _authenticateAPIParams = new();
+        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        string result = string.Empty;
+        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        try
+        {
+            ReceiveSalesEcfInputDto objToSend = new ReceiveSalesEcfInputDto();
+
+            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
+            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceiveSalesEcf";
+
+            var client = new System.Net.Http.HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
+
+            result = await response.Content.ReadAsStringAsync();
+
+            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+            //Error no manejado
+            if (output.Result == null && output.Error == null)
+            {
+                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
+            }
+        }
+        catch (Exception ex)
+        {
+            result = ex.ToString();
+            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+
+        }
+
+
+
+        return output;
+
+    }
+
+    public async Task<EcfVoucherOutputDto> SendPurchaseEcfToDGIIAsync(ReceivePurchaseECFInputDto input)
+    {
+
+        AuthenticateInputDto _authenticateAPIParams = new();
+        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        string result = string.Empty;
+        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        try
+        {
+            ReceivePurchaseECFInputDto objToSend = new ReceivePurchaseECFInputDto();
+
+            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
+            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceivePurchaseECF";
+
+            var client = new System.Net.Http.HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
+
+            result = await response.Content.ReadAsStringAsync();
+
+            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+
+            //Error no manejado
+            if (output.Result == null && output.Error == null)
+            {
+                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
+            }
+        }
+        catch (System.Exception ex)
+        {
+            result = ex.ToString();
+            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+
+        }
+        return output;
+    }
+
+
+    public async Task<EcfVoucherOutputDto> SendCancelSequenceEcfToDGIIAsync(CancelSequenceEcfInputDto input)
+    {
+        AuthenticateInputDto _authenticateAPIParams = new();
+        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        string result = string.Empty;
+        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        try
+        {
+            CancelSequenceEcfInputDto objToSend = new CancelSequenceEcfInputDto();
+
+            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
+            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "CancelSequencesECF";
+
+            var client = new System.Net.Http.HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
+
+            result = await response.Content.ReadAsStringAsync();
+
+            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+
+            //Tomamos el response.StatusCode y el response.ReasonPhrase
+            if (output.Result == null && output.Error == null)
+            {
+                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = response.StatusCode.ToString(), Message = response.ReasonPhrase } };
+            }
+        }
+        catch (System.Exception ex)
+        {
+            result = ex.Message;
+            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+        }
+        return output;
+    }
+
+    public async Task<EcfVoucherOutputDto> SendCommercialApprovalEcfToDGIIAsync(CommercialApprovalEcfInputDto input)
     {
         AuthenticateInputDto _authenticateAPIParams = new AuthenticateInputDto();
         _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
-        var __result = await AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -162,10 +327,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         }
         return output;
     }
-
-
-
-
 
 
 

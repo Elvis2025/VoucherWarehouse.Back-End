@@ -1,4 +1,5 @@
-﻿using IBS.VoucherWarehouse.Common.Mapping.Abstractions;
+﻿using Abp.Application.Services.Dto;
+using IBS.VoucherWarehouse.Common.Mapping.Abstractions;
 using IBS.VoucherWarehouse.Common.Mapping.Helpers;
 
 
@@ -11,31 +12,49 @@ public abstract class IbsMapperBase<TSource, TDestination> :
 {
     public TDestination Map(TSource source)
     {
-        IbsMappingGuard.AgainstNull(source, nameof(source));
+        try
+        {
 
-        BeforeMap(source);
+            IbsMappingGuard.AgainstNull(source, nameof(source));
 
-        var destination = CreateDestination(source);
+            BeforeMap(source);
 
-        ApplyAutomaticMap(source, destination);
-        MapCore(source, destination);
+            var destination = CreateDestination(source);
 
-        AfterMap(source, destination);
+            ApplyAutomaticMap(source, destination);
+            MapCore(source, destination);
 
-        return destination;
+            AfterMap(source, destination);
+
+            return destination;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public void Map(TSource source, TDestination destination)
     {
-        IbsMappingGuard.AgainstNull(source, nameof(source));
-        IbsMappingGuard.AgainstNull(destination, nameof(destination));
+        try
+        {
 
-        BeforeMap(source);
+            IbsMappingGuard.AgainstNull(source, nameof(source));
+            IbsMappingGuard.AgainstNull(destination, nameof(destination));
 
-        ApplyAutomaticMap(source, destination);
-        MapCore(source, destination);
+            BeforeMap(source);
 
-        AfterMap(source, destination);
+            ApplyAutomaticMap(source, destination);
+            MapCore(source, destination);
+
+            AfterMap(source, destination);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public IReadOnlyList<TDestination> MapList(IEnumerable<TSource> source)
@@ -50,6 +69,21 @@ public abstract class IbsMapperBase<TSource, TDestination> :
         IbsMappingGuard.AgainstNull(source, nameof(source));
 
         return source.Select(Map).ToList();
+    }
+
+    public PagedResultDto<TDestination> MapToPagedResult(IEnumerable<TSource> listDto, int count)
+    {
+        IbsMappingGuard.AgainstNull(listDto, nameof(listDto));
+
+
+
+        return new PagedResultDto<TDestination>()
+        {
+            TotalCount = count,
+            Items = listDto.Select(Map).ToList()
+        };
+
+
     }
 
     protected abstract TDestination CreateDestination(TSource source);

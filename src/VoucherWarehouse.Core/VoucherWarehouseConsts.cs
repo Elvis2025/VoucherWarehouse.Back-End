@@ -49,3 +49,12 @@ public static class ITBISForDGII
     public const decimal ITBIS2 = 16;
     public const decimal ITBIS3 = 0;
 }
+
+public static class PermissionCRUD
+{
+    
+    public const string Create = ".Create";
+    public const string Read = ".Read";
+    public const string Update = ".Update";
+    public const string Delete = ".Delete";
+}

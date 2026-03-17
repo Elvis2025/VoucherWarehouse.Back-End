@@ -1,9 +1,11 @@
 ﻿using IBS.VoucherWarehouse.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 
 [Index(nameof(TenantId),IsUnique = true)]
+[Table("EcfApiAuthentications")]
 
 public class EcfApiAuthentication : BaseEntity<int>
 {

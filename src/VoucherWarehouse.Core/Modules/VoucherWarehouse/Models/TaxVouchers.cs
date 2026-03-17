@@ -1,11 +1,12 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using IBS.VoucherWarehouse.Abstractions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 
-public class TaxVouchers : FullAuditedEntity<int>
+public class TaxVouchers : BaseEntity<int>
 {
     public int CompanyToProcessId { get; set; }
     public int? BranchId { get; set; }

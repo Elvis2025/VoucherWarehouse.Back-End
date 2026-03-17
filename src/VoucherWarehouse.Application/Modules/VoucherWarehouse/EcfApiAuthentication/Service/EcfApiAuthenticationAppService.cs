@@ -1,24 +1,42 @@
 ﻿
+using Abp.Runtime.Caching;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Mappers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
 
 public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
 {
+    /*
+     BaseUrl: https://test.ibsystems.com.do/api/Account/
+    UrlAuth: https://test.ibsystems.com.do/api/services/app/ecfVoucher/
+     UserName: adminIBS
+    Password: 123qwe
+    TenantcyName: eIBS 
+     */
+
+
     private readonly IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository;
     private readonly EcfApiAuthenticationMapping ecfApiAuthenticationMapping;
+    private readonly ICacheManager cacheManager;
 
-    public EcfApiAuthenticationAppService(IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository, EcfApiAuthenticationMapping ecfApiAuthenticationMapping)
+    public EcfApiAuthenticationAppService(IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository, 
+                                          EcfApiAuthenticationMapping ecfApiAuthenticationMapping,
+                                          ICacheManager cacheManager)
     {
         this.ecfApiAuthenticationRepository = ecfApiAuthenticationRepository;
         this.ecfApiAuthenticationMapping = ecfApiAuthenticationMapping;
+        this.cacheManager = cacheManager;
     }
 
     public async Task<AuthenticateInputDto> GetEcfUserAuthenticationAsync()
     {
-        var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetAll().FirstOrDefaultAsync();
+        var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetAll()
+                                                                       .FirstOrDefaultAsync();
         if (ecfApiAuthentication == null)
         {
             throw new UserFriendlyException("Ecf API Authentication details not found.");
@@ -31,9 +49,79 @@ public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
             Password = ecfApiAuthentication.Password,
             TenancyName = ecfApiAuthentication.TenancyName,
             UsernameOrEmailAddress = ecfApiAuthentication.UsernameOrEmailAddress
-
-
-
         };
     }
+
+    public async Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync(LoginInputDto loginViewModel)
+    {
+        AuthenticateInputDto _authenticateAPIParams = new AuthenticateInputDto();
+        _authenticateAPIParams = await GetEcfUserAuthenticationAsync();
+        string result = string.Empty;
+        AuthenticationResponseOutputDto _result = new AuthenticationResponseOutputDto();
+
+        try
+        {
+            //Validate Token Expiration
+            var getCache = GetAuthenticateDataFromCACHE();
+            if (getCache != null && !string.IsNullOrEmpty(getCache.Token) && getCache.Expires > DateTime.Now)
+            {
+                //Si el Token sigue Vigente de vuelvo el Token Existente, De lo contrario Genero uno Nuevo
+                _result.Result = getCache;
+            }
+            else
+            {
+                string jsonObject = System.Text.Json.JsonSerializer.Serialize(loginViewModel);
+                string url = @_authenticateAPIParams.AuthenticateUrlIbsApiDgii + "Authenticate";
+
+                var client = new System.Net.Http.HttpClient();
+                var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(url, content);
+
+                result = await response.Content.ReadAsStringAsync();
+
+                _result = JsonConvert.DeserializeObject<AuthenticationResponseOutputDto>(result);
+
+                //Saving New Token to Chache
+                if (_result.Result != null)
+                {
+                    if (!string.IsNullOrEmpty(_result.Result.Token))
+                    {
+                        SavingAuthenticateDataToCACHE(_result.Result);
+
+                    }
+                }
+            }
+
+        }
+        catch (System.Exception ex)
+        {
+            result = ex.Message.ToString();
+            _result = new AuthenticationResponseOutputDto { Error = new ErrorResponse { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+        }
+
+        return _result;
+    }
+    public void SavingAuthenticateDataToCACHE(ResultResponse input)
+    {
+
+        if (!string.IsNullOrEmpty(input.Token))
+        {
+            //Se le restan 10 Segundos a la Expiracion del Token para Tener ese Margen al Momento de la Validacoin
+            input.Expires = input.Expires.AddSeconds(-10);
+            input.Issued = input.Issued.AddSeconds(-10);
+            cacheManager.GetCache("MyCache").Set("ResultResponse", input, TimeSpan.FromMinutes(60.0));
+
+        }
+    }
+    public ResultResponse GetAuthenticateDataFromCACHE()
+    {
+        ResultResponse output = new ResultResponse();
+
+        var _result = cacheManager.GetCache("MyCache").GetOrDefault("ResultResponse");
+        if (_result != null) { output = (ResultResponse)_result; }
+
+        return output;
+    }
+
+
 }

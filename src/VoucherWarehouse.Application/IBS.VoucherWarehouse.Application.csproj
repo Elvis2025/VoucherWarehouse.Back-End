@@ -11,12 +11,15 @@
     <RootNamespace>IBS.VoucherWarehouse</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Modules\VoucherWarehouse\Dto\**" />
+    <EmbeddedResource Remove="Modules\VoucherWarehouse\Dto\**" />
+    <None Remove="Modules\VoucherWarehouse\Dto\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\VoucherWarehouse.Core\IBS.VoucherWarehouse.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Mapping\Extensions\" />
-    <Folder Include="Modules\VoucherWarehouse\TaxVouchersTypes\" />
-    <Folder Include="Modules\VoucherWarehouse\TaxVoucher\" />
-    <Folder Include="Modules\VoucherWarehouse\Dto\" />
+    <Folder Include="Modules\VoucherWarehouse\EcfVoucherWarehouse\Dto\NewFolder\" />
   </ItemGroup>
 </Project>
