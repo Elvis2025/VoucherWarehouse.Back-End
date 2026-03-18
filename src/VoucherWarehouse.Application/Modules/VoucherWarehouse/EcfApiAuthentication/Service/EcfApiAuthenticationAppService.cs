@@ -1,15 +1,19 @@
 ﻿
+using Abp.Collections.Extensions;
 using Abp.Runtime.Caching;
+using IBS.VoucherWarehouse.Common.Mapping.Extensions;
+using IBS.VoucherWarehouse.Common.Mapping.Helpers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Mappers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
 
-public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
+public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEcfApiAuthenticationAppService
 {
     /*
      BaseUrl: https://test.ibsystems.com.do/api/Account/
@@ -21,15 +25,12 @@ public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
 
 
     private readonly IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository;
-    private readonly EcfApiAuthenticationMapping ecfApiAuthenticationMapping;
     private readonly ICacheManager cacheManager;
 
     public EcfApiAuthenticationAppService(IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository, 
-                                          EcfApiAuthenticationMapping ecfApiAuthenticationMapping,
                                           ICacheManager cacheManager)
     {
         this.ecfApiAuthenticationRepository = ecfApiAuthenticationRepository;
-        this.ecfApiAuthenticationMapping = ecfApiAuthenticationMapping;
         this.cacheManager = cacheManager;
     }
 
@@ -101,7 +102,10 @@ public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
 
         return _result;
     }
-    public void SavingAuthenticateDataToCACHE(ResultResponse input)
+
+    
+    #region Internal Helpers
+    private void SavingAuthenticateDataToCACHE(ResultResponse input)
     {
 
         if (!string.IsNullOrEmpty(input.Token))
@@ -113,7 +117,7 @@ public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
 
         }
     }
-    public ResultResponse GetAuthenticateDataFromCACHE()
+    private ResultResponse GetAuthenticateDataFromCACHE()
     {
         ResultResponse output = new ResultResponse();
 
@@ -124,4 +128,115 @@ public class EcfApiAuthenticationAppService : IEcfApiAuthenticationAppService
     }
 
 
+    #endregion
+
+    #region CRUD Methods 
+    public async Task<EcfApiAuthenticationOutputDto> GetAsync(EntityDto<int> input)
+    {
+        try
+        {
+            var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetAsync(input.Id);
+            return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.Map(ecfApiAuthentication);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error in GetAsync: {e.Message}");
+            throw;
+        }
+    }
+
+    public async Task<EcfApiAuthenticationOutputDto> GetFirstOrDefaultAsync()
+    {
+        try
+        {
+            var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetFisrtOrDefaultAsync();
+            return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.Map(ecfApiAuthentication);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error in GetAsync: {e.Message}");
+            throw;
+        }
+    }
+
+    public async Task<PagedResultDto<EcfApiAuthenticationOutputDto>> GetAllAsync(EcfApiAuthenticationInputDto input)
+    {
+
+        try
+        {
+            var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetAllListAsync();
+            var ecfApiAuthenticationSorting = ecfApiAuthentication.Take(input.MaxResultCount)
+                                                       .Skip(input.SkipCount)
+                                                       .WhereIf(!input.Sorting.IsNullOrWhiteSpace(),x => x.TenancyName.Contains(input.Sorting ?? string.Empty) ||
+                                                                   x.UsernameOrEmailAddress.Contains(input.Sorting ?? string.Empty))
+                                                       .ToList();
+
+            return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.MapToPagedResult(ecfApiAuthenticationSorting, ecfApiAuthentication.Count);
+
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error in GetAllAsync: {e.Message}");
+            throw;
+        }
+    }
+
+    public async Task<EcfApiAuthenticationOutputDto> CreateAsync(EcfApiAuthenticationCreateDto input)
+    {
+        try
+        {
+            var exist = await ecfApiAuthenticationRepository.CountAsync();
+
+            if (exist > 0)
+            {
+                throw new UserFriendlyException("Only one Ecf API Authentication record is allowed.");
+            }
+
+            var ecfApiAuthentication = Mapping<EcfApiAuthenticationCreateDto, Models.EcfApiAuthentication>.Auto.Map(input);
+           var result = await ecfApiAuthenticationRepository.InsertAsync(ecfApiAuthentication);
+
+            return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.Map(result);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error in CreateAsync: {e.Message}");
+            throw;
+        }
+    }
+
+    public async Task<EcfApiAuthenticationOutputDto> UpdateAsync(EcfApiAuthenticationUpdateDto input)
+    {
+        try
+        {
+            if (input == null || input.Id <= 0)
+            {
+                throw new UserFriendlyException("Invalid input for update.");
+            }
+            var ecfApiAuthentication = Mapping<EcfApiAuthenticationUpdateDto, Models.EcfApiAuthentication>.Auto.Map(input);
+
+           var result = await ecfApiAuthenticationRepository.UpdateAsync(ecfApiAuthentication);
+            return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.Map(result);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error in UpdateAsync: {e.Message}");
+            throw;
+        }
+    }
+
+    public async Task DeleteAsync(EntityDto<int> input)
+    {
+        try
+        {
+            await ecfApiAuthenticationRepository.DeleteAsync(input.Id);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error in DeleteAsync: {e.Message}");
+            throw;
+        }
+    }
+
+   
+    #endregion
 }

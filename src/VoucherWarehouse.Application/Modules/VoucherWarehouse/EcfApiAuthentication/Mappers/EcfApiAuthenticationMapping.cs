@@ -4,21 +4,21 @@ using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Dto;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Mappers;
 
-public class EcfApiAuthenticationMapping : IbsTwoWayMapperBase<Models.EcfApiAuthentication, EcfApiAuthenticationDto>
+public class EcfApiAuthenticationMapping : IbsTwoWayMapperBase<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>
 {
 
-    protected override EcfApiAuthenticationDto CreateDestination(Models.EcfApiAuthentication source) => new EcfApiAuthenticationDto();
+    protected override EcfApiAuthenticationOutputDto CreateDestination(Models.EcfApiAuthentication source) => new EcfApiAuthenticationOutputDto();
 
-    protected override Models.EcfApiAuthentication CreateSource(EcfApiAuthenticationDto destination)=> new Models.EcfApiAuthentication();
+    protected override Models.EcfApiAuthentication CreateSource(EcfApiAuthenticationOutputDto destination)=> new Models.EcfApiAuthentication();
 
-    protected override void MapCore(Models.EcfApiAuthentication source, EcfApiAuthenticationDto destination)
+    protected override void MapCore(Models.EcfApiAuthentication source, EcfApiAuthenticationOutputDto destination)
     {
         
 
 
     }
 
-    protected override void ReverseMapCore(EcfApiAuthenticationDto destination, Models.EcfApiAuthentication source)
+    protected override void ReverseMapCore(EcfApiAuthenticationOutputDto destination, Models.EcfApiAuthentication source)
     {
      
     }

@@ -19,7 +19,6 @@
     <ProjectReference Include="..\VoucherWarehouse.Core\IBS.VoucherWarehouse.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\Mapping\Extensions\" />
     <Folder Include="Modules\VoucherWarehouse\EcfVoucherWarehouse\Dto\NewFolder\" />
   </ItemGroup>
 </Project>

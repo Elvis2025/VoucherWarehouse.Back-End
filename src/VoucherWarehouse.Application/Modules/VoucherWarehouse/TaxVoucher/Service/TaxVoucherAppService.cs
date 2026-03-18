@@ -21,8 +21,8 @@ public class TaxVoucherAppService :VoucherWarehouseAppServiceBase, ITaxVoucherAp
         {
 
             var te = Mapping<TaxVoucherCreateDto, TaxVouchers>.Auto.Map(input);
-
-           var taxVoucher = await taxVoucherRepository.InsertAsync(te);
+            await taxVouchersTypeRepository.GetAsync(input.TaxVoucherTypeId);
+            var taxVoucher = await taxVoucherRepository.InsertAsync(te);
             return Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.Map(taxVoucher);
         }
         catch (Exception)

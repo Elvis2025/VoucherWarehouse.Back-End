@@ -109,8 +109,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     public async Task<EcfVoucherOutputDto> SendCreditNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input)
     {
 
-        AuthenticateInputDto _authenticateAPIParams = new();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        //AuthenticateInputDto _authenticateAPIParams = new();
+       var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
@@ -119,7 +119,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             ReceiveCreditNoteECFInputDto objToSend = new ReceiveCreditNoteECFInputDto();
 
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceiveCreditNoteEcf";
+            string url = @_authenticateAPIParams.BaseUrl + "ReceiveCreditNoteEcf";
 
             var client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
@@ -146,15 +146,15 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     public async Task<EcfVoucherOutputDto> SendDebitNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input)
     {
-        AuthenticateInputDto _authenticateAPIParams = new();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        //AuthenticateInputDto _authenticateAPIParams = new();
+        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
         {
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceiveDebitNoteEcf";
+            string url = @_authenticateAPIParams.BaseUrl + "ReceiveDebitNoteEcf";
 
             var client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
@@ -180,8 +180,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     public async Task<EcfVoucherOutputDto> SendSalesEcfToDGIIAsync(ReceiveSalesEcfInputDto input)
     {
-        AuthenticateInputDto _authenticateAPIParams = new();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        //AuthenticateInputDto _authenticateAPIParams = new();
+        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
@@ -190,7 +190,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             ReceiveSalesEcfInputDto objToSend = new ReceiveSalesEcfInputDto();
 
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceiveSalesEcf";
+            string url = @_authenticateAPIParams.BaseUrl + "ReceiveSalesEcf";
 
             var client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
@@ -222,8 +222,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     public async Task<EcfVoucherOutputDto> SendPurchaseEcfToDGIIAsync(ReceivePurchaseECFInputDto input)
     {
 
-        AuthenticateInputDto _authenticateAPIParams = new();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        //AuthenticateInputDto _authenticateAPIParams = new();
+        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
@@ -232,7 +232,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             ReceivePurchaseECFInputDto objToSend = new ReceivePurchaseECFInputDto();
 
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ReceivePurchaseECF";
+            string url = @_authenticateAPIParams.BaseUrl + "ReceivePurchaseECF";
 
             var client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
@@ -261,8 +261,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     public async Task<EcfVoucherOutputDto> SendCancelSequenceEcfToDGIIAsync(CancelSequenceEcfInputDto input)
     {
-        AuthenticateInputDto _authenticateAPIParams = new();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        //AuthenticateInputDto _authenticateAPIParams = new();
+        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
@@ -271,7 +271,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             CancelSequenceEcfInputDto objToSend = new CancelSequenceEcfInputDto();
 
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "CancelSequencesECF";
+            string url = @_authenticateAPIParams.BaseUrl + "CancelSequencesECF";
 
             var client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
@@ -298,8 +298,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     public async Task<EcfVoucherOutputDto> SendCommercialApprovalEcfToDGIIAsync(CommercialApprovalEcfInputDto input)
     {
-        AuthenticateInputDto _authenticateAPIParams = new AuthenticateInputDto();
-        _authenticateAPIParams = await ecfApiAuthenticationService.GetEcfUserAuthenticationAsync();
+        //AuthenticateInputDto _authenticateAPIParams = new();
+        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
@@ -308,7 +308,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             ReceivePurchaseECFInputDto objToSend = new ReceivePurchaseECFInputDto();
 
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrlIbsApiDgii + "ComercialApproval";
+            string url = @_authenticateAPIParams.BaseUrl + "ComercialApproval";
 
             var client = new System.Net.Http.HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
