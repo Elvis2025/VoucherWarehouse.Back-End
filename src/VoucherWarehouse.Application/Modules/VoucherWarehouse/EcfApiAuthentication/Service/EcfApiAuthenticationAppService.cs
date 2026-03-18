@@ -16,8 +16,8 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Ser
 public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEcfApiAuthenticationAppService
 {
     /*
-     BaseUrl: https://test.ibsystems.com.do/api/Account/
-    UrlAuth: https://test.ibsystems.com.do/api/services/app/ecfVoucher/
+     BaseUrl: https://test.ibsystems.com.do/api/services/app/ecfVoucher/
+    UrlAuth: https://test.ibsystems.com.do/api/Account/
      UserName: adminIBS
     Password: 123qwe
     TenantcyName: eIBS 
@@ -36,8 +36,7 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
 
     public async Task<AuthenticateInputDto> GetEcfUserAuthenticationAsync()
     {
-        var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetAll()
-                                                                       .FirstOrDefaultAsync();
+        var ecfApiAuthentication = await GetFirstOrDefaultAsync();
         if (ecfApiAuthentication == null)
         {
             throw new UserFriendlyException("Ecf API Authentication details not found.");
