@@ -12,11 +12,22 @@ public sealed record class AiDocumentIndexingOptionsDto
 
     public string RootFolderPath { get; set; } = @"C:\IBSAI-Rag-Documents";
     public string RegistryFilePath { get; set; } = @"C:\IBSAI-Rag-Documents\.ibsai-registry.json";
+
     public int ChunkSize { get; set; } = 1000;
     public int ChunkOverlap { get; set; } = 150;
-    public int TopK { get; set; } = 5;
+
+    // Buscar varios candidatos para no quedarse solo con un documento
+    public int TopK { get; set; } = 12;
+
+    // Umbral mínimo para considerar que el chunk sí es relevante
     public double MinScoreThreshold { get; set; } = 0.70;
-    public int MaxContextChunks { get; set; } = 3;
+
+    // Máximo de chunks que se enviarán al contexto final
+    public int MaxContextChunks { get; set; } = 6;
+
+    // Máximo de chunks por documento para evitar que uno solo domine
+    public int MaxChunksPerDocument { get; set; } = 2;
+
     public int StableFileWaitMilliseconds { get; set; } = 1500;
     public int MaxFileOpenRetries { get; set; } = 10;
     public int FileOpenRetryDelayMilliseconds { get; set; } = 500;

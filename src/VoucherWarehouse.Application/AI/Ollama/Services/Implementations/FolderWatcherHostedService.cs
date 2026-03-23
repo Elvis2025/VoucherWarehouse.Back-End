@@ -4,16 +4,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IBS.VoucherWarehouse.AI.Ollama.Services.Implementations;
 
-public sealed class FolderWatcherHostedService : IHostedService, IDisposable
+public sealed class FolderWatcherHostedService : IHostedService, IDisposable, ITransientDependency
 {
     private readonly IDocumentIndexQueue _queue;
     private readonly AiDocumentIndexingOptionsDto _options;
@@ -33,7 +30,9 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         if (!Directory.Exists(_options.RootFolderPath))
+        {
             Directory.CreateDirectory(_options.RootFolderPath);
+        }
 
         _watcher = new FileSystemWatcher(_options.RootFolderPath)
         {
@@ -47,7 +46,7 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
         _watcher.Renamed += OnRenamed;
         _watcher.Deleted += OnDeleted;
 
-        _logger.LogInformation("FileSystemWatcher iniciado en {Path}", _options.RootFolderPath);
+        _logger.LogInformation("Watcher de documentos iniciado en {RootFolderPath}", _options.RootFolderPath);
 
         return Task.CompletedTask;
     }
@@ -60,8 +59,10 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
 
     private async void OnCreatedOrChanged(object sender, FileSystemEventArgs e)
     {
-        if (Ignore(e.FullPath))
+        if (ShouldIgnoreFile(e.FullPath))
+        {
             return;
+        }
 
         try
         {
@@ -73,15 +74,15 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error en evento {EventType} para archivo {File}", e.ChangeType, e.FullPath);
+            _logger.LogError(ex, "Error procesando evento {ChangeType} para {FilePath}", e.ChangeType, e.FullPath);
         }
     }
 
     private async void OnRenamed(object sender, RenamedEventArgs e)
     {
-        if (!Ignore(e.OldFullPath))
+        try
         {
-            try
+            if (!ShouldIgnoreFile(e.OldFullPath))
             {
                 await _queue.EnqueueAsync(new DocumentIndexQueueItemDto
                 {
@@ -89,15 +90,8 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
                     Reason = "DeletedByRename"
                 });
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error procesando renombrado anterior {File}", e.OldFullPath);
-            }
-        }
 
-        if (!Ignore(e.FullPath))
-        {
-            try
+            if (!ShouldIgnoreFile(e.FullPath))
             {
                 await _queue.EnqueueAsync(new DocumentIndexQueueItemDto
                 {
@@ -105,17 +99,19 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
                     Reason = "Renamed"
                 });
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error procesando renombrado nuevo {File}", e.FullPath);
-            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error procesando renombrado de archivo {OldPath} -> {NewPath}", e.OldFullPath, e.FullPath);
         }
     }
 
     private async void OnDeleted(object sender, FileSystemEventArgs e)
     {
-        if (Ignore(e.FullPath))
+        if (ShouldIgnoreFile(e.FullPath))
+        {
             return;
+        }
 
         try
         {
@@ -127,18 +123,37 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error en eliminación de archivo {File}", e.FullPath);
+            _logger.LogError(ex, "Error procesando eliminación de archivo {FilePath}", e.FullPath);
         }
     }
 
-    private bool Ignore(string path)
-        => Path.GetFullPath(path)
-            .Equals(Path.GetFullPath(_options.RegistryFilePath), StringComparison.OrdinalIgnoreCase);
+    private bool ShouldIgnoreFile(string filePath)
+    {
+        var fullPath = Path.GetFullPath(filePath);
+
+        if (fullPath.Equals(Path.GetFullPath(_options.RegistryFilePath), StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        var fileName = Path.GetFileName(filePath)?.Trim().ToLowerInvariant();
+
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            return true;
+        }
+
+        return fileName is "desktop.ini" or "thumbs.db"
+            || fileName.StartsWith("~$")
+            || fileName.EndsWith(".tmp");
+    }
 
     private void DisposeWatcher()
     {
         if (_watcher is null)
+        {
             return;
+        }
 
         _watcher.EnableRaisingEvents = false;
         _watcher.Created -= OnCreatedOrChanged;
@@ -149,5 +164,8 @@ public sealed class FolderWatcherHostedService : IHostedService, IDisposable
         _watcher = null;
     }
 
-    public void Dispose() => DisposeWatcher();
+    public void Dispose()
+    {
+        DisposeWatcher();
+    }
 }

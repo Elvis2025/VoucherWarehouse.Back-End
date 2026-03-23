@@ -6,6 +6,7 @@ using Abp.Extensions;
 using Castle.Facilities.Logging;
 using IBS.VoucherWarehouse.AI.Ollama.Dto;
 using IBS.VoucherWarehouse.AI.Ollama.Services.Abstractions;
+using IBS.VoucherWarehouse.AI.Ollama.Services.Implementation;
 using IBS.VoucherWarehouse.AI.Ollama.Services.Implementations;
 using IBS.VoucherWarehouse.Configuration;
 using IBS.VoucherWarehouse.Identity;
