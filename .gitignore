@@ -254,4 +254,4 @@ paket-files/
 src/VoucherWarehouse.Web.Mvc/secrets.json
 src/VoucherWarehouse.Web.Host/secrets.json
 src/VoucherWarehouse.Migrator/secrets.json
-VoucherWarehouse.Web.Host/App_Data/Logs/
+src/VoucherWarehouse.Web.Host/App_Data/Logs/
