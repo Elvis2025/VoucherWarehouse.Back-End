@@ -1,6 +1,7 @@
 ﻿using IBS.VoucherWarehouse.Common.Mapping.Helpers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Dto;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucherTypes.Dto;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Service;
 
@@ -49,9 +50,20 @@ public class TaxVoucherAppService :VoucherWarehouseAppServiceBase, ITaxVoucherAp
     {
         try
         {
-            var taxVouchers = await taxVoucherRepository.GetAllListAsync();
+            var taxVouchers = (await taxVoucherRepository.GetAllIncludingAsync( x => x.TaxVouchersTypes)).ToList()!;
+            var taxVouchersDto = Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.MapToPagedResult(taxVouchers, taxVouchers.Count);
 
-            return Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.MapToPagedResult(taxVouchers,taxVouchers.Count);
+            foreach (var taxVoucher in taxVouchersDto.Items)
+            {
+                foreach(var taxVouche in taxVouchers)
+                {
+                    if(taxVouche.Id == taxVoucher.Id)
+                    {
+                        taxVoucher.TaxVoucherType = Mapping<TaxVouchersTypes, TaxVoucherTypesOutputDto>.Auto.Map(taxVouche.TaxVouchersTypes);
+                    }
+                }
+            }
+            return taxVouchersDto;
         }
         catch (Exception)
         {

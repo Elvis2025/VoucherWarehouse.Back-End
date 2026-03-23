@@ -52,12 +52,16 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
         };
     }
 
-    public async Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync(LoginInputDto loginViewModel)
+    public async Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync()
     {
-        AuthenticateInputDto _authenticateAPIParams = new AuthenticateInputDto();
-        _authenticateAPIParams = await GetEcfUserAuthenticationAsync();
-        string result = string.Empty;
-        AuthenticationResponseOutputDto _result = new AuthenticationResponseOutputDto();
+        AuthenticateInputDto authenticateAPIParams = new AuthenticateInputDto();
+        LoginInputDto loginViewModel = new();
+        loginViewModel.RememberMe = false;
+
+
+
+        authenticateAPIParams = await GetEcfUserAuthenticationAsync();
+        AuthenticationResponseOutputDto result = new AuthenticationResponseOutputDto();
 
         try
         {
@@ -66,27 +70,32 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
             if (getCache != null && !string.IsNullOrEmpty(getCache.Token) && getCache.Expires > DateTime.Now)
             {
                 //Si el Token sigue Vigente de vuelvo el Token Existente, De lo contrario Genero uno Nuevo
-                _result.Result = getCache;
+                result.Result = getCache;
+                result.IsSuccess = true;
             }
             else
             {
-                string jsonObject = System.Text.Json.JsonSerializer.Serialize(loginViewModel);
-                string url = @_authenticateAPIParams.AuthenticateUrlIbsApiDgii + "Authenticate";
+                loginViewModel.Password = authenticateAPIParams.Password;
+                loginViewModel.TenancyName = authenticateAPIParams.TenancyName;
+                loginViewModel.UsernameOrEmailAddress = authenticateAPIParams.UsernameOrEmailAddress;
 
-                var client = new System.Net.Http.HttpClient();
+                string jsonObject = System.Text.Json.JsonSerializer.Serialize(loginViewModel);
+                string url = authenticateAPIParams.AuthenticateUrlIbsApiDgii + "Authenticate";
+
+                var client = new HttpClient();
                 var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, content);
 
-                result = await response.Content.ReadAsStringAsync();
+               var res= await response.Content.ReadAsStringAsync();
 
-                _result = JsonConvert.DeserializeObject<AuthenticationResponseOutputDto>(result);
+                result = JsonConvert.DeserializeObject<AuthenticationResponseOutputDto>(res);
 
                 //Saving New Token to Chache
-                if (_result.Result != null)
+                if (result.Result != null)
                 {
-                    if (!string.IsNullOrEmpty(_result.Result.Token))
+                    if (!string.IsNullOrEmpty(result.Result.Token))
                     {
-                        SavingAuthenticateDataToCACHE(_result.Result);
+                        SavingAuthenticateDataToCACHE(result.Result);
 
                     }
                 }
@@ -95,11 +104,10 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
         }
         catch (System.Exception ex)
         {
-            result = ex.Message.ToString();
-            _result = new AuthenticationResponseOutputDto { Error = new ErrorResponse { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+            result = new AuthenticationResponseOutputDto { Error = new ErrorResponse { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = ex.Message.ToString()!} };
         }
 
-        return _result;
+        return result;
     }
 
     

@@ -6,6 +6,6 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Ser
 
 public interface IEcfApiAuthenticationAppService : IIbsAsyncCrudAppService<EcfApiAuthenticationOutputDto, int, EcfApiAuthenticationInputDto, EcfApiAuthenticationCreateDto, EcfApiAuthenticationUpdateDto>
 {
-    Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync(LoginInputDto loginViewModel);
+    Task<AuthenticationResponseOutputDto> AuthenticateAPIAsync();
     Task<AuthenticateInputDto> GetEcfUserAuthenticationAsync();
 }

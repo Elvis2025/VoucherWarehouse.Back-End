@@ -111,7 +111,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
         //AuthenticateInputDto _authenticateAPIParams = new();
        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -148,7 +148,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     {
         //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -182,7 +182,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     {
         //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -224,7 +224,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
         //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -263,7 +263,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     {
         //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try
@@ -300,7 +300,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     {
         //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(new LoginInputDto { TenancyName = _authenticateAPIParams.TenancyName, UsernameOrEmailAddress = _authenticateAPIParams.UsernameOrEmailAddress, Password = _authenticateAPIParams.Password });
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
         try

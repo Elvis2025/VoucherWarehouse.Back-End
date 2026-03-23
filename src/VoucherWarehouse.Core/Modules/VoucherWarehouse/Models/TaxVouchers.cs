@@ -8,7 +8,6 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 
 public class TaxVouchers : BaseEntity<int>
 {
-    public int CompanyToProcessId { get; set; }
     public int? BranchId { get; set; }
     public int TaxVoucherTypeId { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using IBS.VoucherWarehouse.Abstractions;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucherTypes.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,16 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Dto;
 
 public sealed record class TaxVoucherOutputDto : BaseEntityDto<int>
 {
-
+    public string Description { get; set; }
+    public string Prefix { get; set; }
+    public int InitialSequence { get; set; }
+    public int CurrentSequence { get; set; }
+    public int FinalSequence { get; set; }
+    public int RegisteredQuantity { get; set; }
+    public int RemainingQuantity { get; set; }
+    public int MinimumToAlert { get; set; }
+    public DateTime ExpeditionDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
+    public TaxVoucherTypesOutputDto TaxVoucherType { get; set; }
+    public string CodeAndDescription => TaxVoucherType is null ? string.Empty : TaxVoucherType.CodeAndDescription;
 }
