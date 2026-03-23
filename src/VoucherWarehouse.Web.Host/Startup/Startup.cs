@@ -4,20 +4,23 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Extensions;
 using Castle.Facilities.Logging;
+using IBS.VoucherWarehouse.AI.Ollama.Dto;
+using IBS.VoucherWarehouse.AI.Ollama.Services.Abstractions;
+using IBS.VoucherWarehouse.AI.Ollama.Services.Implementations;
 using IBS.VoucherWarehouse.Configuration;
+using IBS.VoucherWarehouse.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using IBS.VoucherWarehouse.Identity;
-
 namespace IBS.VoucherWarehouse.Web.Host.Startup;
 
 public class Startup
@@ -82,6 +85,61 @@ public class Startup
         );
 
         services.AddHttpContextAccessor();
+
+        services.AddSingleton<IDocumentIndexQueue, DocumentIndexQueue>();
+        services.AddTransient<IDocumentIndexingService, DocumentIndexingService>();
+        services.AddTransient<IDocumentRegistryStore, DocumentRegistryStore>();
+        services.AddTransient<IDocumentTextExtractorResolver, DocumentTextExtractorResolver>();
+
+        services.AddTransient<IDocumentTextExtractor, DocxDocumentTextExtractor>();
+        services.AddTransient<IDocumentTextExtractor, HtmlDocumentTextExtractor>();
+        services.AddTransient<IDocumentTextExtractor, PdfDocumentTextExtractor>();
+        services.AddTransient<IDocumentTextExtractor, PlainTextDocumentTextExtractor>();
+        services.AddTransient<IDocumentTextExtractor, XlsxDocumentTextExtractor>();
+
+        services.AddTransient<ITextChunker, TextChunker>();
+        services.AddTransient<IRagQueryService, RagQueryService>();
+        services.AddTransient<IFileHashService, FileHashService>();
+
+        services.Configure<AiDocumentIndexingOptionsDto>(
+           _appConfiguration.GetSection(AiDocumentIndexingOptionsDto.SectionName));
+
+        services.Configure<OllamaOptionsDto>(
+            _appConfiguration.GetSection(OllamaOptionsDto.SectionName));
+
+        services.Configure<QdrantOptionsDto>(
+            _appConfiguration.GetSection(QdrantOptionsDto.SectionName));
+
+
+        // HttpClient - Ollama Embeddings
+        services.AddHttpClient<IOllamaEmbeddingClient, OllamaEmbeddingClient>((sp, client) =>
+        {
+            var options = sp.GetRequiredService<IOptions<OllamaOptionsDto>>().Value;
+            client.BaseAddress = new Uri(options.BaseUrl);
+            client.Timeout = TimeSpan.FromMinutes(options.EmbeddingTimeoutMinutes);
+        });
+
+        // HttpClient - Ollama Chat
+        services.AddHttpClient<IOllamaChatClient, OllamaChatClient>((sp, client) =>
+        {
+            var options = sp.GetRequiredService<IOptions<OllamaOptionsDto>>().Value;
+            client.BaseAddress = new Uri(options.BaseUrl);
+            client.Timeout = TimeSpan.FromMinutes(options.ChatTimeoutMinutes);
+        });
+
+        // HttpClient - Qdrant
+        services.AddHttpClient<IQdrantVectorStore, QdrantVectorStore>((sp, client) =>
+        {
+            var options = sp.GetRequiredService<IOptions<QdrantOptionsDto>>().Value;
+            client.BaseAddress = new Uri(options.BaseUrl);
+            client.Timeout = TimeSpan.FromMinutes(2);
+        });
+
+        // Hosted services
+        services.AddHostedService<AiWarmupHostedService>();
+        services.AddHostedService<FolderBootstrapIndexerHostedService>();
+        services.AddHostedService<FolderWatcherHostedService>();
+        services.AddHostedService<DocumentIndexWorkerHostedService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)

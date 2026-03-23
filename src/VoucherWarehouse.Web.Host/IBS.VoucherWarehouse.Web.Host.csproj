@@ -27,6 +27,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VoucherWarehouse.Application\IBS.VoucherWarehouse.Application.csproj" />
     <ProjectReference Include="..\VoucherWarehouse.Web.Core\IBS.VoucherWarehouse.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
