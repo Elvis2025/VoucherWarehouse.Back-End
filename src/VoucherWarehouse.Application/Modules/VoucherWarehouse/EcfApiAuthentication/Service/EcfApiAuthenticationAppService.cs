@@ -13,7 +13,7 @@ using System.Text;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
 
-public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEcfApiAuthenticationAppService
+public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase, IEcfApiAuthenticationAppService
 {
     /*
      BaseUrl: https://test.ibsystems.com.do/api/services/app/ecfVoucher/
@@ -27,7 +27,7 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
     private readonly IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository;
     private readonly ICacheManager cacheManager;
 
-    public EcfApiAuthenticationAppService(IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository, 
+    public EcfApiAuthenticationAppService(IRepository<Models.EcfApiAuthentication, int> ecfApiAuthenticationRepository,
                                           ICacheManager cacheManager)
     {
         this.ecfApiAuthenticationRepository = ecfApiAuthenticationRepository;
@@ -86,7 +86,7 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
                 var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, content);
 
-               var res= await response.Content.ReadAsStringAsync();
+                var res = await response.Content.ReadAsStringAsync();
 
                 result = JsonConvert.DeserializeObject<AuthenticationResponseOutputDto>(res);
 
@@ -96,21 +96,21 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
                     if (!string.IsNullOrEmpty(result.Result.Token))
                     {
                         SavingAuthenticateDataToCACHE(result.Result);
-
                     }
                 }
+                result.IsSuccess = true;
             }
 
         }
         catch (System.Exception ex)
         {
-            result = new AuthenticationResponseOutputDto { Error = new ErrorResponse { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = ex.Message.ToString()!} };
+            result = new AuthenticationResponseOutputDto { Error = new ErrorResponse { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = ex.Message.ToString()! } };
         }
 
         return result;
     }
 
-    
+
     #region Internal Helpers
     private void SavingAuthenticateDataToCACHE(ResultResponse input)
     {
@@ -174,7 +174,7 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
             var ecfApiAuthentication = await ecfApiAuthenticationRepository.GetAllListAsync();
             var ecfApiAuthenticationSorting = ecfApiAuthentication.Take(input.MaxResultCount)
                                                        .Skip(input.SkipCount)
-                                                       .WhereIf(!input.Sorting.IsNullOrWhiteSpace(),x => x.TenancyName.Contains(input.Sorting ?? string.Empty) ||
+                                                       .WhereIf(!input.Sorting.IsNullOrWhiteSpace(), x => x.TenancyName.Contains(input.Sorting ?? string.Empty) ||
                                                                    x.UsernameOrEmailAddress.Contains(input.Sorting ?? string.Empty))
                                                        .ToList();
 
@@ -200,7 +200,7 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
             }
 
             var ecfApiAuthentication = Mapping<EcfApiAuthenticationCreateDto, Models.EcfApiAuthentication>.Auto.Map(input);
-           var result = await ecfApiAuthenticationRepository.InsertAsync(ecfApiAuthentication);
+            var result = await ecfApiAuthenticationRepository.InsertAsync(ecfApiAuthentication);
 
             return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.Map(result);
         }
@@ -221,7 +221,7 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
             }
             var ecfApiAuthentication = Mapping<EcfApiAuthenticationUpdateDto, Models.EcfApiAuthentication>.Auto.Map(input);
 
-           var result = await ecfApiAuthenticationRepository.UpdateAsync(ecfApiAuthentication);
+            var result = await ecfApiAuthenticationRepository.UpdateAsync(ecfApiAuthentication);
             return Mapping<Models.EcfApiAuthentication, EcfApiAuthenticationOutputDto>.Auto.Map(result);
         }
         catch (Exception e)
@@ -244,6 +244,6 @@ public class EcfApiAuthenticationAppService : VoucherWarehouseAppServiceBase,IEc
         }
     }
 
-   
+
     #endregion
 }

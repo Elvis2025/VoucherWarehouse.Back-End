@@ -1,7 +1,7 @@
 ﻿namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 
 
-class ReceiveSaleResumeInputDto
+public class ReceiveSaleResumeInputDto
 {
     public int printFormat { get; set; }
     public bool sendPrintedFile { get; set; }
@@ -66,7 +66,7 @@ public class TotalesResume
     public decimal? totalITBIS3 { get; set; }
     public decimal? totalITBIS { get; set; }
     public decimal? montoImpuestoAdicional { get; set; }
-    public List<ImpuestosAdicional> impuestosAdicionales { get; set; }
+    public List<ImpuestosAdicional> impuestosAdicionales { get; set; } = new List<ImpuestosAdicional>();
     public decimal montoNoFacturable { get; set; }
     [Required]
     public decimal montoTotal { get; set; }

@@ -21,4 +21,7 @@
   <ItemGroup>
     <Folder Include="Modules\VoucherWarehouse\EcfVoucherWarehouse\Dto\NewFolder\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+  </ItemGroup>
 </Project>

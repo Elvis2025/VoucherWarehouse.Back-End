@@ -4,6 +4,7 @@ using IBS.VoucherWarehouse.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBS.VoucherWarehouse.Migrations
 {
     [DbContext(typeof(VoucherWarehouseDbContext))]
-    partial class VoucherWarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260324193538_NewTablesVoucherWarehouse")]
+    partial class NewTablesVoucherWarehouse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1692,43 +1695,14 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("DGIIResponseMessage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("DeleterUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("DgiiPrintFile")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DgiiQrCodeUrl")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<DateTime?>("DgiiReceivedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DgiiResponseCode")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("DgiiResponseMessage")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("DgiiSecurityCode")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("DgiiSignatureDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DgiiTrackId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool?>("DgiiUsedSequence")
-                        .HasColumnType("bit");
 
                     b.Property<string>("DireccionComprador")
                         .HasMaxLength(500)
@@ -1951,6 +1925,10 @@ namespace IBS.VoucherWarehouse.Migrations
 
                     b.Property<decimal>("TotalITBISRetenido")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TrackId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TransporteJson")
                         .HasColumnType("nvarchar(max)");

@@ -16,7 +16,7 @@ public class ReceiveSalesEcfInputDto
     public string receptionServiceUrl { get; set; }
     public string comercialApprovalServiceUrl { get; set; }
     public EncabezadoSales encabezado { get; set; }
-    public List<DetallesItem> detallesItems { get; set; }
+    public List<DetallesItem> detallesItems { get; set; } = new();
 
     public List<Subtotales> subtotales { get; set; }
     public List<DescuentosORecargo> descuentosORecargos { get; set; }
@@ -54,7 +54,7 @@ public class DetallesItem
     public int unidadReferencia { get; set; }
 
     public List<TablaSubcantidad> tablaSubcantidad { get; set; }
-    public decimal? gradosAlcohol { get; set; }
+    public decimal? gradosAlcohol { get; set; } = new();
     public decimal PrecioUnitarioReferencia { get; set; }
     public decimal precioUnitarioItem { get; set; }
     public decimal descuentoMonto { get; set; }
@@ -194,8 +194,7 @@ public class Totales
 
     public decimal totalITBIS { get; set; }
     public decimal? montoImpuestoAdicional { get; set; }
-    public List<ImpuestosAdicional> impuestosAdicionales { get; set; }
-    [Required]
+    public List<ImpuestosAdicional> impuestosAdicionales { get; set; } = new List<ImpuestosAdicional>();
     public decimal montoTotal { get; set; }
     public decimal montoNoFacturable { get; set; }
 
