@@ -1,4 +1,5 @@
-﻿using Abp.Runtime.Caching;
+﻿using Abp.Collections.Extensions;
+using Abp.Runtime.Caching;
 using Abp.Timing;
 using ClosedXML.Excel;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
@@ -45,14 +46,19 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             throw;
         }
     }
-    [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Read)]
     public async Task<PagedResultDto<EcfVoucherWarehouseOutputDto>> GetAllAsync(EcfVoucherWarehouseInputDto input)
     {
         try
         {
             var ecfVoucherWarehouse = await ecfVoucherWarehouseRepository.GetAllListAsync();
-
-            return MapEntityToOutputTwoWay.Auto.MapToPagedResult(ecfVoucherWarehouse, ecfVoucherWarehouse.Count);
+            var ecfVoucherWarehouseFiltered = ecfVoucherWarehouse
+                //.Where(x => x.TipoECF.Contains(input.FilterText) || 
+                //                                                             x.ENCF.Contains(input.FilterText) ||
+                //                                                             x.RazonSocialComprador.Contains(input.FilterText) ||
+                //                                                             x.RazonSocialEmisor.Contains(input.FilterText) || 
+                //                                                             x.RNCEmisor.Contains(input.FilterText))
+                                                                 .ToList();
+            return MapEntityToOutputTwoWay.Auto.MapToPagedResult(ecfVoucherWarehouseFiltered, ecfVoucherWarehouse.Count);
         }
         catch (Exception)
         {
