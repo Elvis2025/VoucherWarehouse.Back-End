@@ -1,4 +1,5 @@
 ﻿using IBS.VoucherWarehouse.Abstractions;
+using IBS.VoucherWarehouse.Common.GlobalHelpers;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 
@@ -29,8 +30,12 @@ public sealed record class EcfVoucherWarehouseOutputDto : BaseEntityDto<int>
     public string DgiiResponseCode { get; set; }
     public string DgiiSecurityCode { get; set; }
     public string DgiiSignatureDate { get; set; }
-    public string DgiiUsedSequence { get; set; }
+    public bool DgiiUsedSequence { get; set; }
+    public string DgiiUsedSequenceFormatted => DgiiUsedSequence ? "Si" : "No";
+
     public string Status { get; set; }
     public DateTime FechaEmision { get; set; }
-    public string StatusFomatted => string.Equals(Status, "000", StringComparison.CurrentCultureIgnoreCase) ? "Aceptado" : "Rechazado";
+    public string StatusFomatted => Status.FormattedStatusDgii();
+
+
 }

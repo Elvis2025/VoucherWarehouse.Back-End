@@ -57,6 +57,7 @@ public class DgiiExcelImportDto
     // Grupos dinámicos
     public List<DgiiExcelFormaPagoDto> FormasPago { get; set; } = new();
     public List<DgiiExcelDetalleDto> Items { get; set; } = new();
+    public EcfVoucherOutputDto Errors { get; set; }
 }
 
 

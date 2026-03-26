@@ -2,6 +2,7 @@
 using Abp.Runtime.Caching;
 using Abp.Timing;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Mappers;
@@ -214,7 +215,10 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Status: {(int)response.StatusCode} - {response.StatusCode}\nBody: {responseBody}");
+                
+                output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(responseBody);
+                await SaveEcfVoucherAsync(input, output);
+                return output;
             }
 
             result = await response.Content.ReadAsStringAsync();
@@ -225,7 +229,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             {
                 output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
             }
-            await SaveEcfVoucherAsync(input, output, jsonObject, result);
+            await SaveEcfVoucherAsync(input, output);
             //Justo aqui debajo debes proceder a insertar en la base de datos la transaccion que viajo a la DGII
         }
         catch (Exception ex)
@@ -699,21 +703,29 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     public async Task LoadExcelAsync([FromForm] ImportDgiiExcelRequestDto input)
     {
-        if (input.File == null || input.File.Length == 0)
+        try
         {
-            throw new Exception("Debes enviar un archivo Excel.");
-        }
+            if (input.File == null || input.File.Length == 0)
+            {
+                throw new Exception("Debes enviar un archivo Excel.");
+            }
 
-        var extension = Path.GetExtension(input.File.FileName);
-        if (string.IsNullOrWhiteSpace(extension) ||
-            (extension.ToLower() != ".xlsx" && extension.ToLower() != ".xls"))
+            var extension = Path.GetExtension(input.File.FileName);
+            if (string.IsNullOrWhiteSpace(extension) ||
+                (extension.ToLower() != ".xlsx" && extension.ToLower() != ".xls"))
+            {
+                throw new Exception("El archivo debe ser Excel (.xlsx o .xls).");
+            }
+
+            using var stream = input.File.OpenReadStream();
+
+            var importedRows = await ImportAsync(stream, input.File.FileName);
+        }
+        catch (Exception e)
         {
-            throw new Exception("El archivo debe ser Excel (.xlsx o .xls).");
+           
+            throw;
         }
-
-        using var stream = input.File.OpenReadStream();
-
-        var importedRows = await ImportAsync(stream, input.File.FileName);
 
        
     }
@@ -762,7 +774,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         {
             throw new ArgumentNullException(nameof(source));
         }
-
+        var numeroPedidoInterno = Random.Shared.Next(10000, 100000);
         var dto = new ReceiveSalesEcfInputDto
         {
             sendPrintedFile = false,
@@ -781,7 +793,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     // ESTE CAMPO TE ESTABA FALLANDO.
                     // Debe ir inicializado siempre.
                     // Si tu catálogo usa otro valor por defecto válido, cámbialo aquí.
-                    tipoCuentaPago = "01",
+                    tipoCuentaPago = "NA",
 
                     tablaFormasPago = (source.FormasPago ?? new List<DgiiExcelFormaPagoDto>())
                         .Select(x => new TablaFormasPago
@@ -805,8 +817,9 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     codigoVendedor = SafeString(source.CodigoVendedor),
 
                     // En tu JSON estaba nulo; mejor mandarlo inicializado.
-                    fechaEmision = SafeString(source.FechaEmision),
-
+                    fechaEmision = DateTime.Now.ToString("dd-MM-yyyy"),
+                    numeroFacturaInterna = $"IBS-VW-{numeroPedidoInterno}",
+                    numeroPedidoInterno = numeroPedidoInterno.ToString(),
                     tablaTelefonoEmisor = (source.TelefonosEmisor ?? new List<string>())
                         .Where(x => !string.IsNullOrWhiteSpace(x))
                         .Select(x => x.Trim())
@@ -821,7 +834,9 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     correoComprador = SafeString(source.CorreoComprador),
                     direccionComprador = SafeString(source.DireccionComprador),
                     municipioComprador = SafeString(source.MunicipioComprador),
-                    provinciaComprador = SafeString(source.ProvinciaComprador)
+                    provinciaComprador = SafeString(source.ProvinciaComprador),
+                    fechaEntrega = DateTime.Now.ToString("dd-MM-yyyy"),
+                    codigoInternoComprador = Random.Shared.Next(10000, 100000).ToString()
                 },
 
                 transporte = null,
@@ -845,9 +860,10 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
                     // ESTE CAMPO TE ESTABA FALLANDO.
                     montoImpuestoAdicional = 0m,
-
+                    impuestosAdicionales = null,
                     montoNoFacturable = 0m,
                     montoTotal = source.MontoTotal ?? 0m,
+                    valorPagar = source.MontoTotal ?? 0m,
                     //montoPeriodo = source.MontoTotal ?? 0m
                 }
             },
@@ -858,7 +874,14 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     numeroLinea = x?.NumeroLinea ?? x?.Numero ?? 0,
                     indicadorFacturacion = x?.IndicadorFacturacion ?? 0,
                     nombreItem = SafeString(x?.NombreItem),
-
+                    tablaCodigosItem = new() {
+                        new()
+                        { 
+                            tipoCodigo = "IBSVWINTERNA",
+                            codigoItem = $"00{x.NumeroLinea}"
+                        
+                        }
+                    },
                     // ESTE CAMPO TE ESTABA FALLANDO.
                     gradosAlcohol = 0m,
 
@@ -880,11 +903,9 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     private async Task SaveEcfVoucherAsync(
     ReceiveSalesEcfInputDto input,
-    EcfVoucherOutputDto output,
-    string requestJson,
-    string responseJson)
+    EcfVoucherOutputDto output)
     {
-        var entity = MapToEcfVoucherWarehouseEntity(input, output, requestJson, responseJson);
+        var entity = MapToEcfVoucherWarehouseEntity(input, output);
 
         await ecfVoucherWarehouseRepository.InsertAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
@@ -892,9 +913,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     private Models.EcfVoucherWarehouse MapToEcfVoucherWarehouseEntity(
     ReceiveSalesEcfInputDto input,
-    EcfVoucherOutputDto output,
-    string requestJson,
-    string responseJson)
+    EcfVoucherOutputDto output)
     {
 
         int.TryParse(input.encabezado?.idDoc?.indicadorNotaCredito, out int indicadorNotaCredito);
@@ -1000,7 +1019,10 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             DgiiPrintFile = string.Empty,
        
         };
-
+        if(output.Error is not null)
+        {
+            entity.DgiiResponseMessage =$" {output.Error.Details} { output.Error.Message}";
+        }
         MapPaymentForms(entity, input);
         MapEmitterPhones(entity, input);
         MapHeaderAdditionalTaxes(entity, input);
