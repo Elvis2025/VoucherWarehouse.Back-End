@@ -33,7 +33,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
     #region CRUD Async
     [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Read)]
-    public async Task<EcfVoucherWarehouseOutputDto> GetAsync(EntityDto<int> input)
+    public async Task<EcfVoucherWarehouseOutputDto> GetAsync(EntityDto<long> input)
     {
         try
         {
@@ -52,13 +52,28 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         try
         {
             var ecfVoucherWarehouse = await ecfVoucherWarehouseRepository.GetAllListAsync();
-            var ecfVoucherWarehouseFiltered = ecfVoucherWarehouse
-                //.Where(x => x.TipoECF.Contains(input.FilterText) || 
-                //                                                             x.ENCF.Contains(input.FilterText) ||
-                //                                                             x.RazonSocialComprador.Contains(input.FilterText) ||
-                //                                                             x.RazonSocialEmisor.Contains(input.FilterText) || 
-                //                                                             x.RNCEmisor.Contains(input.FilterText))
+            var ecfVoucherWarehouseFiltered = ecfVoucherWarehouse.OrderByDescending(x => x.Id)
                                                                  .ToList();
+
+            if(input.FilterText is not null)
+            {
+                ecfVoucherWarehouseFiltered = ecfVoucherWarehouseFiltered.Where(x => x.TipoECF.Contains(input.FilterText) ||
+                                                                             x.ENCF.Contains(input.FilterText) ||
+                                                                             x.RazonSocialComprador.Contains(input.FilterText) ||
+                                                                             x.RazonSocialEmisor.Contains(input.FilterText) ||
+                                                                             x.RNCEmisor.Contains(input.FilterText))
+                                                                 .ToList();
+
+            }
+
+            ecfVoucherWarehouseFiltered = ecfVoucherWarehouseFiltered.Skip(input.SkipCount)
+                                                             .Take(input.MaxResultCount)
+                                                             .ToList();
+
+
+            
+                
+
             return MapEntityToOutputTwoWay.Auto.MapToPagedResult(ecfVoucherWarehouseFiltered, ecfVoucherWarehouse.Count);
         }
         catch (Exception)
@@ -102,7 +117,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         }
     }
     [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Delete)]
-    public async Task DeleteAsync(EntityDto<int> input)
+    public async Task DeleteAsync(EntityDto<long> input)
     {
         try
         {

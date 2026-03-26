@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Service;
 
-public interface IEcfVoucherWarehouseAppService : IApplicationService,IAsyncCrudAppService<EcfVoucherWarehouseOutputDto,int,EcfVoucherWarehouseInputDto,EcfVoucherWarehouseCreateDto,EcfVoucherWarehouseUpdateDto>
+public interface IEcfVoucherWarehouseAppService : IApplicationService,IAsyncCrudAppService<EcfVoucherWarehouseOutputDto,long,EcfVoucherWarehouseInputDto,EcfVoucherWarehouseCreateDto,EcfVoucherWarehouseUpdateDto>
 {
     Task LoadExcelAsync([FromForm] EcfVoucherWarehouseAppService.ImportDgiiExcelRequestDto input);
     Task<EcfVoucherOutputDto> ReceiveSalesResumeECFAsync(ReceiveSalesEcfInputDto input);

@@ -3,8 +3,9 @@ using IBS.VoucherWarehouse.Common.GlobalHelpers;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 
-public sealed record class EcfVoucherWarehouseOutputDto : BaseEntityDto<int>
+public sealed record class EcfVoucherWarehouseOutputDto : BaseEntityDto<long>
 {
+    public string Code => $"VW-{Id}";
     public string DgiiResponseMessage { get; set; }
     public decimal MontoTotal { get; set; }
     public decimal MontoAgravadoTotal { get; set; }

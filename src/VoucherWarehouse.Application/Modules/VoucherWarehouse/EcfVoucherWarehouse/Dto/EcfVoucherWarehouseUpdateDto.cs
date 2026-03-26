@@ -2,6 +2,6 @@
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 
-public sealed record class EcfVoucherWarehouseUpdateDto : BaseEntityDto<int>
+public sealed record class EcfVoucherWarehouseUpdateDto : BaseEntityDto<long>
 {
 }
