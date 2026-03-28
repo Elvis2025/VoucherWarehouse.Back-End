@@ -1,4 +1,8 @@
-﻿namespace IBS.VoucherWarehouse.Common.Mapping.Extensions;
+﻿using Abp.EntityFrameworkCore.Repositories;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+
+namespace IBS.VoucherWarehouse.Common.Helpers;
 
 public static class IbsRepositoryExtension
 {
@@ -48,6 +52,29 @@ public static class IbsRepositoryExtension
         return firstEntity;
     }
 
+
+
+    public static TEntity InsertIfNotExit<TEntity, TPrimaryKey>(this IRepository<TEntity, TPrimaryKey> repository)
+        where TEntity : class, IEntity<TPrimaryKey>
+    {
+        var entity = repository.GetAll()
+                               .FirstOrDefault();
+
+
+        return entity;
+    }
+
+    public async static Task InsertOrUpdateRangeAsync<TEntity, TPrimaryKey>(this IRepository<TEntity, TPrimaryKey> repository,IEnumerable<TEntity> entitys)
+        where TEntity : class, IEntity<TPrimaryKey>
+    {
+          
+        foreach (var entity in entitys)
+        {
+            await repository.InsertOrUpdateAsync(entity);
+        }
+    }
+
+   
 
 
 }

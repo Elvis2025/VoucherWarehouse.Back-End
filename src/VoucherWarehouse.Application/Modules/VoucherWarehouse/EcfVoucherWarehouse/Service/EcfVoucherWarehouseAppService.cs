@@ -2,11 +2,15 @@
 using Abp.Runtime.Caching;
 using Abp.Timing;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Spreadsheet;
+using IBS.VoucherWarehouse.Common.GlobalHelpers;
+using IBS.VoucherWarehouse.Common.Helpers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Mappers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -23,12 +27,17 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     private readonly IRepository<Models.EcfVoucherWarehouse,long> ecfVoucherWarehouseRepository;
     private readonly IEcfApiAuthenticationAppService ecfApiAuthenticationService;
     private readonly ICacheManager cacheManager;
+    private readonly ITaxVoucherAppService taxVoucherAppService;
 
-    public EcfVoucherWarehouseAppService(IRepository<Models.EcfVoucherWarehouse,long> ecfVoucherWarehouseRepository, IEcfApiAuthenticationAppService ecfApiAuthenticationService, ICacheManager cacheManager)
+    public EcfVoucherWarehouseAppService(IRepository<Models.EcfVoucherWarehouse,long> ecfVoucherWarehouseRepository, 
+                                         IEcfApiAuthenticationAppService ecfApiAuthenticationService, 
+                                         ICacheManager cacheManager,
+                                         ITaxVoucherAppService taxVoucherAppService)
     {
         this.ecfVoucherWarehouseRepository = ecfVoucherWarehouseRepository;
         this.ecfApiAuthenticationService = ecfApiAuthenticationService;
         this.cacheManager = cacheManager;
+        this.taxVoucherAppService = taxVoucherAppService;
     }
 
     #region CRUD Async
@@ -493,10 +502,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
             var dto = new DgiiExcelImportDto
             {
-                CasoPrueba = GetString(ws, row, headers, "CasoPrueba"),
                 TipoeCF = GetInt(ws, row, headers, "TipoeCF") ?? 0,
-                ENCF = GetString(ws, row, headers, "ENCF"),
-                FechaVencimientoSecuencia = GetString(ws, row, headers, "FechaVencimientoSecuencia"),
                 IndicadorMontoGravado = GetInt(ws, row, headers, "IndicadorMontoGravado"),
                 TipoIngresos = GetString(ws, row, headers, "TipoIngresos"),
                 TipoPago = GetInt(ws, row, headers, "TipoPago"),
@@ -776,7 +782,11 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
         foreach (var res in result)
         {
+            var voucherSecuence = await taxVoucherAppService.GenerateTaxVoucherAsync(res.TipoeCF.ToVoucherType());
+            res.ENCF = voucherSecuence.Number;
+            res.FechaVencimientoSecuencia = voucherSecuence.ExpirationDate;
             var ecfSale = MapToSaleEcf(res);
+            
             await SendSalesEcfToDGIIAsync(ecfSale);
 
         }
@@ -790,6 +800,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             throw new ArgumentNullException(nameof(source));
         }
         var numeroPedidoInterno = Random.Shared.Next(10000, 100000);
+ 
         var dto = new ReceiveSalesEcfInputDto
         {
             sendPrintedFile = false,
@@ -799,8 +810,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 idDoc = new IdDoc
                 {
                     tipoeCF = SafeString(source.TipoeCF),
-                    eNCF = SafeString(source.ENCF),
-                    fechaVencimientoSecuencia = SafeString(source.FechaVencimientoSecuencia),
                     indicadorMontoGravado = source.IndicadorMontoGravado ?? 0,
                     tipoIngresos = SafeString(source.TipoIngresos),
                     tipoPago = source.TipoPago ?? 0,

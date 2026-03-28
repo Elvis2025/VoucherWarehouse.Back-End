@@ -148,9 +148,11 @@ public class IdDoc
     [Required]
     [StringLength(2)]
     public string tipoeCF { get; set; }
+
     [Required]
     [StringLength(13)]
     public string eNCF { get; set; }
+
     [StringLength(10)]
     public string fechaVencimientoSecuencia { get; set; }
     public string indicadorNotaCredito { get; set; }

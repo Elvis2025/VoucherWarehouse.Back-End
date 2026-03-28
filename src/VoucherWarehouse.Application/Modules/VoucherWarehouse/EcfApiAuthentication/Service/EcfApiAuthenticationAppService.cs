@@ -1,7 +1,7 @@
 ﻿
 using Abp.Collections.Extensions;
 using Abp.Runtime.Caching;
-using IBS.VoucherWarehouse.Common.Mapping.Extensions;
+using IBS.VoucherWarehouse.Common.Helpers;
 using IBS.VoucherWarehouse.Common.Mapping.Helpers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Mappers;

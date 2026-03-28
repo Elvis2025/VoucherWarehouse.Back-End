@@ -2,7 +2,9 @@
 using Abp.Domain.Uow;
 using Abp.EntityFrameworkCore.Uow;
 using Abp.MultiTenancy;
+using IBS.VoucherWarehouse.Common.Services;
 using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host;
+using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Host.VoucherWarehouse.TaxVoucherTypes;
 using IBS.VoucherWarehouse.EntityFrameworkCore.Seed.Tenants;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +17,7 @@ public static class SeedHelper
     public static void SeedHostDb(IIocResolver iocResolver)
     {
         WithDbContext<VoucherWarehouseDbContext>(iocResolver, SeedHostDb);
+     
     }
 
     public static void SeedHostDb(VoucherWarehouseDbContext context)
@@ -26,6 +29,7 @@ public static class SeedHelper
 
         // Default tenant seed (in host database).
         new DefaultTenantBuilder(context).Create();
+        new HostTaxVoucherTypesCreator(context).Create();
         new TenantRoleAndUserBuilder(context, 1).Create();
     }
 

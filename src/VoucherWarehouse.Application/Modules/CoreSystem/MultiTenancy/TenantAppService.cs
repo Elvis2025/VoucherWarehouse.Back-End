@@ -10,6 +10,7 @@ using Abp.Runtime.Security;
 using IBS.VoucherWarehouse.Authorization;
 using IBS.VoucherWarehouse.Authorization.Roles;
 using IBS.VoucherWarehouse.Authorization.Users;
+using IBS.VoucherWarehouse.Common.Services;
 using IBS.VoucherWarehouse.Editions;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
@@ -86,6 +87,9 @@ public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, Page
             // Assign admin user to role!
             CheckErrors(await _userManager.AddToRoleAsync(adminUser, adminRole.Name));
             await CurrentUnitOfWork.SaveChangesAsync();
+
+            //Create static Data for new tenant
+            StaticDataForTenant.Instance.CreateAll();
         }
 
         return MapToEntityDto(tenant);
