@@ -10,7 +10,7 @@ public abstract record class BaseInputEntityDto<TPrimaryKey> : IEntityDto<TPrima
     public int SkipCount { get; set; } = 0;
     public static int DefaultMaxResultCount { get; set; } = 10;
 
-    [Range(1, int.MaxValue)]
+    [Range(0, int.MaxValue)]
     public int MaxResultCount { get; set; } = DefaultMaxResultCount;
     public string Sorting { get; set; } = string.Empty;
     public string FilterText { get; set; } = string.Empty;

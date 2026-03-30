@@ -1,4 +1,5 @@
 ﻿using Abp.Auditing;
+using IBS.VoucherWarehouse.Common.Constants;
 using IBS.VoucherWarehouse.Sessions.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,13 +24,15 @@ public class SessionAppService : VoucherWarehouseAppServiceBase, ISessionAppServ
         if (AbpSession.TenantId.HasValue)
         {
             output.Tenant = ObjectMapper.Map<TenantLoginInfoDto>(await GetCurrentTenantAsync());
+            IbsSession.Tenant = output.Tenant;
         }
 
         if (AbpSession.UserId.HasValue)
         {
             output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
+            IbsSession.User = output.User;
         }
-
+        IbsSession.TenantId = AbpSession.TenantId;
         return output;
     }
 }

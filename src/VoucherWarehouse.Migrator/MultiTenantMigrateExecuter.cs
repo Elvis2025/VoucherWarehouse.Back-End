@@ -5,18 +5,22 @@ using Abp.Domain.Uow;
 using Abp.Extensions;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
+using IBS.VoucherWarehouse.Abstractions;
 using IBS.VoucherWarehouse.EntityFrameworkCore;
 using IBS.VoucherWarehouse.EntityFrameworkCore.Seed;
 using IBS.VoucherWarehouse.MultiTenancy;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
+using static IBS.VoucherWarehouse.Authorization.Roles.StaticRoleNames;
 
 namespace IBS.VoucherWarehouse.Migrator;
 
 public class MultiTenantMigrateExecuter : ITransientDependency
 {
     private readonly Log _log;
+    private readonly IIbsDbMigrator ibsDbMigrator;
     private readonly AbpZeroDbMigrator _migrator;
     private readonly IRepository<Tenant> _tenantRepository;
     private readonly IDbPerTenantConnectionStringResolver _connectionStringResolver;
@@ -25,10 +29,11 @@ public class MultiTenantMigrateExecuter : ITransientDependency
         AbpZeroDbMigrator migrator,
         IRepository<Tenant> tenantRepository,
         Log log,
+        IIbsDbMigrator ibsDbMigrator,
         IDbPerTenantConnectionStringResolver connectionStringResolver)
     {
         _log = log;
-
+        this.ibsDbMigrator = ibsDbMigrator;
         _migrator = migrator;
         _tenantRepository = tenantRepository;
         _connectionStringResolver = connectionStringResolver;
@@ -60,6 +65,9 @@ public class MultiTenantMigrateExecuter : ITransientDependency
         try
         {
             _migrator.CreateOrMigrateForHost(SeedHelper.SeedHostDb);
+            
+            var tenantHost = _tenantRepository.FirstOrDefault(t => t.Id == (int)MultiTenancySides.Tenant);
+            ibsDbMigrator.CreateOrMigrateForHostByTenant(tenantHost);
         }
         catch (Exception ex)
         {
@@ -72,22 +80,40 @@ public class MultiTenantMigrateExecuter : ITransientDependency
         _log.Write("HOST database migration completed.");
         _log.Write("--------------------------------------------------------");
 
-        var migratedDatabases = new HashSet<string>();
-        var tenants = _tenantRepository.GetAllList(t => t.ConnectionString != null && t.ConnectionString != "");
+        var migratedDatabases = new HashSet<int>();
+        var tenants = _tenantRepository.GetAllList(t => t.IsActive && t.Id != 1).OrderBy(x => x.ConnectionString).ToList();
         for (var i = 0; i < tenants.Count; i++)
         {
             var tenant = tenants[i];
-            _log.Write(string.Format("Tenant database migration started... ({0} / {1})", (i + 1), tenants.Count));
+            var isTenantInhost = string.IsNullOrWhiteSpace(tenant.ConnectionString);
+            if (isTenantInhost)
+            {
+                _log.Write(string.Format($"Host database TenantId: {tenant.Id}, migration started... ({i + 1} / {tenants.Count})"));
+            }
+            else
+            {
+                _log.Write(string.Format($"Tenant database TenantId: {tenant.Id}, migration started... ({(i + 1)} / {tenants.Count})"));
+            }
             _log.Write("Name              : " + tenant.Name);
             _log.Write("TenancyName       : " + tenant.TenancyName);
-            _log.Write("Tenant Id         : " + tenant.Id);
-            _log.Write("Connection string : " + SimpleStringCipher.Instance.Decrypt(tenant.ConnectionString));
+            // _log.Write("Tenant Id         : " + tenant.Id);
+            //_log.Write("Connection string : " + SimpleStringCipher.Instance.Decrypt(tenant.ConnectionString));
 
-            if (!migratedDatabases.Contains(tenant.ConnectionString))
+            if (!migratedDatabases.Contains(tenant.Id))
+            
             {
                 try
                 {
-                    _migrator.CreateOrMigrateForTenant(tenant);
+                    if (isTenantInhost)
+                    {
+                        ibsDbMigrator.CreateOrMigrateForHostByTenant(tenant);
+                    }
+                    else
+                    {
+
+                        _migrator.CreateOrMigrateForTenant(tenant, SeedHelper.SeedHostDb);
+                        ibsDbMigrator.CreateOrMigrateForHostByTenant(tenant);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -96,7 +122,7 @@ public class MultiTenantMigrateExecuter : ITransientDependency
                     _log.Write("Skipped this tenant and will continue for others...");
                 }
 
-                migratedDatabases.Add(tenant.ConnectionString);
+                migratedDatabases.Add(tenant.Id);
             }
             else
             {

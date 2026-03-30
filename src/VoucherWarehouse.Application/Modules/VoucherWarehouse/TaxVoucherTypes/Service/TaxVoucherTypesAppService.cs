@@ -9,7 +9,7 @@ public class TaxVoucherTypesAppService : VoucherWarehouseAppServiceBase, ITaxVou
 {
     private readonly IRepository<TaxVouchersTypes, int> taxVoucherTypesRepository;
 
-    public TaxVoucherTypesAppService(IRepository<Models.TaxVouchersTypes,int> taxVoucherTypesRepository)
+    public TaxVoucherTypesAppService(IRepository<Models.TaxVouchersTypes, int> taxVoucherTypesRepository)
     {
         this.taxVoucherTypesRepository = taxVoucherTypesRepository;
     }
@@ -49,8 +49,15 @@ public class TaxVoucherTypesAppService : VoucherWarehouseAppServiceBase, ITaxVou
         try
         {
             var taxVouchers = await taxVoucherTypesRepository.GetAllListAsync();
-
-            return Mapping<TaxVouchersTypes, TaxVoucherTypesOutputDto>.Auto.MapToPagedResult(taxVouchers, taxVouchers.Count);
+                taxVouchers = taxVouchers.OrderByDescending(x => x.Code.StartsWith('E')).ToList();
+            if (input.MaxResultCount <= 0)    
+            {
+                return Mapping<TaxVouchersTypes, TaxVoucherTypesOutputDto>.Auto.MapToPagedResult(taxVouchers, taxVouchers.Count);
+            }
+            var taxVouchersFiltered = taxVouchers.Skip(input.SkipCount)
+                                                .Take(input.MaxResultCount)
+                                                .ToList();
+            return Mapping<TaxVouchersTypes, TaxVoucherTypesOutputDto>.Auto.MapToPagedResult(taxVouchersFiltered, taxVouchers.Count);
         }
         catch (Exception)
         {
@@ -90,11 +97,11 @@ public class TaxVoucherTypesAppService : VoucherWarehouseAppServiceBase, ITaxVou
         }
     }
 
-  
-   
 
- 
 
-  
-    
+
+
+
+
+
 }

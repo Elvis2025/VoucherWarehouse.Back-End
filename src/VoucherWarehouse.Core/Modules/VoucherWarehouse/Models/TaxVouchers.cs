@@ -8,12 +8,10 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 
 public class TaxVouchers : BaseEntity<int>
 {
-    public int? BranchId { get; set; }
     public int TaxVoucherTypeId { get; set; }
 
     [StringLength(1000)]
-    public string Description { get; set; }
-    public string Prefix { get; set; }
+    public string Comment { get; set; }
     public int InitialSequence { get; set; }
     public int CurrentSequence { get; set; }
     public int FinalSequence { get; set; }

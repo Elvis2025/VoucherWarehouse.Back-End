@@ -4,6 +4,7 @@ using IBS.VoucherWarehouse.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBS.VoucherWarehouse.Migrations
 {
     [DbContext(typeof(VoucherWarehouseDbContext))]
-    partial class VoucherWarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260329180447_CreateIndexForEcfApiAuthentication")]
+    partial class CreateIndexForEcfApiAuthentication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1627,7 +1630,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<string>("TenancyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UsernameOrEmailAddress")
@@ -1636,8 +1639,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("TenantId")
-                        .IsUnique()
-                        .HasFilter("[TenantId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("EcfApiAuthentications");
                 });
@@ -1905,7 +1907,7 @@ namespace IBS.VoucherWarehouse.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("TerminoPago")
@@ -2012,7 +2014,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("TasaImpuesto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoImpuesto")
@@ -2099,7 +2101,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("PorcentajeDescuento")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoDescuento")
@@ -2152,7 +2154,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoCodigo")
@@ -2207,7 +2209,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("PrecioOtraMoneda")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TipoCambio")
@@ -2269,7 +2271,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("MontoITBISRetenido")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2321,7 +2323,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("Subcantidad")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2376,7 +2378,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("PorcentajeRecargo")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoRecargo")
@@ -2467,7 +2469,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("RecargoMonto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<int>("UnidadMedida")
@@ -2523,7 +2525,7 @@ namespace IBS.VoucherWarehouse.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2579,7 +2581,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("MontoAjuste")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoAjuste")
@@ -2672,7 +2674,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2745,7 +2747,7 @@ namespace IBS.VoucherWarehouse.Migrations
                     b.Property<int>("TaxVoucherTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2795,7 +2797,7 @@ namespace IBS.VoucherWarehouse.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("TenantId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

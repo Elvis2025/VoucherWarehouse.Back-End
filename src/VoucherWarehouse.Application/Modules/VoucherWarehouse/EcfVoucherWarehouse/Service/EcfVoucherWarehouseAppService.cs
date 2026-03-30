@@ -813,7 +813,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     indicadorMontoGravado = source.IndicadorMontoGravado ?? 0,
                     tipoIngresos = SafeString(source.TipoIngresos),
                     tipoPago = source.TipoPago ?? 0,
-
+                    eNCF = source.ENCF,
+                    fechaVencimientoSecuencia = source.FechaVencimientoSecuencia,
                     // ESTE CAMPO TE ESTABA FALLANDO.
                     // Debe ir inicializado siempre.
                     // Si tu catálogo usa otro valor por defecto válido, cámbialo aquí.

@@ -4,7 +4,7 @@ using System;
 
 namespace IBS.VoucherWarehouse.Abstractions;
 
-public abstract class BaseEntity<TKey> : FullAuditedEntity<TKey>, IMayHaveTenant,IPassivable
+public abstract class BaseEntity<TKey> : FullAuditedEntity<TKey>,IPassivable,IMayHaveTenant
 {
     public int? TenantId { get; set; }
     public bool IsActive { get; set; }

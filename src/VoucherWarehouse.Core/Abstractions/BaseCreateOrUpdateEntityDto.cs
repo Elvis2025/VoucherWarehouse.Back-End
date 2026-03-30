@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace IBS.VoucherWarehouse.Abstractions;
 
-public abstract record class BaseCreateOrUpdateEntityDto<TPrimaryKey> : IEntityDto<TPrimaryKey>, IPassivable
+public abstract record class BaseCreateOrUpdateEntityDto<TPrimaryKey> : IEntityDto<TPrimaryKey>, IPassivable, IMayHaveTenant
 {
     public TPrimaryKey Id { get; set; }
     public bool IsActive { get; set; }
+    public int? TenantId { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
+using IBS.VoucherWarehouse.Common.Constants;
 using IBS.VoucherWarehouse.Common.Mapping.Abstractions;
 using IBS.VoucherWarehouse.Common.Mapping.Helpers;
 
@@ -124,6 +125,12 @@ public abstract class IbsMapperBase<TSource, TDestination> :
             var value = mapDefinition.SourceProperty.GetValue(source);
             value = TransformSourceValue(propertyName, value);
 
+            if (string.Equals(propertyName, "TenantId") && value is null)
+            {
+
+                mapDefinition.DestinationProperty.SetValue(destination, IbsSession.TenantId);
+                continue;
+            }
             mapDefinition.DestinationProperty.SetValue(destination, value);
         }
     }

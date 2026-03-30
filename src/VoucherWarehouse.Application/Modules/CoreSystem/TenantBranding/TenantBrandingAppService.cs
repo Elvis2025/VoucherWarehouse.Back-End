@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IBS.VoucherWarehouse.Modules.CoreSystem.TenantBranding.Dto;
 using IBS.VoucherWarehouse.Modules.CoreSystem.TenantLogoFileManager;
+using IBS.VoucherWarehouse.Common.Helpers;
 
 namespace IBS.VoucherWarehouse.Modules.CoreSystem.TenantBranding;
 
@@ -81,7 +82,7 @@ public class TenantBrandingAppService : VoucherWarehouseAppServiceBase, ITenantB
             return null;
         }
 
-        var branding = await _tenantBrandingRepository.FirstOrDefaultAsync(x => x.TenantId == AbpSession.GetTenantId());
+        var branding = await _tenantBrandingRepository.GetFisrtOrDefaultAsync();
 
         if (branding == null)
         {

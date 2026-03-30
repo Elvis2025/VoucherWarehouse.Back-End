@@ -2,11 +2,9 @@
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Dto;
 
-public sealed record class TaxVoucherCreateDto : IPassivable
+public sealed record class TaxVoucherCreateDto : BaseCreateOrUpdateEntityDto<int>
 {
-    public bool IsActive { get; set; }
-    public string Description { get; set; }
-    public string Prefix { get; set; }
+    public string Comment { get; set; }
     public int InitialSequence { get; set; }
     public int CurrentSequence { get; set; }
     public int FinalSequence { get; set; }

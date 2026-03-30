@@ -7,6 +7,7 @@ using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
+using IBS.VoucherWarehouse.Abstractions;
 using IBS.VoucherWarehouse.Authorization;
 using IBS.VoucherWarehouse.Authorization.Roles;
 using IBS.VoucherWarehouse.Authorization.Users;
@@ -26,6 +27,7 @@ public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, Page
     private readonly EditionManager _editionManager;
     private readonly UserManager _userManager;
     private readonly RoleManager _roleManager;
+    private readonly IIbsDbMigrator iibsDbMigrator;
     private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
 
     public TenantAppService(
@@ -34,6 +36,7 @@ public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, Page
         EditionManager editionManager,
         UserManager userManager,
         RoleManager roleManager,
+        IIbsDbMigrator iibsDbMigrator,
         IAbpZeroDbMigrator abpZeroDbMigrator)
         : base(repository)
     {
@@ -41,6 +44,7 @@ public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, Page
         _editionManager = editionManager;
         _userManager = userManager;
         _roleManager = roleManager;
+        this.iibsDbMigrator = iibsDbMigrator;
         _abpZeroDbMigrator = abpZeroDbMigrator;
     }
 
@@ -65,7 +69,7 @@ public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, Page
 
         // Create tenant database
         _abpZeroDbMigrator.CreateOrMigrateForTenant(tenant);
-
+        iibsDbMigrator.CreateOrMigrateForHostByTenant(tenant);
         // We are working entities of new tenant, so changing tenant filter
         using (CurrentUnitOfWork.SetTenantId(tenant.Id))
         {
@@ -89,7 +93,7 @@ public class TenantAppService : AsyncCrudAppService<Tenant, TenantDto, int, Page
             await CurrentUnitOfWork.SaveChangesAsync();
 
             //Create static Data for new tenant
-            StaticDataForTenant.Instance.CreateAll();
+           // StaticDataForTenant.Instance.CreateAll();
         }
 
         return MapToEntityDto(tenant);

@@ -29,8 +29,15 @@ public static class SeedHelper
 
         // Default tenant seed (in host database).
         new DefaultTenantBuilder(context).Create();
-        new HostTaxVoucherTypesCreator(context).Create();
         new TenantRoleAndUserBuilder(context, 1).Create();
+       // SeedHostDbByTenant(context);
+    }
+
+    public static void SeedHostDbByTenant(VoucherWarehouseDbContext context, AbpTenantBase tenantBase)
+    {
+        context.SuppressAutoSetTenantId = true;
+
+        new HostTaxVoucherTypesCreator(context, tenantBase).Create();
     }
 
     private static void WithDbContext<TDbContext>(IIocResolver iocResolver, Action<TDbContext> contextAction)

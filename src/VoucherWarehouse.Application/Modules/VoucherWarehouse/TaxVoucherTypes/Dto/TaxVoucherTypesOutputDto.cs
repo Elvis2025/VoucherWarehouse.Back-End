@@ -9,8 +9,8 @@ public sealed record class TaxVoucherTypesOutputDto : BaseEntityDto<int>
     public string Code { get; set; }
     [StringLength(100)]
     [Required]
-    public string Description { get; set; }
-    public string CodeAndDescription => Code + " - " + Description;
+    public string Name { get; set; }
+    public string CodeAndDescription => Code + " - " + Name;
     public int TaxVoucherLenght { get; set; }
     public string Format { get; set; }
 }

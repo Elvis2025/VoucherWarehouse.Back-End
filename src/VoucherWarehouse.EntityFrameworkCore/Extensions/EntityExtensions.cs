@@ -1,5 +1,7 @@
 ﻿using Abp.Domain.Entities;
+using Abp.MultiTenancy;
 using IBS.VoucherWarehouse.EntityFrameworkCore;
+using IBS.VoucherWarehouse.MultiTenancy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -46,12 +48,80 @@ public static class EntityExtensions
     public static void AddOrSetValuesRange<TEntity, TMatchKey>(
           this DbSet<TEntity> dbSet,
           IEnumerable<TEntity> entities,
-          Expression<Func<TEntity, TMatchKey>> matchSelector,
+          Expression<Func<TEntity, TMatchKey>> filter,
+          AbpTenantBase tenant,
+          VoucherWarehouseDbContext context)
+          where TEntity : class
+    {
+        var existingEntities = dbSet.ToList();
+        var matchFunc = filter.Compile();
+
+        var entityType = context.Model.FindEntityType(typeof(TEntity));
+
+        if (entityType is null) return;
+        var primaryKey = entityType.FindPrimaryKey();
+
+        if (primaryKey is null) return;
+
+        var primaryKeyNames = primaryKey.Properties
+            .Select(p => p.Name)
+            .ToHashSet();
+
+        var allProperties = entityType.GetProperties()
+            .Where(p => !primaryKeyNames.Contains(p.Name))
+            .ToList();
+
+        var tenantId = tenant.Id;
+        var userId = tenant.CreatorUserId ?? 1;
+
+        foreach (var entity in entities)
+        {
+            var matchValue = matchFunc(entity);
+
+            var existing = existingEntities
+                .FirstOrDefault(e => EqualityComparer<TMatchKey>.Default.Equals(matchFunc(e), matchValue) && e.FilterByTenantId(tenantId));
+
+            if (existing is null)
+            {
+                SetPropertyIfExists(entity, "CreationTime", DateTime.Now);
+                SetPropertyIfExists(entity, "TenantId", tenantId);
+                SetPropertyIfExists(entity, "CreatorUserId", userId);
+                dbSet.Add(entity);
+                continue;
+            }
+
+            context.Entry(existing);
+
+            foreach (var property in allProperties)
+            {
+                if (property.Name == "TenantId") 
+                    continue;
+                if (property.Name == "CreatorUserId") 
+                    continue;
+
+                var propertyInfo = typeof(TEntity).GetProperty(property.Name);
+                if (propertyInfo == null || !propertyInfo.CanRead || !propertyInfo.CanWrite)
+                    continue;
+
+                var newValue = propertyInfo.GetValue(entity);
+                propertyInfo.SetValue(existing, newValue);
+            }
+
+            SetPropertyIfExists(existing, "LastModificationTime", DateTime.Now);
+            SetPropertyIfExists(existing, "LastModifierUserId", userId);
+        }
+    }
+
+    public static void AddOrSetValuesRange<TEntity, TMatchKey>(
+          this DbSet<TEntity> dbSet,
+          IEnumerable<TEntity> entities,
+          int? tenantId,
+          Expression<Func<TEntity, TMatchKey>> filter,
           DbContext context)
           where TEntity : class
     {
         var existingEntities = dbSet.ToList();
-        var matchFunc = matchSelector.Compile();
+        var matchFunc = filter.Compile();
 
         var entityType = context.Model.FindEntityType(typeof(TEntity));
 
@@ -78,6 +148,7 @@ public static class EntityExtensions
             if (existing == null)
             {
                 SetPropertyIfExists(entity, "CreationTime", DateTime.Now);
+                if (tenantId != null) SetPropertyIfExists(entity, "TenantId", tenantId);
                 dbSet.Add(entity);
                 continue;
             }
@@ -95,6 +166,7 @@ public static class EntityExtensions
             }
 
             SetPropertyIfExists(existing, "LastModificationTime", DateTime.Now);
+            if (tenantId != null) SetPropertyIfExists(existing, "TenantId", tenantId);
         }
     }
 
@@ -107,5 +179,15 @@ public static class EntityExtensions
         {
             prop.SetValue(entity, value);
         }
+    }
+
+
+    private static bool FilterByTenantId(this object entity, int tenatId)
+    {
+        var prop = entity.GetType().GetProperty("TenantId").GetValue(entity)?.ToString();
+        if (prop is null || !int.TryParse(prop, out int currentTenantId)) return false;
+
+
+        return currentTenantId == tenatId;
     }
 }

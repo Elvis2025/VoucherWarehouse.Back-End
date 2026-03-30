@@ -1,7 +1,9 @@
-﻿using Abp.EntityFrameworkCore.Configuration;
+﻿using Abp.Dependency;
+using Abp.EntityFrameworkCore.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.EntityFrameworkCore;
+using IBS.VoucherWarehouse.Abstractions;
 using IBS.VoucherWarehouse.EntityFrameworkCore.Seed;
 
 namespace IBS.VoucherWarehouse.EntityFrameworkCore;
@@ -37,6 +39,7 @@ public class VoucherWarehouseEntityFrameworkModule : AbpModule
     public override void Initialize()
     {
         IocManager.RegisterAssemblyByConvention(typeof(VoucherWarehouseEntityFrameworkModule).GetAssembly());
+       //ocManager.Register<IibsDbMigrator, AbpZeroDbMigrator>(DependencyLifeStyle.Transient);
     }
 
     public override void PostInitialize()

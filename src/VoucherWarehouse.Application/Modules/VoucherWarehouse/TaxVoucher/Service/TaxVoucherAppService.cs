@@ -123,10 +123,10 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
         //if (taxVoucher.ExpirationDate > DateTime.Now)
         //    throw new UserFriendlyException(L("ThereIsNotAvailableSequenceFor",$"{voucherType.GetFullName()}\n Cantidad de Secuencias: {taxVoucher.RemainingQuantity}"));
 
-        currentSequence = taxVoucher.CurrentSequence++;
+        currentSequence = ++taxVoucher.CurrentSequence;
 
 
-        currentRemainingQuantity = taxVoucher.RemainingQuantity--;
+        currentRemainingQuantity = --taxVoucher.RemainingQuantity;
 
         if (taxVoucher.RemainingQuantity <= taxVoucher.MinimumToAlert)
         {
@@ -137,7 +137,7 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
 
         taxVoucher = await taxVoucherRepository.GetAsync(taxVoucher.Id);
         taxVoucher.CurrentSequence = currentSequence;
-        taxVoucher.RemainingQuantity -= currentRemainingQuantity;
+        taxVoucher.RemainingQuantity = currentRemainingQuantity;
         await taxVoucherRepository.UpdateAsync(taxVoucher);
 
         

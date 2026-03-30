@@ -4,6 +4,7 @@ using IBS.VoucherWarehouse.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBS.VoucherWarehouse.Migrations
 {
     [DbContext(typeof(VoucherWarehouseDbContext))]
-    partial class VoucherWarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260329035047_NewChangesInTableTaxVouchers")]
+    partial class NewChangesInTableTaxVouchers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2690,7 +2693,7 @@ namespace IBS.VoucherWarehouse.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("Comentario")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 

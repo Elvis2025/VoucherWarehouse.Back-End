@@ -5,7 +5,7 @@ using System;
 
 namespace IBS.VoucherWarehouse.Abstractions;
 
-public abstract record class BaseEntityDto<TKey> : IEntityDto<TKey>,IFullAudited, IMayHaveTenant, ISoftDelete, IPassivable
+public abstract record class BaseEntityDto<TKey> : IEntityDto<TKey>,IFullAudited, IMayHaveTenant, IPassivable
 {
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
