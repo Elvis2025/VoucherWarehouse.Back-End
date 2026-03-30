@@ -13,6 +13,7 @@ public sealed record class TaxVoucherOutputDto : BaseEntityDto<int>
 {
     public string Comment { get; set; }
     public int InitialSequence { get; set; }
+    public int TaxVoucherTypeId { get; set; }
     public int CurrentSequence { get; set; }
     public int FinalSequence { get; set; }
     public int RegisteredQuantity { get; set; }
@@ -23,7 +24,6 @@ public sealed record class TaxVoucherOutputDto : BaseEntityDto<int>
 
     public string ExpirationDateFormatted => ExpirationDate.ToDateDgiiFormat();
     public string ExpeditionDateFormatted => ExpeditionDate.ToDateDgiiFormat();
-
 
     public TaxVoucherTypesOutputDto TaxVoucherType { get; set; }
     public string CodeAndDescription => TaxVoucherType is null ? string.Empty : TaxVoucherType.CodeAndDescription;

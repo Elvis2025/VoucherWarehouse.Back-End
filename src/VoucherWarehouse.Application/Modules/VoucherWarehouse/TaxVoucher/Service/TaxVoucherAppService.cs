@@ -22,10 +22,11 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
     {
         try
         {
-
-            var te = Mapping<TaxVoucherCreateDto, TaxVouchers>.Auto.Map(input);
+            input.FinalSequence = Math.Abs(input.RegisteredQuantity - input.CurrentSequence);
+            input.RemainingQuantity = input.RegisteredQuantity;
+            var taxVoucherDto = Mapping<TaxVoucherCreateDto, TaxVouchers>.Auto.Map(input);
             await taxVouchersTypeRepository.GetAsync(input.TaxVoucherTypeId);
-            var taxVoucher = await taxVoucherRepository.InsertAsync(te);
+            var taxVoucher = await taxVoucherRepository.InsertAsync(taxVoucherDto);
             return Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.Map(taxVoucher);
         }
         catch (Exception)
@@ -79,6 +80,7 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
         try
         {
             var taxVoucher = await taxVoucherRepository.GetAsync(input.Id);
+            var test = Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.Map(taxVoucher);
             return Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.Map(taxVoucher);
         }
         catch (Exception)
@@ -92,6 +94,11 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
     {
         try
         {
+            input.FinalSequence = Math.Abs(input.RegisteredQuantity - input.CurrentSequence);
+            input.RemainingQuantity = Math.Abs(input.RegisteredQuantity - input.RemainingQuantity);
+            var taxVoucherDto = Mapping<TaxVoucherUpdateDto, TaxVouchers>.Auto.Map(input);
+            await taxVouchersTypeRepository.GetAsync(input.TaxVoucherTypeId);
+      
             var taxVoucher = await taxVoucherRepository.UpdateAsync(Mapping<TaxVoucherUpdateDto, TaxVouchers>.Auto.Map(input));
             return Mapping<TaxVouchers, TaxVoucherOutputDto>.Auto.Map(taxVoucher);
         }
