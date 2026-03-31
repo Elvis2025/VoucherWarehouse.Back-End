@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
+﻿namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 
 
 public class ReceiveSalesEcfInputDto
@@ -46,25 +39,27 @@ public class DetallesItem
     [StringLength(80)]
     public string nombreItem { get; set; }
     public int indicadorBienoServicio { get; set; }
-
-    public string descripcionItem { get; set; }
     public decimal cantidadItem { get; set; }
-    public int unidadMedida { get; set; }
+    public int? unidadMedida { get; set; } = null;
     public decimal cantidadReferencia { get; set; }
     public int unidadReferencia { get; set; }
 
-    public List<TablaSubcantidad> tablaSubcantidad { get; set; }
+    public string descripcionItem { get; set; } = null;
     public decimal? gradosAlcohol { get; set; } = new();
     public decimal PrecioUnitarioReferencia { get; set; }
     public decimal precioUnitarioItem { get; set; }
     public decimal descuentoMonto { get; set; }
-    public List<TablaSubDescuento> tablaSubDescuento { get; set; }
     public decimal recargoMonto { get; set; }
-    public List<TablaSubRecargo> tablaSubRecargo { get; set; }
-    public List<TablaImpuestoAdicional> tablaImpuestoAdicional { get; set; }
-    public OtramonedasDetalles otramonedasDetalles { get; set; }
-    public Retencion retencion { get; set; }
     public decimal montoItem { get; set; }
+
+
+    //Campos no son requeridos
+    public List<TablaSubcantidad> tablaSubcantidad { get; set; } = null;
+    public List<TablaSubDescuento> tablaSubDescuento { get; set; } = null;
+    public List<TablaSubRecargo> tablaSubRecargo { get; set; } = null;
+    public List<TablaImpuestoAdicional> tablaImpuestoAdicional { get; set; } = null;
+    public OtramonedasDetalles otramonedasDetalles { get; set; } = null;
+    public Retencion retencion { get; set; } = null;
 }
 
 public class Retencion
@@ -96,51 +91,57 @@ public class EncabezadoSales
 
 public class Comprador
 {
+    [Required]
     public string rNCComprador { get; set; }
-    //[Required]
+
+    [Required]
     [StringLength(150)]
-    public string razonSocialComprador { get; set; }
-    public string identificadorExtranjero { get; set; }
-    public string contactoComprador { get; set; }
-    public string correoComprador { get; set; }
-    public string direccionComprador { get; set; }
-    public string municipioComprador { get; set; }
-    public string provinciaComprador { get; set; }
+    public string razonSocialComprador { get; set; } 
+    public string identificadorExtranjero { get; set; } = null;
+    public string contactoComprador { get; set; } = null;
+    public string correoComprador { get; set; } = null;
+    public string direccionComprador { get; set; } = null;
+    public string municipioComprador { get; set; } = null;
+    public string provinciaComprador { get; set; } = null;
+    [Required]
     public string fechaEntrega { get; set; }
-    public string fechaOrdenCompra { get; set; }
-    public string numeroOrdenCompra { get; set; }
-    public string codigoInternoComprador { get; set; }
-    public string contactoEntrega { get; set; }
-    public string direccionEntrega { get; set; }
-    public string telefonoAdicional { get; set; }
+    public string fechaOrdenCompra { get; set; } = null;
+    public string numeroOrdenCompra { get; set; } = null;
+    public string codigoInternoComprador { get; set; } = null;
+    public string contactoEntrega { get; set; } = null;
+    public string direccionEntrega { get; set; } = null;
+    public string telefonoAdicional { get; set; } = null;
 }
 
 public class Emisor
 {
     [Required]
     public string rNCEmisor { get; set; }
+
     [Required]
     [StringLength(150)]
     public string razonSocialEmisor { get; set; }
+
     [StringLength(150)]
-    public string nombreComercial { get; set; }
+    public string nombreComercial { get; set; } = null;
+
     [Required]
     [StringLength(100)]
     public string direccionEmisor { get; set; }
-    public string municipio { get; set; }
-    public string provincia { get; set; }
-    public string[] tablaTelefonoEmisor { get; set; }
-    public string correoEmisor { get; set; }
+    public string municipio { get; set; } = null;
+    public string provincia { get; set; } = null;
+    public string[] tablaTelefonoEmisor { get; set; } = null;
+    public string correoEmisor { get; set; } = null;
 
-    public string webSite { get; set; }
-    public string codigoVendedor { get; set; }
+    public string webSite { get; set; } = null;
+    public string codigoVendedor { get; set; } = null;
     [Required]
     [StringLength(10)]
     public string fechaEmision { get; set; }
     [StringLength(20)]
-    public string numeroFacturaInterna { get; set; }
-    public string numeroPedidoInterno { get; set; }
-    public string zonaVenta { get; set; }
+    public string numeroFacturaInterna { get; set; } = null;
+    public string numeroPedidoInterno { get; set; } = null;
+    public string zonaVenta { get; set; } = null;
 }
 
 public class IdDoc
@@ -154,33 +155,45 @@ public class IdDoc
     public string eNCF { get; set; }
 
     [StringLength(10)]
+    [Required]
     public string fechaVencimientoSecuencia { get; set; }
-    public string indicadorNotaCredito { get; set; }
-    public int? indicadorMontoGravado { get; set; }
+
+    public string indicadorNotaCredito { get; set; } = null;
+
+    public int? indicadorMontoGravado { get; set; } = 0;
+
     [StringLength(2)]
     public string tipoIngresos { get; set; }
     [Required]
-    public int tipoPago { get; set; }
+    public int? tipoPago { get; set; }
+
     [StringLength(10)]
-    public string fechaLimitePago { get; set; }
-    public string terminoPago { get; set; }
+    public string fechaLimitePago { get; set; } = null;
+
+    public string terminoPago { get; set; } = null;
+
+    [Required]
     public List<TablaFormasPago> tablaFormasPago { get; set; }
+
     [StringLength(2)]
+    [Required]
     public string tipoCuentaPago { get; set; }
+
     [StringLength(28)]
-    public string numeroCuentaPago { get; set; }
+    public string numeroCuentaPago { get; set; } = null;
+
     [StringLength(75)]
-    public string bancoPago { get; set; }
+    public string bancoPago { get; set; } = null;
 }
 
 public class Totales
 {
 
-    public decimal montoGravadoI1 { get; set; }
-    public decimal montoGravadoI2 { get; set; }
-    public decimal montoGravadoI3 { get; set; }
-    public decimal montoGravadoTotal { get; set; }
-    public decimal montoExento { get; set; }
+    public decimal? montoGravadoI1 { get; set; }
+    public decimal? montoGravadoI2 { get; set; }
+    public decimal? montoGravadoI3 { get; set; }
+    public decimal? montoGravadoTotal { get; set; }
+    public decimal? montoExento { get; set; }
     public decimal? iTBIS1 { get; set; }
     public decimal? iTBIS2 { get; set; }
     public decimal? iTBIS3 { get; set; }
@@ -200,7 +213,7 @@ public class Totales
     public decimal montoTotal { get; set; }
     public decimal montoNoFacturable { get; set; }
 
-    public decimal valorPagar { get; set; }
+    public decimal? valorPagar { get; set; } = null;
 }
 
 public class ImpuestosAdicional

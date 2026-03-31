@@ -71,7 +71,7 @@ public static class EntityExtensions
             .Where(p => !primaryKeyNames.Contains(p.Name))
             .ToList();
 
-        var tenantId = tenant.Id;
+        int? tenantId = tenant.Id == 1 ? null : tenant.Id;
         var userId = tenant.CreatorUserId ?? 1;
 
         foreach (var entity in entities)
@@ -182,7 +182,7 @@ public static class EntityExtensions
     }
 
 
-    private static bool FilterByTenantId(this object entity, int tenatId)
+    private static bool FilterByTenantId(this object entity, int? tenatId)
     {
         var prop = entity.GetType().GetProperty("TenantId").GetValue(entity)?.ToString();
         if (prop is null || !int.TryParse(prop, out int currentTenantId)) return false;

@@ -18,7 +18,7 @@ public class DgiiExcelImportDto
     public string DireccionEmisor { get; set; }
     public string Municipio { get; set; }
     public string Provincia { get; set; }
-    public List<string> TelefonosEmisor { get; set; } = new();
+    public List<string> TelefonosEmisor { get; set; } = null;
     public string CorreoEmisor { get; set; }
     public string WebSite { get; set; }
     public string CodigoVendedor { get; set; }

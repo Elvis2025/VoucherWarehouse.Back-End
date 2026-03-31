@@ -29,7 +29,7 @@ public class IdDocResume
     [StringLength(2)]
     public string tipoIngresos { get; set; }
     [Required]
-    public int tipoPago { get; set; }
+    public int? tipoPago { get; set; }
     [StringLength(10)]
     public string fechaLimitePago { get; set; }
     public List<TablaFormasPago> tablaFormasPago { get; set; }
@@ -60,7 +60,7 @@ public class TotalesResume
     public decimal? montoGravadoI2 { get; set; }
     public decimal? montoGravadoI3 { get; set; }
     public decimal? montoGravadoTotal { get; set; }
-    public decimal montoExento { get; set; }
+    public decimal? montoExento { get; set; }
     public decimal? totalITBIS1 { get; set; }
     public decimal? totalITBIS2 { get; set; }
     public decimal? totalITBIS3 { get; set; }

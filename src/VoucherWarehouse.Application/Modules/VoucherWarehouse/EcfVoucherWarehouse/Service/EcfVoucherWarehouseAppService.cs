@@ -810,66 +810,59 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 idDoc = new IdDoc
                 {
                     tipoeCF = SafeString(source.TipoeCF),
-                    indicadorMontoGravado = source.IndicadorMontoGravado ?? 0,
-                    tipoIngresos = SafeString(source.TipoIngresos),
-                    tipoPago = source.TipoPago ?? 0,
                     eNCF = source.ENCF,
                     fechaVencimientoSecuencia = source.FechaVencimientoSecuencia,
-                    // ESTE CAMPO TE ESTABA FALLANDO.
-                    // Debe ir inicializado siempre.
-                    // Si tu catálogo usa otro valor por defecto válido, cámbialo aquí.
-                    tipoCuentaPago = "NA",
-
-                    tablaFormasPago = (source.FormasPago ?? new List<DgiiExcelFormaPagoDto>())
+                    indicadorNotaCredito = null,
+                    indicadorMontoGravado = source.IndicadorMontoGravado,
+                    tipoIngresos = SafeString(source.TipoIngresos),
+                    tipoPago = source.TipoPago,
+                    fechaLimitePago = null,
+                    terminoPago = null,
+                    tablaFormasPago = (source.FormasPago ?? null)
                         .Select(x => new TablaFormasPago
                         {
                             formaPago = x?.FormaPago ?? 0,
                             montoPago = x?.MontoPago ?? 0m
                         })
-                        .ToList()
+                        .ToList(),
+                    tipoCuentaPago = "NA",
+                    numeroCuentaPago = null,
+                    bancoPago = null
                 },
 
                 emisor = new Emisor
                 {
                     rNCEmisor = SafeString(source.RNCEmisor),
                     razonSocialEmisor = SafeString(source.RazonSocialEmisor),
-                    nombreComercial = SafeString(source.NombreComercial),
+                    nombreComercial = null,
                     direccionEmisor = SafeString(source.DireccionEmisor),
-                    municipio = SafeString(source.Municipio),
-                    provincia = SafeString(source.Provincia),
-                    correoEmisor = SafeString(source.CorreoEmisor),
-                    webSite = SafeString(source.WebSite),
-                    codigoVendedor = SafeString(source.CodigoVendedor),
+                    municipio = null,
+                    provincia = null,
+                    tablaTelefonoEmisor = null,
 
-                    // En tu JSON estaba nulo; mejor mandarlo inicializado.
+                    correoEmisor = null,
+                    webSite = null,
+                    codigoVendedor = null,
+           
                     fechaEmision = DateTime.Now.ToString("dd-MM-yyyy"),
                     numeroFacturaInterna = $"IBS-VW-{numeroPedidoInterno}",
                     numeroPedidoInterno = numeroPedidoInterno.ToString(),
-                    tablaTelefonoEmisor = (source.TelefonosEmisor ?? new List<string>())
-                        .Where(x => !string.IsNullOrWhiteSpace(x))
-                        .Select(x => x.Trim())
-                        .ToArray()
+                    zonaVenta = null
                 },
 
                 comprador = new Comprador
                 {
                     rNCComprador = SafeString(source.RNCComprador),
                     razonSocialComprador = SafeString(source.RazonSocialComprador),
-                    contactoComprador = SafeString(source.ContactoComprador),
-                    correoComprador = SafeString(source.CorreoComprador),
-                    direccionComprador = SafeString(source.DireccionComprador),
-                    municipioComprador = SafeString(source.MunicipioComprador),
-                    provinciaComprador = SafeString(source.ProvinciaComprador),
                     fechaEntrega = DateTime.Now.ToString("dd-MM-yyyy"),
-                    codigoInternoComprador = Random.Shared.Next(10000, 100000).ToString()
                 },
 
                 transporte = null,
 
                 totales = new Totales
                 {
-                    montoGravadoTotal = source.MontoGravadoTotal ?? 0m,
-                    montoGravadoI1 = source.MontoGravadoI1 ?? 0m,
+                    montoGravadoTotal = source.MontoGravadoTotal,
+                    montoGravadoI1 = source.MontoGravadoI1 ,
 
                     // Inicializados por defecto para que nunca vayan nulos
                     montoGravadoI2 = 0m,
@@ -893,26 +886,19 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 }
             },
 
-            detallesItems = (source.Items ?? new List<DgiiExcelDetalleDto>())
+            detallesItems = (source.Items ?? null)
                 .Select(x => new DetallesItem
                 {
                     numeroLinea = x?.NumeroLinea ?? x?.Numero ?? 0,
+                    tablaCodigosItem = null,
                     indicadorFacturacion = x?.IndicadorFacturacion ?? 0,
                     nombreItem = SafeString(x?.NombreItem),
-                    tablaCodigosItem = new() {
-                        new()
-                        { 
-                            tipoCodigo = "IBSVWINTERNA",
-                            codigoItem = $"00{x.NumeroLinea}"
-                        
-                        }
-                    },
+                    indicadorBienoServicio = x?.IndicadorBienoServicio ?? 0,
                     // ESTE CAMPO TE ESTABA FALLANDO.
                     gradosAlcohol = 0m,
 
-                    indicadorBienoServicio = x?.IndicadorBienoServicio ?? 0,
                     cantidadItem = x?.CantidadItem ?? 0m,
-                    unidadMedida = x?.UnidadMedida ?? 0,
+                    unidadMedida = x?.UnidadMedida ?? null,
                     precioUnitarioItem = x?.PrecioUnitarioItem ?? 0m,
                     montoItem = x?.MontoItem ?? 0m
                 })
@@ -923,7 +909,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     }
     private static string SafeString(object value)
     {
-        return value?.ToString()?.Trim() ?? string.Empty;
+        return value?.ToString()?.Trim() ?? null;
     }
 
     private async Task SaveEcfVoucherAsync(
@@ -1101,10 +1087,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     private void MapHeaderAdditionalTaxes(Models.EcfVoucherWarehouse entity, ReceiveSalesEcfInputDto input)
     {
         var taxes = input?.encabezado?.totales?.impuestosAdicionales;
-        if (taxes == null)
-        {
-            return;
-        }
+        if (taxes == null) return;
 
         foreach (var item in taxes)
         {
@@ -1135,7 +1118,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 IndicadorBienoServicio = item.indicadorBienoServicio,
                 DescripcionItem = item.descripcionItem,
                 CantidadItem = item.cantidadItem ,
-                UnidadMedida = item.unidadMedida ,
+                UnidadMedida = item.unidadMedida ?? 0 ,
                 CantidadReferencia = item.cantidadReferencia ,
                 UnidadReferencia = item.unidadReferencia ,
                 GradosAlcohol = item.gradosAlcohol ?? 0m ,
