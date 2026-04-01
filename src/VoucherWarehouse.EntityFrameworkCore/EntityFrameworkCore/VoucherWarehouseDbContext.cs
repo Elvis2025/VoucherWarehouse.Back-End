@@ -29,6 +29,9 @@ public class VoucherWarehouseDbContext : AbpZeroDbContext<Tenant, Role, User, Vo
     public virtual DbSet<EcfVoucherWarehouseDetailAdditionalTax> EcfVoucherWarehouseDetailAdditionalTaxes { get; set; }
     public virtual DbSet<EcfVoucherWarehouseDetailOtherCurrency> EcfVoucherWarehouseDetailOtherCurrencies { get; set; }
     public virtual DbSet<EcfVoucherWarehouseDetailRetention> EcfVoucherWarehouseDetailRetentions { get; set; }
+    public virtual DbSet<EcfVoucherDocumentJob> EcfVoucherDocumentJobs { get; set; }
+    public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+    public virtual DbSet<PaymentType> PaymentTypes { get; set; }
     public VoucherWarehouseDbContext(DbContextOptions<VoucherWarehouseDbContext> options)
         : base(options)
     {

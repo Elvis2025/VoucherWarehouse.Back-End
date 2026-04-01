@@ -4,6 +4,7 @@ using IBS.VoucherWarehouse.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBS.VoucherWarehouse.Migrations
 {
     [DbContext(typeof(VoucherWarehouseDbContext))]
-    partial class VoucherWarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260401053620_CreateNewTables02123")]
+    partial class CreateNewTables02123
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1676,9 +1679,6 @@ namespace IBS.VoucherWarehouse.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCancellationRequested")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")

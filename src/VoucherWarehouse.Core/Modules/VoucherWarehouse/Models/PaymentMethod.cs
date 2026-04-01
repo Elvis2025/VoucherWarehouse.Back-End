@@ -15,5 +15,5 @@ public class PaymentMethod : BaseEntity<int>
     public string Name { get; set; }
     [Required]
     [NotNull]
-    public int DggiiCode { get; set; }
+    public int DgiiCode { get; set; }
 }

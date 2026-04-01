@@ -1,18 +1,25 @@
-﻿using Abp.Collections.Extensions;
+﻿using Abp.BackgroundJobs;
+using Abp.Collections.Extensions;
+using Abp.Domain.Uow;
 using Abp.Runtime.Caching;
 using Abp.Timing;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Spreadsheet;
+using IBS.VoucherWarehouse.Common.Constants;
 using IBS.VoucherWarehouse.Common.GlobalHelpers;
 using IBS.VoucherWarehouse.Common.Helpers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfApiAuthentication.Service;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.BackgroundWorker;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.ExcelManager;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Mappers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Service;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.IO;
@@ -22,22 +29,34 @@ using System.Text.RegularExpressions;
 
 namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Service;
 //[AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Default)]
-public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEcfVoucherWarehouseAppService
+public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEcfVoucherWarehouseAppService, IEcfVoucherRowProcessor
 {
-    private readonly IRepository<Models.EcfVoucherWarehouse,long> ecfVoucherWarehouseRepository;
+    private readonly IRepository<Models.EcfVoucherWarehouse, long> ecfVoucherWarehouseRepository;
     private readonly IEcfApiAuthenticationAppService ecfApiAuthenticationService;
-    private readonly ICacheManager cacheManager;
     private readonly ITaxVoucherAppService taxVoucherAppService;
+    private readonly IRepository<EcfVoucherDocumentJob, Guid> ecfVoucherDocumentJobRepository;
+    private readonly IBackgroundJobManager backgroundJobManager;
+    private readonly IWebHostEnvironment environment;
+    private readonly IEcfVoucherDocumentJobManagerService ecfVoucherDocumentJobManagerService;
 
-    public EcfVoucherWarehouseAppService(IRepository<Models.EcfVoucherWarehouse,long> ecfVoucherWarehouseRepository, 
-                                         IEcfApiAuthenticationAppService ecfApiAuthenticationService, 
+    public EcfVoucherWarehouseAppService(IRepository<Models.EcfVoucherWarehouse, long> ecfVoucherWarehouseRepository,
+                                         IEcfApiAuthenticationAppService ecfApiAuthenticationService,
                                          ICacheManager cacheManager,
-                                         ITaxVoucherAppService taxVoucherAppService)
+                                         ITaxVoucherAppService taxVoucherAppService,
+                                         IRepository<EcfVoucherDocumentJob, Guid> ecfVoucherDocumentJobRepository,
+                                         IBackgroundJobManager backgroundJobManager,
+                                         IWebHostEnvironment environment,
+                                         IEcfVoucherDocumentJobManagerService ecfVoucherDocumentJobManagerService
+
+                                         )
     {
         this.ecfVoucherWarehouseRepository = ecfVoucherWarehouseRepository;
         this.ecfApiAuthenticationService = ecfApiAuthenticationService;
-        this.cacheManager = cacheManager;
         this.taxVoucherAppService = taxVoucherAppService;
+        this.ecfVoucherDocumentJobRepository = ecfVoucherDocumentJobRepository;
+        this.backgroundJobManager = backgroundJobManager;
+        this.environment = environment;
+        this.ecfVoucherDocumentJobManagerService = ecfVoucherDocumentJobManagerService;
     }
 
     #region CRUD Async
@@ -64,7 +83,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             var ecfVoucherWarehouseFiltered = ecfVoucherWarehouse.OrderByDescending(x => x.Id)
                                                                  .ToList();
 
-            if(input.FilterText is not null)
+            if (input.FilterText is not null)
             {
                 ecfVoucherWarehouseFiltered = ecfVoucherWarehouseFiltered.Where(x => x.TipoECF.Contains(input.FilterText) ||
                                                                              x.ENCF.Contains(input.FilterText) ||
@@ -80,8 +99,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                                                              .ToList();
 
 
-            
-                
+
+
 
             return MapEntityToOutputTwoWay.Auto.MapToPagedResult(ecfVoucherWarehouseFiltered, ecfVoucherWarehouse.Count);
         }
@@ -149,7 +168,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
     {
 
         //AuthenticateInputDto _authenticateAPIParams = new();
-       var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
+        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
         EcfVoucherOutputDto output = new EcfVoucherOutputDto();
@@ -239,7 +258,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
             if (!response.IsSuccessStatusCode)
             {
-                
+
                 output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(responseBody);
                 await SaveEcfVoucherAsync(input, output);
                 return output;
@@ -471,327 +490,81 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
 
 
-    private static readonly Regex IndexedColumnRegex = new(@"^(?<name>.+)\[(?<index>\d+)\]$", RegexOptions.Compiled);
 
 
-    private List<DgiiExcelImportDto> Read(Stream stream)
+    public async Task<Guid> LoadExcelAsync([FromForm] ImportDgiiExcelRequestDto input)
     {
-        using var workbook = new XLWorkbook(stream);
-        var ws = workbook.Worksheet(1);
-
-        const int headerRow = 1;
-        const int dataStartRow = 2;
-
-        var lastColumn = ws.LastColumnUsed().ColumnNumber();
-        var lastRow = ws.LastRowUsed().RowNumber();
-
-        var headers = new Dictionary<int, string>();
-        for (int col = 1; col <= lastColumn; col++)
+        if (input?.File == null || input.File.Length == 0)
         {
-            headers[col] = ws.Cell(headerRow, col).GetValue<string>()?.Trim();
+            throw new UserFriendlyException("Debes enviar un archivo.");
         }
 
-        var result = new List<DgiiExcelImportDto>();
+        var extension = Path.GetExtension(input.File.FileName)?.ToLowerInvariant();
 
-        for (int row = dataStartRow; row <= lastRow; row++)
+        if (string.IsNullOrWhiteSpace(extension) ||
+            (extension != FileExtension.Xls &&
+             extension != FileExtension.Xlsx &&
+             extension != FileExtension.Csv &&
+             extension != FileExtension.Txt))
         {
-            if (RowIsEmpty(ws, row, lastColumn))
-            {
-                continue;
-            }
-
-            var dto = new DgiiExcelImportDto
-            {
-                TipoeCF = GetInt(ws, row, headers, "TipoeCF") ?? 0,
-                IndicadorMontoGravado = GetInt(ws, row, headers, "IndicadorMontoGravado"),
-                TipoIngresos = GetString(ws, row, headers, "TipoIngresos"),
-                TipoPago = GetInt(ws, row, headers, "TipoPago"),
-
-                RNCEmisor = GetString(ws, row, headers, "RNCEmisor"),
-                RazonSocialEmisor = GetString(ws, row, headers, "RazonSocialEmisor"),
-                NombreComercial = GetString(ws, row, headers, "NombreComercial"),
-                DireccionEmisor = GetString(ws, row, headers, "DireccionEmisor"),
-                Municipio = GetString(ws, row, headers, "Municipio"),
-                Provincia = GetString(ws, row, headers, "Provincia"),
-                CorreoEmisor = GetString(ws, row, headers, "CorreoEmisor"),
-                WebSite = GetString(ws, row, headers, "WebSite"),
-                CodigoVendedor = GetString(ws, row, headers, "CodigoVendedor"),
-
-                NumeroFacturaInterna = GetString(ws, row, headers, "NumeroFacturaInterna"),
-                NumeroPedidoInterno = GetString(ws, row, headers, "NumeroPedidoInterno"),
-                ZonaVenta = GetString(ws, row, headers, "ZonaVenta"),
-                FechaEmision = GetString(ws, row, headers, "FechaEmision"),
-
-                RNCComprador = GetString(ws, row, headers, "RNCComprador"),
-                RazonSocialComprador = GetString(ws, row, headers, "RazonSocialComprador"),
-                ContactoComprador = GetString(ws, row, headers, "ContactoComprador"),
-                CorreoComprador = GetString(ws, row, headers, "CorreoComprador"),
-                DireccionComprador = GetString(ws, row, headers, "DireccionComprador"),
-                MunicipioComprador = GetString(ws, row, headers, "MunicipioComprador"),
-                ProvinciaComprador = GetString(ws, row, headers, "ProvinciaComprador"),
-
-                FechaEntrega = GetString(ws, row, headers, "FechaEntrega"),
-                FechaOrdenCompra = GetString(ws, row, headers, "FechaOrdenCompra"),
-                NumeroOrdenCompra = GetString(ws, row, headers, "NumeroOrdenCompra"),
-                CodigoInternoComprador = GetString(ws, row, headers, "CodigoInternoComprador"),
-                NumeroContenedor = GetString(ws, row, headers, "NumeroContenedor"),
-                NumeroReferencia = GetString(ws, row, headers, "NumeroReferencia"),
-
-                MontoGravadoTotal = GetDecimal(ws, row, headers, "MontoGravadoTotal"),
-                MontoGravadoI1 = GetDecimal(ws, row, headers, "MontoGravadoI1"),
-                ITBIS1 = GetDecimal(ws, row, headers, "ITBIS1"),
-                TotalITBIS = GetDecimal(ws, row, headers, "TotalITBIS"),
-                TotalITBIS1 = GetDecimal(ws, row, headers, "TotalITBIS1"),
-                MontoTotal = GetDecimal(ws, row, headers, "MontoTotal")
-            };
-
-            dto.TelefonosEmisor = GetIndexedStrings(ws, row, headers, "TelefonoEmisor");
-            dto.FormasPago = GetFormasPago(ws, row, headers);
-            dto.Items = GetItems(ws, row, headers);
-
-            result.Add(dto);
+            throw new UserFriendlyException("Solo se aceptan archivos (.xls, .xlsx, .csv, .txt).");
         }
 
-        return result;
-    }
+        var jobId = Guid.NewGuid();
 
+        var uploadsFolder = Path.Combine(
+            environment.ContentRootPath,
+            "App_Data",
+            "Imports",
+            "EcfVoucher");
 
+        Directory.CreateDirectory(uploadsFolder);
 
+        var storedFileName = $"{jobId}{extension}";
+        var filePath = Path.Combine(uploadsFolder, storedFileName);
 
-    private static List<DgiiExcelFormaPagoDto> GetFormasPago(IXLWorksheet ws, int row, Dictionary<int, string> headers)
-    {
-        var result = new List<DgiiExcelFormaPagoDto>();
-        var indexes = GetIndexes(headers, "FormaPago")
-            .Union(GetIndexes(headers, "MontoPago"))
-            .Distinct()
-            .OrderBy(x => x);
-
-        foreach (var index in indexes)
+        await using (var fileStream = new FileStream(
+            filePath,
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None,
+            bufferSize: 81920,
+            useAsync: true))
         {
-            var formaPago = GetIndexedInt(ws, row, headers, "FormaPago", index);
-            var montoPago = GetIndexedDecimal(ws, row, headers, "MontoPago", index);
-
-            if (formaPago == null && montoPago == null)
-                continue;
-
-            result.Add(new DgiiExcelFormaPagoDto
-            {
-                Numero = index,
-                FormaPago = formaPago,
-                MontoPago = montoPago
-            });
+            await input.File.CopyToAsync(fileStream);
         }
 
-        return result;
-    }
-
-    private static List<DgiiExcelDetalleDto> GetItems(IXLWorksheet ws, int row, Dictionary<int, string> headers)
-    {
-        var result = new List<DgiiExcelDetalleDto>();
-
-        var indexes = GetIndexes(headers, "NumeroLinea")
-            .Union(GetIndexes(headers, "IndicadorFacturacion"))
-            .Union(GetIndexes(headers, "NombreItem"))
-            .Union(GetIndexes(headers, "IndicadorBienoServicio"))
-            .Union(GetIndexes(headers, "CantidadItem"))
-            .Union(GetIndexes(headers, "UnidadMedida"))
-            .Union(GetIndexes(headers, "PrecioUnitarioItem"))
-            .Union(GetIndexes(headers, "MontoItem"))
-            .Distinct()
-            .OrderBy(x => x);
-
-        foreach (var index in indexes)
+        var job = new EcfVoucherDocumentJob
         {
-            var item = new DgiiExcelDetalleDto
-            {
-                Numero = index,
-                NumeroLinea = GetIndexedInt(ws, row, headers, "NumeroLinea", index),
-                IndicadorFacturacion = GetIndexedInt(ws, row, headers, "IndicadorFacturacion", index),
-                NombreItem = GetIndexedString(ws, row, headers, "NombreItem", index),
-                IndicadorBienoServicio = GetIndexedInt(ws, row, headers, "IndicadorBienoServicio", index),
-                CantidadItem = GetIndexedDecimal(ws, row, headers, "CantidadItem", index),
-                UnidadMedida = GetIndexedInt(ws, row, headers, "UnidadMedida", index),
-                PrecioUnitarioItem = GetIndexedDecimal(ws, row, headers, "PrecioUnitarioItem", index),
-                MontoItem = GetIndexedDecimal(ws, row, headers, "MontoItem", index)
-            };
+            Id = jobId,
+            TenantId = AbpSession.TenantId,
+            FileName = input.File.FileName,
+            FilePath = filePath,
+            Status = JobStatus.Pending,
+            TotalRows = 0,
+            ProcessedRows = 0,
+            SuccessRows = 0,
+            FailedRows = 0,
+            ErrorMessage = null,
+            StartTime = null,
+            EndTime = null
+        };
 
-            if (string.IsNullOrWhiteSpace(item.NombreItem)
-                && item.CantidadItem == null
-                && item.PrecioUnitarioItem == null
-                && item.MontoItem == null)
-                continue;
+        await ecfVoucherDocumentJobRepository.InsertAsync(job);
+        await CurrentUnitOfWork.SaveChangesAsync();
 
-            result.Add(item);
-        }
-
-        return result;
-    }
-
-    private static IEnumerable<int> GetIndexes(Dictionary<int, string> headers, string baseName)
-    {
-        foreach (var item in headers)
+        await backgroundJobManager.EnqueueAsync<DgiiProcessEcfVoucher, ProcessDgiiImportJobArgs>(new ProcessDgiiImportJobArgs
         {
-            if (string.IsNullOrWhiteSpace(item.Value))
-                continue;
+            JobId = jobId
+        });
 
-            var match = IndexedColumnRegex.Match(item.Value);
-            if (!match.Success)
-                continue;
-
-            if (string.Equals(match.Groups["name"].Value.Trim(), baseName, StringComparison.OrdinalIgnoreCase))
-                yield return int.Parse(match.Groups["index"].Value);
-        }
-    }
-
-    private static string GetString(IXLWorksheet ws, int row, Dictionary<int, string> headers, string headerName)
-    {
-        var col = headers.FirstOrDefault(x => string.Equals(x.Value, headerName, StringComparison.OrdinalIgnoreCase)).Key;
-        return col == 0 ? null : ws.Cell(row, col).GetFormattedString().Trim();
-    }
-
-    private static int? GetInt(IXLWorksheet ws, int row, Dictionary<int, string> headers, string headerName)
-    {
-        var value = GetString(ws, row, headers, headerName);
-        return int.TryParse(value, out var n) ? n : null;
-    }
-
-    private static decimal? GetDecimal(IXLWorksheet ws, int row, Dictionary<int, string> headers, string headerName)
-    {
-        var value = GetString(ws, row, headers, headerName);
-        return ParseDecimal(value);
-    }
-
-    private static string GetIndexedString(IXLWorksheet ws, int row, Dictionary<int, string> headers, string baseName, int index)
-    {
-        var header = $"{baseName}[{index}]";
-        var col = headers.FirstOrDefault(x => string.Equals(x.Value, header, StringComparison.OrdinalIgnoreCase)).Key;
-        return col == 0 ? null : ws.Cell(row, col).GetFormattedString().Trim();
-    }
-
-    private static int? GetIndexedInt(IXLWorksheet ws, int row, Dictionary<int, string> headers, string baseName, int index)
-    {
-        var value = GetIndexedString(ws, row, headers, baseName, index);
-        return int.TryParse(value, out var n) ? n : null;
-    }
-
-    private static decimal? GetIndexedDecimal(IXLWorksheet ws, int row, Dictionary<int, string> headers, string baseName, int index)
-    {
-        var value = GetIndexedString(ws, row, headers, baseName, index);
-        return ParseDecimal(value);
-    }
-
-    private static List<string> GetIndexedStrings(IXLWorksheet ws, int row, Dictionary<int, string> headers, string baseName)
-    {
-        var result = new List<string>();
-        foreach (var index in GetIndexes(headers, baseName).OrderBy(x => x))
-        {
-            var value = GetIndexedString(ws, row, headers, baseName, index);
-            if (!string.IsNullOrWhiteSpace(value))
-                result.Add(value);
-        }
-
-        return result;
-    }
-
-    private static decimal? ParseDecimal(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            return null;
-
-        value = value.Trim();
-
-        if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d1))
-            return d1;
-
-        if (decimal.TryParse(value, NumberStyles.Any, new CultureInfo("es-DO"), out var d2))
-            return d2;
-
-        return null;
-    }
-
-    private static bool RowIsEmpty(IXLWorksheet ws, int row, int lastColumn)
-    {
-        for (int col = 1; col <= lastColumn; col++)
-        {
-            if (!string.IsNullOrWhiteSpace(ws.Cell(row, col).GetFormattedString()))
-                return false;
-        }
-
-        return true;
+        return jobId;
     }
 
 
 
-    public async Task LoadExcelAsync([FromForm] ImportDgiiExcelRequestDto input)
-    {
-        try
-        {
-            if (input.File == null || input.File.Length == 0)
-            {
-                throw new Exception("Debes enviar un archivo Excel.");
-            }
 
-            var extension = Path.GetExtension(input.File.FileName);
-            if (string.IsNullOrWhiteSpace(extension) ||
-                (extension.ToLower() != ".xlsx" && extension.ToLower() != ".xls"))
-            {
-                throw new Exception("El archivo debe ser Excel (.xlsx o .xls).");
-            }
 
-            using var stream = input.File.OpenReadStream();
-
-            var importedRows = await ImportAsync(stream, input.File.FileName);
-        }
-        catch (Exception e)
-        {
-           
-            throw;
-        }
-
-       
-    }
-
-    public class ImportDgiiExcelRequestDto
-    {
-        public IFormFile File { get; set; }
-    }
-
-    public async Task<List<DgiiExcelImportDto>> ImportAsync(Stream fileStream, string fileName)
-    {
-        if (fileStream == null)
-        {
-            throw new UserFriendlyException("No se recibió el archivo.");
-        }
-
-        if (string.IsNullOrWhiteSpace(fileName))
-        {
-            throw new UserFriendlyException("El nombre del archivo es inválido.");
-        }
-
-        var extension = Path.GetExtension(fileName)?.ToLowerInvariant();
-        if (extension != ".xlsx" && extension != ".xls")
-        {
-            throw new UserFriendlyException("Solo se permiten archivos Excel (.xlsx o .xls).");
-        }
-
-        using var memoryStream = new MemoryStream();
-        await fileStream.CopyToAsync(memoryStream);
-        memoryStream.Position = 0;
-
-        var result = Read(memoryStream);
-
-        foreach (var res in result)
-        {
-            var voucherSecuence = await taxVoucherAppService.GenerateTaxVoucherAsync(res.TipoeCF.ToVoucherType());
-            res.ENCF = voucherSecuence.Number;
-            res.FechaVencimientoSecuencia = voucherSecuence.ExpirationDate;
-            var ecfSale = MapToSaleEcf(res);
-            
-            await SendSalesEcfToDGIIAsync(ecfSale);
-
-        }
-        return result;
-    }
 
     public ReceiveSalesEcfInputDto MapToSaleEcf(DgiiExcelImportDto source)
     {
@@ -800,7 +573,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             throw new ArgumentNullException(nameof(source));
         }
         var numeroPedidoInterno = Random.Shared.Next(10000, 100000);
- 
+
         var dto = new ReceiveSalesEcfInputDto
         {
             sendPrintedFile = false,
@@ -843,7 +616,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     correoEmisor = null,
                     webSite = null,
                     codigoVendedor = null,
-           
+
                     fechaEmision = DateTime.Now.ToString("dd-MM-yyyy"),
                     numeroFacturaInterna = $"IBS-VW-{numeroPedidoInterno}",
                     numeroPedidoInterno = numeroPedidoInterno.ToString(),
@@ -862,7 +635,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 totales = new Totales
                 {
                     montoGravadoTotal = source.MontoGravadoTotal,
-                    montoGravadoI1 = source.MontoGravadoI1 ,
+                    montoGravadoI1 = source.MontoGravadoI1,
 
                     // Inicializados por defecto para que nunca vayan nulos
                     montoGravadoI2 = 0m,
@@ -1028,11 +801,11 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             DgiiSecurityCode = output?.Result?.SecurityCode,
             DgiiSignatureDate = ParseNullableDate(output?.Result?.SignatureDate),
             DgiiPrintFile = string.Empty,
-       
+
         };
-        if(output.Error is not null)
+        if (output.Error is not null)
         {
-            entity.DgiiResponseMessage =$" {output.Error.Details} { output.Error.Message}";
+            entity.DgiiResponseMessage = $" {output.Error.Details} {output.Error.Message}";
         }
         MapPaymentForms(entity, input);
         MapEmitterPhones(entity, input);
@@ -1094,7 +867,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             entity.AdditionalTaxes.Add(new EcfVoucherWarehouseAdditionalTax
             {
                 TipoImpuesto = item.tipoImpuesto,
-                TasaImpuesto = item.tasaImpuestoAdicional ,
+                TasaImpuesto = item.tasaImpuestoAdicional,
                 MontoImpuesto = item.montoImpuestoSelectivoConsumoEspecifico
             });
         }
@@ -1113,20 +886,20 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             var detail = new EcfVoucherWarehouseDetails
             {
                 NumeroLinea = item.numeroLinea,
-                IndicadorFacturacion = item.indicadorFacturacion ,
+                IndicadorFacturacion = item.indicadorFacturacion,
                 NombreItem = item.nombreItem,
                 IndicadorBienoServicio = item.indicadorBienoServicio,
                 DescripcionItem = item.descripcionItem,
-                CantidadItem = item.cantidadItem ,
-                UnidadMedida = item.unidadMedida ?? 0 ,
-                CantidadReferencia = item.cantidadReferencia ,
-                UnidadReferencia = item.unidadReferencia ,
-                GradosAlcohol = item.gradosAlcohol ?? 0m ,
+                CantidadItem = item.cantidadItem,
+                UnidadMedida = item.unidadMedida ?? 0,
+                CantidadReferencia = item.cantidadReferencia,
+                UnidadReferencia = item.unidadReferencia,
+                GradosAlcohol = item.gradosAlcohol ?? 0m,
                 PrecioUnitarioReferencia = item.PrecioUnitarioReferencia,
-                PrecioUnitarioItem = item.precioUnitarioItem ,
-                DescuentoMonto = item.descuentoMonto ,
-                RecargoMonto = item.recargoMonto ,
-                MontoItem = item.montoItem 
+                PrecioUnitarioItem = item.precioUnitarioItem,
+                DescuentoMonto = item.descuentoMonto,
+                RecargoMonto = item.recargoMonto,
+                MontoItem = item.montoItem
             };
 
             entity.Details.Add(detail);
@@ -1211,4 +984,151 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         return null;
     }
 
+    public async Task ProcessAsync(DgiiExcelImportDto row, int rowNumber)
+    {
+        if (row == null)
+        {
+            throw new ArgumentNullException(nameof(row), $"La fila {rowNumber} está vacía.");
+        }
+
+        var voucherSequence = await taxVoucherAppService.GenerateTaxVoucherAsync(
+            row.TipoeCF.ToVoucherType());
+
+        row.ENCF = voucherSequence.Number;
+        row.FechaVencimientoSecuencia = voucherSequence.ExpirationDate;
+
+        var ecfSale = MapToSaleEcf(row);
+
+        await SendSalesEcfToDGIIAsync(ecfSale);
+    }
+
+
+
+
+
+    [UnitOfWork(false)]
+    public async Task<EcfVoucherJobStatusDto> GetJobStatusAsync(Guid jobId)
+    {
+        if (jobId == Guid.Empty)
+        {
+            throw new UserFriendlyException("El JobId es requerido.");
+        }
+
+        var job = await ecfVoucherDocumentJobManagerService.GetAsync(jobId);
+
+        if (job == null || job.IsDeleted)
+        {
+            throw new UserFriendlyException("No se encontró el job solicitado.");
+        }
+
+        ValidateTenantAccess(job);
+
+        return MapToJobStatusDto(job);
+    }
+
+    [UnitOfWork(false)]
+    public async Task<List<EcfVoucherJobStatusDto>> GetJobsStatusAsync(GetEcfVoucherJobsInputDto input)
+    {
+        input ??= new GetEcfVoucherJobsInputDto();
+
+        var maxResultCount = input.MaxResultCount <= 0 ? 20 : input.MaxResultCount;
+        if (maxResultCount > 100)
+        {
+            maxResultCount = 100;
+        }
+
+        var query = ecfVoucherDocumentJobRepository.GetAll()
+            .Where(x => !x.IsDeleted);
+
+        if (AbpSession.TenantId.HasValue)
+        {
+            query = query.Where(x => x.TenantId == AbpSession.TenantId);
+        }
+
+        if (input.OnlyActive)
+        {
+            query = query.Where(x =>
+                x.Status == JobStatus.Pending ||
+                x.Status == JobStatus.Processing ||
+                x.Status == JobStatus.Cancelled);
+        }
+
+        var jobs = await query
+            .OrderByDescending(x => x.CreationTime)
+            .Take(maxResultCount)
+            .ToListAsync();
+
+        return jobs
+            .Select(MapToJobStatusDto)
+            .ToList();
+    }
+
+    public async Task CancelJobAsync(CancelEcfVoucherJobInputDto input)
+    {
+        if (input == null || input.JobId == Guid.Empty)
+        {
+            throw new UserFriendlyException("El JobId es requerido.");
+        }
+
+        var job = await ecfVoucherDocumentJobManagerService.GetAsync(input.JobId);
+
+        if (job == null || job.IsDeleted)
+        {
+            throw new UserFriendlyException("No se encontró el job solicitado.");
+        }
+
+        ValidateTenantAccess(job);
+
+        await ecfVoucherDocumentJobManagerService.RequestCancellationAsync(input.JobId);
+    }
+
+    private void ValidateTenantAccess(EcfVoucherDocumentJob job)
+    {
+        if (AbpSession.TenantId.HasValue && job.TenantId != AbpSession.TenantId)
+        {
+            throw new UserFriendlyException("No tienes permiso para acceder a este job.");
+        }
+    }
+
+    private static EcfVoucherJobStatusDto MapToJobStatusDto(EcfVoucherDocumentJob job)
+    {
+        var progressPercentage = job.TotalRows <= 0
+            ? 0
+            : Math.Round((decimal)job.ProcessedRows * 100m / job.TotalRows, 2);
+
+        var isCompleted =
+            job.Status == JobStatus.Completed ||
+            job.Status == JobStatus.CompletedWithErrors;
+
+        var isFailed = job.Status == JobStatus.Failed;
+        var isCancelled = job.Status == JobStatus.Cancelled;
+
+        var isActive =
+            job.Status == JobStatus.Pending ||
+            job.Status == JobStatus.Processing ||
+            job.Status == JobStatus.Cancelled;
+
+        return new EcfVoucherJobStatusDto
+        {
+            JobId = job.Id,
+            FileName = job.FileName,
+            Status = job.Status,
+            ErrorMessage = job.ErrorMessage,
+            TotalRows = job.TotalRows,
+            ProcessedRows = job.ProcessedRows,
+            SuccessRows = job.SuccessRows,
+            FailedRows = job.FailedRows,
+            IsCancellationRequested = job.IsCancellationRequested,
+            IsCompleted = isCompleted,
+            IsFailed = isFailed,
+            IsCancelled = isCancelled,
+            IsActive = isActive,
+            ProgressPercentage = progressPercentage,
+            CreationTime = job.CreationTime,
+            StartTime = job.StartTime,
+            EndTime = job.EndTime,
+            LastModificationTime = job.LastModificationTime
+        };
+    }
 }
+

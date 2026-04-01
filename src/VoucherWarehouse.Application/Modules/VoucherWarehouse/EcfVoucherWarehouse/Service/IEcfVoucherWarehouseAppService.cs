@@ -5,7 +5,8 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Serv
 
 public interface IEcfVoucherWarehouseAppService : IApplicationService,IAsyncCrudAppService<EcfVoucherWarehouseOutputDto,long,EcfVoucherWarehouseInputDto,EcfVoucherWarehouseCreateDto,EcfVoucherWarehouseUpdateDto>
 {
-    Task LoadExcelAsync([FromForm] EcfVoucherWarehouseAppService.ImportDgiiExcelRequestDto input);
+    Task<Guid> LoadExcelAsync([FromForm] ImportDgiiExcelRequestDto input);
+    Task ProcessAsync(DgiiExcelImportDto row, int rowNumber);
     Task<EcfVoucherOutputDto> ReceiveSalesResumeECFAsync(ReceiveSalesEcfInputDto input);
     Task<EcfVoucherOutputDto> SendCancelSequenceEcfToDGIIAsync(CancelSequenceEcfInputDto input);
     Task<EcfVoucherOutputDto> SendCommercialApprovalEcfToDGIIAsync(CommercialApprovalEcfInputDto input);

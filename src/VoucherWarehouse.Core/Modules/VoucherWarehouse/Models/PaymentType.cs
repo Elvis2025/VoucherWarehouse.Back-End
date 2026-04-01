@@ -15,6 +15,6 @@ public class PaymentType : BaseEntity<int>
 
     [Required]
     [NotNull]
-    public int DggiiCode { get; set; }
+    public int DgiiCode { get; set; }
 
 }

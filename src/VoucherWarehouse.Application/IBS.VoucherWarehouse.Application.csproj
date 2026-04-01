@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Mapping\Extensions\" />
-    <Folder Include="Modules\VoucherWarehouse\EcfVoucherWarehouse\Dto\NewFolder\" />
+    <Folder Include="Modules\VoucherWarehouse\EcfVoucherWarehouse\NewFolder\" />
+    <Folder Include="Modules\CoreSystem\PymentType\" />
+    <Folder Include="Modules\CoreSystem\PaymentMethod\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
