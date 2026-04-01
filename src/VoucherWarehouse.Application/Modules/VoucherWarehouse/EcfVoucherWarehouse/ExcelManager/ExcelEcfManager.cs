@@ -19,6 +19,7 @@ public static class ExcelEcfManager
     private static readonly Regex IndexedColumnRegex =
         new(@"^(?<name>.+)\[(?<index>\d+)\]$", RegexOptions.Compiled);
 
+       
     public static async Task ImportAsync(Stream fileStream, string fileName, Action<List<DgiiExcelImportDto>> action)
     {
         try
@@ -53,6 +54,10 @@ public static class ExcelEcfManager
             };
 
             action?.Invoke(result);
+            //Mas codigo
+
+
+
         }
         catch (Exception e)
         {

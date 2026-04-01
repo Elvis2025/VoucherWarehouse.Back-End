@@ -38,6 +38,8 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
         {
             var job = await _jobManager.GetAsync(args.JobId);
 
+      
+
             if (job == null)
             {
                 throw new Exception($"No se encontró el documento de importación con Id: {args.JobId}");
