@@ -94,7 +94,7 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
     {
         try
         {
-            input.FinalSequence = Math.Abs(input.RegisteredQuantity - input.CurrentSequence);
+            input.FinalSequence = input.RegisteredQuantity;
             input.RemainingQuantity = Math.Abs(input.RegisteredQuantity - input.RemainingQuantity);
             var taxVoucherDto = Mapping<TaxVoucherUpdateDto, TaxVouchers>.Auto.Map(input);
             await taxVouchersTypeRepository.GetAsync(input.TaxVoucherTypeId);
