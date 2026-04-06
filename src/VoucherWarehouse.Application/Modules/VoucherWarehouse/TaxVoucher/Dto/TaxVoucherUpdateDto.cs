@@ -6,8 +6,7 @@ public sealed record class TaxVoucherUpdateDto : IPassivable,IEntityDto<int>
 {
     public bool IsActive { get; set; }
     public int Id { get; set; }
-    public string Description { get; set; }
-    public string Prefix { get; set; }
+    public string Comment { get; set; }
     public int InitialSequence { get; set; }
     public int CurrentSequence { get; set; }
     public int FinalSequence { get; set; }

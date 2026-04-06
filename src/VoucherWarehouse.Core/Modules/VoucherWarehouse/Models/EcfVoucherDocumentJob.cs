@@ -22,4 +22,10 @@ public class EcfVoucherDocumentJob : BaseEntity<Guid>
     public string ErrorMessage { get; set; }
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
+    public string WorkerInstanceId { get; set; }
+    public DateTime? HeartbeatAt { get; set; }
+    public DateTime? LeaseExpiresAt { get; set; }
+    public DateTime? LastProgressAt { get; set; }
+    public int ConcurrencyStamp { get; set; }
+    public string ExecutionId { get; set; }
 }

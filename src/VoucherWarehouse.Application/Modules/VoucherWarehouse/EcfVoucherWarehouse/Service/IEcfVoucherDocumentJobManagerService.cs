@@ -11,22 +11,73 @@ public interface IEcfVoucherDocumentJobManagerService
 {
     Task<EcfVoucherDocumentJob> GetAsync(Guid jobId);
 
-    Task MarkAsProcessingAsync(Guid jobId);
+    Task<bool> TryAcquireProcessingLeaseAsync(
+        Guid jobId,
+        string workerInstanceId,
+        TimeSpan leaseDuration);
 
-    Task SetTotalRowsAsync(Guid jobId, int totalRows);
+    Task<bool> RenewLeaseAsync(
+        Guid jobId,
+        string workerInstanceId,
+        TimeSpan leaseDuration);
 
-    Task SaveProgressSnapshotAsync(Guid jobId, int processedRows, int successRows, int failedRows);
+    Task<bool> IsOwnedByWorkerAsync(
+        Guid jobId,
+        string workerInstanceId);
 
-    Task AppendRowErrorAsync(Guid jobId, int rowNumber, string errorMessage);
+    Task<bool> CanDeleteFileAsync(
+        Guid jobId,
+        string workerInstanceId);
 
-    Task MarkAsCompletedAsync(Guid jobId, int processedRows, int successRows, int failedRows);
+    Task SetTotalRowsAsync(
+        Guid jobId,
+        int totalRows,
+        string workerInstanceId);
 
-    Task MarkAsCompletedWithErrorsAsync(Guid jobId, int processedRows, int successRows, int failedRows);
+    Task SaveProgressSnapshotAsync(
+        Guid jobId,
+        int processedRows,
+        int successRows,
+        int failedRows,
+        string workerInstanceId);
 
-    Task MarkAsCancelledAsync(Guid jobId, int processedRows, int successRows, int failedRows);
+    Task AppendRowErrorAsync(
+        Guid jobId,
+        int rowNumber,
+        string errorMessage,
+        string workerInstanceId);
 
-    Task MarkAsFailedAsync(Guid jobId, string errorMessage);
+    Task MarkAsCompletedAsync(
+        Guid jobId,
+        int processedRows,
+        int successRows,
+        int failedRows,
+        string workerInstanceId);
+
+    Task MarkAsCompletedWithErrorsAsync(
+        Guid jobId,
+        int processedRows,
+        int successRows,
+        int failedRows,
+        string workerInstanceId);
+
+    Task MarkAsCancelledAsync(
+        Guid jobId,
+        int processedRows,
+        int successRows,
+        int failedRows,
+        string workerInstanceId);
+
+    Task MarkAsFailedAsync(
+        Guid jobId,
+        string errorMessage,
+        string workerInstanceId);
 
     Task<bool> IsCancellationRequestedAsync(Guid jobId);
+
     Task RequestCancellationAsync(Guid jobId);
+
+    Task<List<EcfVoucherDocumentJob>> GetRecoverableJobsAsync();
+
+    Task MarkAsPendingForRecoveryAsync(Guid jobId);
 }

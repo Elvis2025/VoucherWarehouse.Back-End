@@ -15,6 +15,7 @@ using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.ExcelManager;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Mappers;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.Models;
+using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Dto;
 using IBS.VoucherWarehouse.Modules.VoucherWarehouse.TaxVoucher.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -71,10 +72,10 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         }
         catch (Exception)
         {
-
             throw;
         }
     }
+
     public async Task<PagedResultDto<EcfVoucherWarehouseOutputDto>> GetAllAsync(EcfVoucherWarehouseInputDto input)
     {
         try
@@ -86,10 +87,13 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             if (input.FilterText is not null)
             {
                 ecfVoucherWarehouseFiltered = ecfVoucherWarehouseFiltered.Where(x => x.TipoECF.Contains(input.FilterText) ||
-                                                                             x.ENCF.Contains(input.FilterText) ||
-                                                                             x.RazonSocialComprador.Contains(input.FilterText) ||
-                                                                             x.RazonSocialEmisor.Contains(input.FilterText) ||
-                                                                             x.RNCEmisor.Contains(input.FilterText))
+                                                                                 x.ENCF.Contains(input.FilterText) ||
+                                                                                 x.RazonSocialComprador.Contains(input.FilterText) ||
+                                                                                 x.RazonSocialEmisor.Contains(input.FilterText) ||
+                                                                                 x.RNCEmisor.Contains(input.FilterText) ||
+                                                                                 x.Status.Contains(input.FilterText) ||
+                                                                                 x.DgiiResponseMessage.Contains(input.FilterText) ||
+                                                                                 x.TipoECF.Contains(input.FilterText))
                                                                  .ToList();
 
             }
@@ -99,17 +103,20 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                                                              .ToList();
 
 
-
-
-
+            if (input.StartDate.HasValue || input.EndDate.HasValue)
+            {
+                var endDate = input.EndDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59);
+                ecfVoucherWarehouseFiltered = ecfVoucherWarehouseFiltered.Where(x => x.FechaEmision >= input.StartDate.Value.Date && x.FechaEmision.Value.Date <= input.EndDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59))
+                                                                         .ToList();
+            }
             return MapEntityToOutputTwoWay.Auto.MapToPagedResult(ecfVoucherWarehouseFiltered, ecfVoucherWarehouse.Count);
         }
         catch (Exception)
         {
-
             throw;
         }
     }
+
     [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Create)]
     public async Task<EcfVoucherWarehouseOutputDto> CreateAsync(EcfVoucherWarehouseCreateDto input)
     {
@@ -123,10 +130,10 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         }
         catch (Exception)
         {
-
             throw;
         }
     }
+
     [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Update)]
     public async Task<EcfVoucherWarehouseOutputDto> UpdateAsync(EcfVoucherWarehouseUpdateDto input)
     {
@@ -140,268 +147,256 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         }
         catch (Exception)
         {
-
             throw;
         }
     }
+
     [AbpAuthorize(VoucherWarehouseNamePermissions.EcfVoucherWarehouse.Delete)]
     public async Task DeleteAsync(EntityDto<long> input)
     {
         try
         {
-
             await ecfVoucherWarehouseRepository.DeleteAsync(input.Id);
         }
         catch (Exception)
         {
-
             throw;
         }
     }
 
-
     #endregion
-
-
 
     public async Task<EcfVoucherOutputDto> SendCreditNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input)
     {
-
-        //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
-            ReceiveCreditNoteECFInputDto objToSend = new ReceiveCreditNoteECFInputDto();
-
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
             string url = @_authenticateAPIParams.BaseUrl + "ReceiveCreditNoteEcf";
 
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, content);
 
             result = await response.Content.ReadAsStringAsync();
 
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
-            //Tomamos el response.StatusCode y el response.ReasonPhrase
-            if (output.Result == null && output.Error == null)
-            {
-                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
-            }
+            output = TryDeserializeOutput(result) ?? CreateFailureOutput(L("UnHandledError"));
+            EnsureOutputState(output, response.IsSuccessStatusCode, result);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             result = ex.ToString();
-            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
-
+            output = CreateFailureOutput(result);
         }
+
         return output;
     }
 
     public async Task<EcfVoucherOutputDto> SendDebitNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input)
     {
-        //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
             string url = @_authenticateAPIParams.BaseUrl + "ReceiveDebitNoteEcf";
 
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
-            var response = client.PostAsync(url, content).Result;
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
 
-            result = response.Content.ReadAsStringAsync().Result;
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
 
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
-            //Error no manejado
-            if (output.Result == null && output.Error == null)
-            {
-                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
-            }
+            result = await response.Content.ReadAsStringAsync();
+
+            output = TryDeserializeOutput(result) ?? CreateFailureOutput(L("UnHandledError"));
+            EnsureOutputState(output, response.IsSuccessStatusCode, result);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             result = ex.ToString();
-            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+            output = CreateFailureOutput(result);
         }
+
         return output;
     }
 
     public async Task<EcfVoucherOutputDto> SendSalesEcfToDGIIAsync(ReceiveSalesEcfInputDto input)
     {
-        //AuthenticateInputDto _authenticateAPIParams = new();
-        var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
-        string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        string rawResponse = string.Empty;
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
-            ReceiveSalesEcfInputDto objToSend = new ReceiveSalesEcfInputDto();
+            var authenticateApiParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
+            var authResult = await ecfApiAuthenticationService.AuthenticateAPIAsync();
 
-            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
-            string url = @_authenticateAPIParams.BaseUrl + "ReceiveSalesEcf";
-
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, content);
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
+            if (authenticateApiParams == null)
             {
-
-                output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(responseBody);
-                await SaveEcfVoucherAsync(input, output);
+                output = CreateFailureOutput("No se encontró la configuración de autenticación de la API ECF.");
+                await TrySaveFailedVoucherAsync(input, output);
                 return output;
             }
 
-            result = await response.Content.ReadAsStringAsync();
-
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
-            //Error no manejado
-            if (output.Result == null && output.Error == null)
+            if (authResult?.Result == null || string.IsNullOrWhiteSpace(authResult.Result.Token))
             {
-                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
+                output = CreateFailureOutput("No fue posible autenticarse contra la API ECF.");
+                await TrySaveFailedVoucherAsync(input, output);
+                return output;
             }
+
+            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
+            string url = authenticateApiParams.BaseUrl + "ReceiveSalesEcf";
+
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
+
+            rawResponse = await response.Content.ReadAsStringAsync();
+
+            output = TryDeserializeOutput(rawResponse) ?? CreateFailureOutput(
+                string.IsNullOrWhiteSpace(rawResponse) ? L("UnHandledError") : rawResponse);
+
+            EnsureOutputState(output, response.IsSuccessStatusCode, rawResponse);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                output.Result.Message = string.IsNullOrWhiteSpace(output.Result.Message)
+                    ? $"HTTP {(int)response.StatusCode} - {response.StatusCode}"
+                    : output.Result.Message;
+            }
+
             await SaveEcfVoucherAsync(input, output);
-            //Justo aqui debajo debes proceder a insertar en la base de datos la transaccion que viajo a la DGII
+            return output;
         }
         catch (Exception ex)
         {
-            result = ex.ToString();
-            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
+            rawResponse = ex.ToString();
+            output = CreateFailureOutput(rawResponse);
 
+            await TrySaveFailedVoucherAsync(input, output);
+            return output;
         }
-
-
-
-        return output;
-
     }
 
     public async Task<EcfVoucherOutputDto> SendPurchaseEcfToDGIIAsync(ReceivePurchaseECFInputDto input)
     {
-
-        //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
-            ReceivePurchaseECFInputDto objToSend = new ReceivePurchaseECFInputDto();
-
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
             string url = @_authenticateAPIParams.BaseUrl + "ReceivePurchaseECF";
 
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, content);
 
             result = await response.Content.ReadAsStringAsync();
 
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
-
-            //Error no manejado
-            if (output.Result == null && output.Error == null)
-            {
-                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
-            }
+            output = TryDeserializeOutput(result) ?? CreateFailureOutput(L("UnHandledError"));
+            EnsureOutputState(output, response.IsSuccessStatusCode, result);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             result = ex.ToString();
-            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
-
+            output = CreateFailureOutput(result);
         }
+
         return output;
     }
 
-
     public async Task<EcfVoucherOutputDto> SendCancelSequenceEcfToDGIIAsync(CancelSequenceEcfInputDto input)
     {
-        //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
-            CancelSequenceEcfInputDto objToSend = new CancelSequenceEcfInputDto();
-
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
             string url = @_authenticateAPIParams.BaseUrl + "CancelSequencesECF";
 
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, content);
 
             result = await response.Content.ReadAsStringAsync();
 
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+            output = TryDeserializeOutput(result) ?? CreateFailureOutput(
+                $"HTTP {(int)response.StatusCode} - {response.ReasonPhrase}");
 
-            //Tomamos el response.StatusCode y el response.ReasonPhrase
-            if (output.Result == null && output.Error == null)
-            {
-                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = response.StatusCode.ToString(), Message = response.ReasonPhrase } };
-            }
+            EnsureOutputState(output, response.IsSuccessStatusCode, result);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            result = ex.Message;
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+            result = ex.ToString();
+            output = CreateFailureOutput(result);
         }
+
         return output;
     }
 
     public async Task<EcfVoucherOutputDto> SendCommercialApprovalEcfToDGIIAsync(CommercialApprovalEcfInputDto input)
     {
-        //AuthenticateInputDto _authenticateAPIParams = new();
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
         var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
         string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
-            ReceivePurchaseECFInputDto objToSend = new ReceivePurchaseECFInputDto();
-
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
             string url = @_authenticateAPIParams.BaseUrl + "ComercialApproval";
 
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, content);
 
             result = await response.Content.ReadAsStringAsync();
 
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+            output = TryDeserializeOutput(result) ?? CreateFailureOutput(L("UnHandledError"));
+            EnsureOutputState(output, response.IsSuccessStatusCode, result);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             result = ex.ToString();
-            output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = result } };
-
+            output = CreateFailureOutput(result);
         }
+
         return output;
     }
 
     public async Task<EcfVoucherOutputDto> ReceiveSalesResumeECFAsync(ReceiveSalesEcfInputDto input)
     {
-        //Llenar el ReceiveSaleResumeInputDto con la informacion que llegue
-        ReceiveSaleResumeInputDto resumeInput = new ReceiveSaleResumeInputDto();
-        resumeInput = new ReceiveSaleResumeInputDto
+        ReceiveSaleResumeInputDto resumeInput = new ReceiveSaleResumeInputDto
         {
             sendPrintedFile = false,
             printFormat = input.printFormat,
@@ -415,7 +410,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     tipoIngresos = input.encabezado.idDoc.tipoIngresos,
                     tipoPago = input.encabezado.idDoc.tipoPago,
                     fechaLimitePago = input.encabezado.idDoc.fechaLimitePago,
-                    // tablaFormasPago = input.encabezado.idDoc.tablaFormasPago, 
                     tipoCuentaPago = string.Empty
                 },
                 emisor = new EmisorResume
@@ -424,12 +418,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     razonSocialEmisor = input.encabezado.emisor.razonSocialEmisor,
                     fechaEmision = input.encabezado.emisor.fechaEmision ?? string.Empty,
                 },
-                //comprador = new EcfEVoucher.Dto.CompradorResume
-                //{
-                //    identificadorExtranjero = input.encabezado.comprador.identificadorExtranjero,
-                //    rNCComprador = input.encabezado.comprador.rNCComprador,
-                //    razonSocialComprador = input.encabezado.comprador.razonSocialComprador
-                //},
                 totales = new TotalesResume
                 {
                     montoGravadoI1 = input.encabezado.totales.montoGravadoI1,
@@ -450,48 +438,40 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             }
         };
 
-
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
-        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync(); string result = string.Empty;
-        EcfVoucherOutputDto output = new EcfVoucherOutputDto();
+        var __result = await ecfApiAuthenticationService.AuthenticateAPIAsync();
+        string result = string.Empty;
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
         try
         {
-            ReceiveSalesEcfInputDto objToSend = new ReceiveSalesEcfInputDto();
-
             string jsonObject = System.Text.Json.JsonSerializer.Serialize(resumeInput);
             string url = @_authenticateAPIParams.BaseUrl + "ReceiveSalesResumeEcf";
 
-            var client = new System.Net.Http.HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
-            var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", __result.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(url, content);
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Status: {(int)response.StatusCode} - {response.StatusCode}\nBody: {responseBody}");
-            }
+            output = TryDeserializeOutput(responseBody) ?? CreateFailureOutput(
+                string.IsNullOrWhiteSpace(responseBody) ? L("UnHandledError") : responseBody);
 
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
-
-            //Error no manejado
-            if (output.Result == null && output.Error == null)
-            {
-                output = new EcfVoucherOutputDto { Error = new ErrorDto { Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError, Message = L("UnHandledError") } };
-            }
+            EnsureOutputState(output, response.IsSuccessStatusCode, responseBody);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            result = ex.Message;
-            output = JsonConvert.DeserializeObject<EcfVoucherOutputDto>(result);
+            result = ex.ToString();
+            output = CreateFailureOutput(result);
         }
+
         return output;
     }
-
-
-
-
-
+    
+    [HttpPost("api/services/app/EcfVoucherWarehouse/LoadExcel")]
+    [Consumes("multipart/form-data")]
     public async Task<Guid> LoadExcelAsync([FromForm] ImportDgiiExcelRequestDto input)
     {
         if (input?.File == null || input.File.Length == 0)
@@ -561,17 +541,13 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         return jobId;
     }
 
-
-
-
-
-
     public ReceiveSalesEcfInputDto MapToSaleEcf(DgiiExcelImportDto source)
     {
         if (source == null)
         {
             throw new ArgumentNullException(nameof(source));
         }
+
         var numeroPedidoInterno = Random.Shared.Next(10000, 100000);
 
         var dto = new ReceiveSalesEcfInputDto
@@ -612,11 +588,9 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     municipio = null,
                     provincia = null,
                     tablaTelefonoEmisor = null,
-
                     correoEmisor = null,
                     webSite = null,
                     codigoVendedor = null,
-
                     fechaEmision = DateTime.Now.ToString("dd-MM-yyyy"),
                     numeroFacturaInterna = $"IBS-VW-{numeroPedidoInterno}",
                     numeroPedidoInterno = numeroPedidoInterno.ToString(),
@@ -636,26 +610,19 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 {
                     montoGravadoTotal = source.MontoGravadoTotal,
                     montoGravadoI1 = source.MontoGravadoI1,
-
-                    // Inicializados por defecto para que nunca vayan nulos
                     montoGravadoI2 = 0m,
                     montoGravadoI3 = 0m,
                     montoExento = 0m,
-
                     iTBIS1 = source.ITBIS1 ?? 0m,
                     totalITBIS = source.TotalITBIS ?? 0m,
                     totalITBIS1 = source.TotalITBIS1 ?? 0m,
-
                     totalITBIS2 = 0m,
                     totalITBIS3 = 0m,
-
-                    // ESTE CAMPO TE ESTABA FALLANDO.
                     montoImpuestoAdicional = 0m,
                     impuestosAdicionales = null,
                     montoNoFacturable = 0m,
                     montoTotal = source.MontoTotal ?? 0m,
                     valorPagar = source.MontoTotal ?? 0m,
-                    //montoPeriodo = source.MontoTotal ?? 0m
                 }
             },
 
@@ -667,9 +634,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                     indicadorFacturacion = x?.IndicadorFacturacion ?? 0,
                     nombreItem = SafeString(x?.NombreItem),
                     indicadorBienoServicio = x?.IndicadorBienoServicio ?? 0,
-                    // ESTE CAMPO TE ESTABA FALLANDO.
                     gradosAlcohol = 0m,
-
                     cantidadItem = x?.CantidadItem ?? 0m,
                     unidadMedida = x?.UnidadMedida ?? null,
                     precioUnitarioItem = x?.PrecioUnitarioItem ?? 0m,
@@ -680,14 +645,15 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
         return dto;
     }
+
     private static string SafeString(object value)
     {
         return value?.ToString()?.Trim() ?? null;
     }
 
     private async Task SaveEcfVoucherAsync(
-    ReceiveSalesEcfInputDto input,
-    EcfVoucherOutputDto output)
+        ReceiveSalesEcfInputDto input,
+        EcfVoucherOutputDto output)
     {
         var entity = MapToEcfVoucherWarehouseEntity(input, output);
 
@@ -695,22 +661,33 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         await CurrentUnitOfWork.SaveChangesAsync();
     }
 
-    private Models.EcfVoucherWarehouse MapToEcfVoucherWarehouseEntity(
-    ReceiveSalesEcfInputDto input,
-    EcfVoucherOutputDto output)
+    private async Task TrySaveFailedVoucherAsync(
+        ReceiveSalesEcfInputDto input,
+        EcfVoucherOutputDto output)
     {
+        try
+        {
+            await SaveEcfVoucherAsync(input, output);
+        }
+        catch
+        {
+        }
+    }
 
+    private Models.EcfVoucherWarehouse MapToEcfVoucherWarehouseEntity(
+        ReceiveSalesEcfInputDto input,
+        EcfVoucherOutputDto output)
+    {
         int.TryParse(input.encabezado?.idDoc?.indicadorNotaCredito, out int indicadorNotaCredito);
+
         var entity = new Models.EcfVoucherWarehouse
         {
-            // Root
             PrintFormat = input.printFormat,
             SendPrintedFile = input.sendPrintedFile,
             AuthenticationServiceUrl = input.authenticationServiceUrl,
             ReceptionServiceUrl = input.receptionServiceUrl,
             ComercialApprovalServiceUrl = input.comercialApprovalServiceUrl,
 
-            // IdDoc
             TipoECF = input.encabezado?.idDoc?.tipoeCF,
             ENCF = input.encabezado?.idDoc?.eNCF,
             FechaVencimientoSecuencia = ParseNullableDate(input.encabezado?.idDoc?.fechaVencimientoSecuencia),
@@ -724,7 +701,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             NumeroCuentaPago = input.encabezado?.idDoc?.numeroCuentaPago,
             BancoPago = input.encabezado?.idDoc?.bancoPago,
 
-            // Emisor
             RNCEmisor = input.encabezado?.emisor?.rNCEmisor,
             RazonSocialEmisor = input.encabezado?.emisor?.razonSocialEmisor,
             NombreComercial = input.encabezado?.emisor?.nombreComercial,
@@ -739,7 +715,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             NumeroPedidoInterno = input.encabezado?.emisor?.numeroPedidoInterno,
             ZonaVenta = input.encabezado?.emisor?.zonaVenta,
 
-            // Comprador
             RNCComprador = input.encabezado?.comprador?.rNCComprador,
             RazonSocialComprador = input.encabezado?.comprador?.razonSocialComprador,
             IdentificadorExtranjero = input.encabezado?.comprador?.identificadorExtranjero,
@@ -756,7 +731,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             DireccionEntrega = input.encabezado?.comprador?.direccionEntrega,
             TelefonoAdicional = input.encabezado?.comprador?.telefonoAdicional,
 
-            // Totales
             MontoGravadoI1 = input.encabezado?.totales?.montoGravadoI1 ?? 0m,
             MontoGravadoI2 = input.encabezado?.totales?.montoGravadoI2 ?? 0m,
             MontoGravadoI3 = input.encabezado?.totales?.montoGravadoI3 ?? 0m,
@@ -778,7 +752,6 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             MontoNoFacturable = input.encabezado?.totales?.montoNoFacturable ?? 0m,
             ValorPagar = input.encabezado?.totales?.valorPagar ?? 0m,
 
-            // Opcionales
             InformacionesAdicionalesJson = input.encabezado?.informacionesAdicionales != null
                 ? JsonConvert.SerializeObject(input.encabezado.informacionesAdicionales)
                 : null,
@@ -786,27 +759,28 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
                 ? JsonConvert.SerializeObject(input.encabezado.transporte)
                 : null,
 
-            // Control
             CreationTime = Clock.Now,
             LastModificationTime = null,
-            Status = output?.Result?.Code,
+            Status = output?.Result?.Success == true
+                ? (output?.Result?.Code ?? "Success")
+                : JobStatus.Failed.ToString(),
 
-            // Respuesta DGII
             DgiiTrackId = output?.Result?.TrackId,
             DgiiResponseCode = output?.Result?.Code,
             DgiiResponseMessage = output?.Result?.Message,
             DgiiQrCodeUrl = output?.Result?.QrCodeUrl,
             DgiiUsedSequence = output?.Result?.UsedSequence,
-            DgiiReceivedDate = ParseNullableDate(DateTime.Now.ToString()),
+            DgiiReceivedDate = DateTime.Now,
             DgiiSecurityCode = output?.Result?.SecurityCode,
             DgiiSignatureDate = ParseNullableDate(output?.Result?.SignatureDate),
             DgiiPrintFile = string.Empty,
-
         };
-        if (output.Error is not null)
+
+        if (output?.Error is not null)
         {
-            entity.DgiiResponseMessage = $" {output.Error.Details} {output.Error.Message}";
+            entity.DgiiResponseMessage = $"{output.Error.Details} {output.Error.Message}".Trim();
         }
+
         MapPaymentForms(entity, input);
         MapEmitterPhones(entity, input);
         MapHeaderAdditionalTaxes(entity, input);
@@ -958,13 +932,13 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         DateTime parsed;
         var formats = new[]
         {
-        "dd-MM-yyyy",
-        "d-M-yyyy",
-        "dd-MM-yyyy HH:mm:ss",
-        "d-M-yyyy HH:mm:ss",
-        "M/d/yyyy h:mm:ss tt",
-        "MM/dd/yyyy h:mm:ss tt"
-    };
+            "dd-MM-yyyy",
+            "d-M-yyyy",
+            "dd-MM-yyyy HH:mm:ss",
+            "d-M-yyyy HH:mm:ss",
+            "M/d/yyyy h:mm:ss tt",
+            "MM/dd/yyyy h:mm:ss tt"
+        };
 
         if (DateTime.TryParseExact(
             value,
@@ -998,13 +972,13 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         row.FechaVencimientoSecuencia = voucherSequence.ExpirationDate;
 
         var ecfSale = MapToSaleEcf(row);
+        var response = await SendSalesEcfToDGIIAsync(ecfSale);
 
-        await SendSalesEcfToDGIIAsync(ecfSale);
+        if (response?.Result?.Success != true)
+        {
+            throw new Exception(BuildTransactionFailureMessage(rowNumber, row, response));
+        }
     }
-
-
-
-
 
     [UnitOfWork(false)]
     public async Task<EcfVoucherJobStatusDto> GetJobStatusAsync(Guid jobId)
@@ -1130,5 +1104,98 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             LastModificationTime = job.LastModificationTime
         };
     }
-}
 
+    private static EcfVoucherOutputDto TryDeserializeOutput(string rawResponse)
+    {
+        if (string.IsNullOrWhiteSpace(rawResponse))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonConvert.DeserializeObject<EcfVoucherOutputDto>(rawResponse);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static EcfVoucherOutputDto CreateFailureOutput(string message, string code = null)
+    {
+        code ??= ResponseCodeStatusAPI_IBS_DGII.UnHandledError;
+
+        return new EcfVoucherOutputDto
+        {
+            Error = new ErrorDto
+            {
+                Code = code,
+                Message = message
+            },
+            Result = new()
+            {
+                Success = false,
+                Code = code,
+                Message = message
+            }
+        };
+    }
+
+    private static void EnsureOutputState(EcfVoucherOutputDto output, bool httpSuccess, string rawResponse)
+    {
+        if (output.Result == null)
+        {
+            output.Result = new();
+        }
+
+        if (output.Error == null && !httpSuccess)
+        {
+            output.Error = new ErrorDto
+            {
+                Code = ResponseCodeStatusAPI_IBS_DGII.UnHandledError,
+                Message = string.IsNullOrWhiteSpace(rawResponse) ? "La API devolvió un error sin contenido." : rawResponse
+            };
+        }
+
+        if (!httpSuccess)
+        {
+            output.Result.Success = false;
+        }
+        else if (output.Error != null)
+        {
+            output.Result.Success = false;
+        }
+        else if (!output.Result.Success)
+        {
+            output.Result.Success = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(output.Result.Message))
+        {
+            output.Result.Message = output.Error?.Message;
+        }
+
+        if (string.IsNullOrWhiteSpace(output.Result.Code))
+        {
+            output.Result.Code = output.Error?.Code;
+        }
+    }
+
+    private static string BuildTransactionFailureMessage(
+        int rowNumber,
+        DgiiExcelImportDto row,
+        EcfVoucherOutputDto response)
+    {
+        var reference = !string.IsNullOrWhiteSpace(row?.ENCF)
+            ? $" eNCF {row.ENCF}"
+            : string.Empty;
+
+        var detail = response?.Error?.Message
+                     ?? response?.Error?.Details
+                     ?? response?.Result?.Message
+                     ?? "La DGII devolvió una respuesta fallida sin detalle.";
+
+        return $"La transacción de la fila {rowNumber}{reference} falló. {detail}";
+    }
+}
