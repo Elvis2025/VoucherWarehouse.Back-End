@@ -10,7 +10,7 @@ public class VoucherWarehousePermissions : PermissionBase
     private static readonly Lazy<VoucherWarehousePermissions> instance = 
         new Lazy<VoucherWarehousePermissions>(() => new());
 
-    public static readonly VoucherWarehousePermissions Instance = instance.Value;
+    public static VoucherWarehousePermissions Instance => instance.Value;
 
     public override void Set(IPermissionDefinitionContext context)
     {
@@ -39,6 +39,11 @@ public class VoucherWarehousePermissions : PermissionBase
             taxVoucherTypes.CreateChildPermission(TaxVouchersTypes.Read, L("Read"));
             taxVoucherTypes.CreateChildPermission(TaxVouchersTypes.Update, L("Update"));
             taxVoucherTypes.CreateChildPermission(TaxVouchersTypes.Delete, L("Delete"));
+
+        var ecfQueries = voucherWarehouse.CreateChildPermission(EcfQueries.Default, L("EcfQueries"));
+            ecfQueries.CreateChildPermission(EcfQueries.Read, L("EcfQueriesRead"));
+
+
 
 
     }

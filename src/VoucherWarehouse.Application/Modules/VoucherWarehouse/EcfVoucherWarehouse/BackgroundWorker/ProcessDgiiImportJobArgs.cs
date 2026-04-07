@@ -9,5 +9,6 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
     public class ProcessDgiiImportJobArgs
     {
         public Guid JobId { get; set; }
+        public int? TenantId {  get; set; }
     }
 }

@@ -9,5 +9,5 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
 public interface IEcfVoucherRowProcessor : ITransientDependency
 {
-    Task ProcessAsync(DgiiExcelImportDto row, int rowNumber);
+    Task ProcessAsync(DgiiExcelImportDto row, int rowNumber, int? tenantId);
 }

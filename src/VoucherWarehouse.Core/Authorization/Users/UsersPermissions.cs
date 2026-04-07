@@ -25,6 +25,7 @@ public sealed class UsersPermissions : PermissionBase
         users.CreateChildPermission(PermissionNames.Pages_Users_AssignmentRole, L("UsersAssignmentRole"));
         users.CreateChildPermission(PermissionNames.Pages_Users_ChangePassword, L("UsersChangePassword"));
         users.CreateChildPermission(PermissionNames.Pages_Users_ResetPassword, L("UsersResetPassword"));
+        users.CreateChildPermission(PermissionNames.Pages_Users_Permissions, L("UsersPremissions"));
 
     }
 }

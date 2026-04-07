@@ -22,8 +22,8 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
     {
         try
         {
-            input.FinalSequence = Math.Abs(input.RegisteredQuantity - input.CurrentSequence);
-            input.RemainingQuantity = input.RegisteredQuantity;
+            input.FinalSequence = input.RegisteredQuantity;
+            input.RemainingQuantity = Math.Abs(input.RegisteredQuantity - input.CurrentSequence);
             var taxVoucherDto = Mapping<TaxVoucherCreateDto, TaxVouchers>.Auto.Map(input);
             await taxVouchersTypeRepository.GetAsync(input.TaxVoucherTypeId);
             var taxVoucher = await taxVoucherRepository.InsertAsync(taxVoucherDto);
@@ -95,7 +95,7 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
         try
         {
             input.FinalSequence = input.RegisteredQuantity;
-            input.RemainingQuantity = Math.Abs(input.RegisteredQuantity - input.RemainingQuantity);
+            input.RemainingQuantity = Math.Abs(input.RegisteredQuantity - input.CurrentSequence);
             var taxVoucherDto = Mapping<TaxVoucherUpdateDto, TaxVouchers>.Auto.Map(input);
             await taxVouchersTypeRepository.GetAsync(input.TaxVoucherTypeId);
       
@@ -126,7 +126,7 @@ public class TaxVoucherAppService : VoucherWarehouseAppServiceBase, ITaxVoucherA
         if (taxVoucher.CurrentSequence > taxVoucher.FinalSequence)
             throw new UserFriendlyException(L("ExhaustedTaxVoucher", voucherType.GetFullName()));
         if (taxVoucher.RemainingQuantity <= 0)
-            throw new UserFriendlyException(L("ThereIsNotAvailableSequenceFor",$"{voucherType.GetFullName()}\n Cantidad de Secuencias: {taxVoucher.RemainingQuantity}"));
+            throw new Exception($"{L("ThereIsNotAvailableSequenceFor")}: {voucherType.GetFullName()}\n Cantidad de Secuencias: {taxVoucher.RemainingQuantity}");
         //if (taxVoucher.ExpirationDate > DateTime.Now)
         //    throw new UserFriendlyException(L("ThereIsNotAvailableSequenceFor",$"{voucherType.GetFullName()}\n Cantidad de Secuencias: {taxVoucher.RemainingQuantity}"));
 

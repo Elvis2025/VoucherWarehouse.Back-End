@@ -293,6 +293,69 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         }
     }
 
+    public async Task<EcfVoucherOutputDto> SendSalesEcfToDGIIByTenantAsync(ReceiveSalesEcfInputDto input,int? tenantId)
+    {
+        string rawResponse = string.Empty;
+        EcfVoucherOutputDto output = CreateFailureOutput(L("UnHandledError"));
+
+        try
+        {
+            var authenticateApiParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
+            var authResult = await ecfApiAuthenticationService.AuthenticateAPIAsync();
+
+            if (authenticateApiParams == null)
+            {
+                output = CreateFailureOutput("No se encontró la configuración de autenticación de la API ECF.");
+                output.TenantId = tenantId;
+                await TrySaveFailedVoucherAsync(input, output);
+                return output;
+            }
+
+            if (authResult?.Result == null || string.IsNullOrWhiteSpace(authResult.Result.Token))
+            {
+                output = CreateFailureOutput("No fue posible autenticarse contra la API ECF.");
+                output.TenantId = tenantId;
+                await TrySaveFailedVoucherAsync(input, output);
+                return output;
+            }
+
+            string jsonObject = System.Text.Json.JsonSerializer.Serialize(input);
+            string url = authenticateApiParams.BaseUrl + "ReceiveSalesEcf";
+
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.Result.Token);
+
+            var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content);
+
+            rawResponse = await response.Content.ReadAsStringAsync();
+
+            output = TryDeserializeOutput(rawResponse) ?? CreateFailureOutput(
+                string.IsNullOrWhiteSpace(rawResponse) ? L("UnHandledError") : rawResponse);
+
+            EnsureOutputState(output, response.IsSuccessStatusCode, rawResponse);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                output.Result.Message = string.IsNullOrWhiteSpace(output.Result.Message)
+                    ? $"HTTP {(int)response.StatusCode} - {response.StatusCode}"
+                    : output.Result.Message;
+            }
+            output.TenantId = tenantId;
+            await SaveEcfVoucherAsync(input, output);
+            return output;
+        }
+        catch (Exception ex)
+        {
+            rawResponse = ex.ToString();
+            output = CreateFailureOutput(rawResponse);
+
+            await TrySaveFailedVoucherAsync(input, output);
+            return output;
+        }
+    }
+
     public async Task<EcfVoucherOutputDto> SendPurchaseEcfToDGIIAsync(ReceivePurchaseECFInputDto input)
     {
         var _authenticateAPIParams = await ecfApiAuthenticationService.GetFirstOrDefaultAsync();
@@ -527,7 +590,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             FailedRows = 0,
             ErrorMessage = null,
             StartTime = null,
-            EndTime = null
+            EndTime = null,
         };
 
         await ecfVoucherDocumentJobRepository.InsertAsync(job);
@@ -535,7 +598,8 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
 
         await backgroundJobManager.EnqueueAsync<DgiiProcessEcfVoucher, ProcessDgiiImportJobArgs>(new ProcessDgiiImportJobArgs
         {
-            JobId = jobId
+            JobId = jobId,
+            TenantId = AbpSession.TenantId
         });
 
         return jobId;
@@ -656,7 +720,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         EcfVoucherOutputDto output)
     {
         var entity = MapToEcfVoucherWarehouseEntity(input, output);
-
+        entity.TenantId = AbpSession.TenantId ?? output.TenantId;
         await ecfVoucherWarehouseRepository.InsertAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
     }
@@ -805,6 +869,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
             {
                 FormaPago = item.formaPago,
                 MontoPago = item.montoPago
+                
             });
         }
     }
@@ -958,7 +1023,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         return null;
     }
 
-    public async Task ProcessAsync(DgiiExcelImportDto row, int rowNumber)
+    public async Task ProcessAsync(DgiiExcelImportDto row, int rowNumber, int? tenantId)
     {
         if (row == null)
         {
@@ -972,7 +1037,7 @@ public class EcfVoucherWarehouseAppService : VoucherWarehouseAppServiceBase, IEc
         row.FechaVencimientoSecuencia = voucherSequence.ExpirationDate;
 
         var ecfSale = MapToSaleEcf(row);
-        var response = await SendSalesEcfToDGIIAsync(ecfSale);
+        var response = await SendSalesEcfToDGIIByTenantAsync(ecfSale,tenantId);
 
         if (response?.Result?.Success != true)
         {

@@ -7,5 +7,6 @@ public class EcfVoucherOutputDto
 
     public ResultDto Result { get; set; }
     public ErrorDto Error { get; set; }
+    public int? TenantId { get; set; }
 
 }

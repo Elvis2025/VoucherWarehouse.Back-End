@@ -6,7 +6,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Serv
 public interface IEcfVoucherWarehouseAppService : IApplicationService,IAsyncCrudAppService<EcfVoucherWarehouseOutputDto,long,EcfVoucherWarehouseInputDto,EcfVoucherWarehouseCreateDto,EcfVoucherWarehouseUpdateDto>
 {
     Task<Guid> LoadExcelAsync([FromForm] ImportDgiiExcelRequestDto input);
-    Task ProcessAsync(DgiiExcelImportDto row, int rowNumber);
+    Task ProcessAsync(DgiiExcelImportDto row, int rowNumber, int? tenantId);
     Task<EcfVoucherOutputDto> ReceiveSalesResumeECFAsync(ReceiveSalesEcfInputDto input);
     Task<EcfVoucherOutputDto> SendCancelSequenceEcfToDGIIAsync(CancelSequenceEcfInputDto input);
     Task<EcfVoucherOutputDto> SendCommercialApprovalEcfToDGIIAsync(CommercialApprovalEcfInputDto input);
@@ -14,4 +14,5 @@ public interface IEcfVoucherWarehouseAppService : IApplicationService,IAsyncCrud
     Task<EcfVoucherOutputDto> SendDebitNoteEcfToDGIIAsync(ReceiveCreditNoteECFInputDto input);
     Task<EcfVoucherOutputDto> SendPurchaseEcfToDGIIAsync(ReceivePurchaseECFInputDto input);
     Task<EcfVoucherOutputDto> SendSalesEcfToDGIIAsync(ReceiveSalesEcfInputDto input);
+    Task<EcfVoucherOutputDto> SendSalesEcfToDGIIByTenantAsync(ReceiveSalesEcfInputDto input, int? tenantId);
 }

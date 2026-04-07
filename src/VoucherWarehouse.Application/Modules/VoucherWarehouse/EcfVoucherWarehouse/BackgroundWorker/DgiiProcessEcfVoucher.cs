@@ -9,6 +9,7 @@ using IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Service;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -53,19 +54,21 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
         {
             var workerInstanceId = Guid.NewGuid().ToString("N");
 
-            var job = await _jobManager.GetAsync(args.JobId);
+            var job = await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.GetAsync(args.JobId));
 
-            if (job == null)
+            if (job is null)
             {
                 var notFoundException = new Exception($"No se encontró el documento de importación con Id: {args.JobId}");
                 await LogAndAuditAsync(notFoundException, nameof(ExecuteAsync), new { args.JobId, workerInstanceId });
-                throw notFoundException;
+                return;
             }
 
-            var acquired = await _jobManager.TryAcquireProcessingLeaseAsync(
-                args.JobId,
-                workerInstanceId,
-                TimeSpan.FromMinutes(LeaseDurationMinutes));
+            var acquired = await ExecuteInTenantScopeAsync(
+                args.TenantId,
+                () => _jobManager.TryAcquireProcessingLeaseAsync(
+                    args.JobId,
+                    workerInstanceId,
+                    TimeSpan.FromMinutes(LeaseDurationMinutes)));
 
             if (!acquired)
             {
@@ -78,11 +81,11 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
             }
 
             using var heartbeatCts = new CancellationTokenSource();
-            var heartbeatTask = RunHeartbeatLoopAsync(args.JobId, workerInstanceId, heartbeatCts.Token);
+            var heartbeatTask = RunHeartbeatLoopAsync(args.JobId, args.TenantId, workerInstanceId, heartbeatCts.Token);
 
             try
             {
-                job = await _jobManager.GetAsync(args.JobId);
+                job = await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.GetAsync(args.JobId));
 
                 if (job == null)
                 {
@@ -100,7 +103,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
                     job.FileName,
                     async rows =>
                     {
-                        if (!await _jobManager.IsOwnedByWorkerAsync(args.JobId, workerInstanceId))
+                        if (!await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.IsOwnedByWorkerAsync(args.JobId, workerInstanceId)))
                         {
                             _jobLogger.LogWarning(
                                 "El worker {WorkerInstanceId} perdió la propiedad del job {JobId} antes de iniciar el procesamiento de filas.",
@@ -110,9 +113,9 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
                             return;
                         }
 
-                        await _jobManager.SetTotalRowsAsync(args.JobId, rows.Count, workerInstanceId);
+                        await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.SetTotalRowsAsync(args.JobId, rows.Count, workerInstanceId));
 
-                        var currentState = await _jobManager.GetAsync(args.JobId);
+                        var currentState = await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.GetAsync(args.JobId));
                         if (currentState == null)
                         {
                             throw new Exception($"No se pudo obtener el estado actual del job {args.JobId}.");
@@ -120,13 +123,14 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
                         var result = await ProcessRowsInParallelAsync(
                             args.JobId,
+                            args.TenantId,
                             workerInstanceId,
                             rows,
                             currentState.ProcessedRows,
                             currentState.SuccessRows,
                             currentState.FailedRows);
 
-                        if (!await _jobManager.IsOwnedByWorkerAsync(args.JobId, workerInstanceId))
+                        if (!await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.IsOwnedByWorkerAsync(args.JobId, workerInstanceId)))
                         {
                             _jobLogger.LogWarning(
                                 "El worker {WorkerInstanceId} perdió la propiedad del job {JobId} antes del cierre del procesamiento.",
@@ -136,41 +140,47 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
                             return;
                         }
 
-                        var isCancellationRequested = await _jobManager.IsCancellationRequestedAsync(args.JobId);
+                        var isCancellationRequested = await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.IsCancellationRequestedAsync(args.JobId));
 
                         if (isCancellationRequested)
                         {
-                            await _jobManager.MarkAsCancelledAsync(
-                                args.JobId,
-                                result.ProcessedRows,
-                                result.SuccessRows,
-                                result.FailedRows,
-                                workerInstanceId);
+                            await ExecuteInTenantScopeAsync(
+                                args.TenantId,
+                                () => _jobManager.MarkAsCancelledAsync(
+                                    args.JobId,
+                                    result.ProcessedRows,
+                                    result.SuccessRows,
+                                    result.FailedRows,
+                                    workerInstanceId));
 
                             return;
                         }
 
                         if (result.FailedRows > 0)
                         {
-                            await _jobManager.MarkAsCompletedWithErrorsAsync(
-                                args.JobId,
-                                result.ProcessedRows,
-                                result.SuccessRows,
-                                result.FailedRows,
-                                workerInstanceId);
+                            await ExecuteInTenantScopeAsync(
+                                args.TenantId,
+                                () => _jobManager.MarkAsCompletedWithErrorsAsync(
+                                    args.JobId,
+                                    result.ProcessedRows,
+                                    result.SuccessRows,
+                                    result.FailedRows,
+                                    workerInstanceId));
                         }
                         else
                         {
-                            await _jobManager.MarkAsCompletedAsync(
-                                args.JobId,
-                                result.ProcessedRows,
-                                result.SuccessRows,
-                                result.FailedRows,
-                                workerInstanceId);
+                            await ExecuteInTenantScopeAsync(
+                                args.TenantId,
+                                () => _jobManager.MarkAsCompletedAsync(
+                                    args.JobId,
+                                    result.ProcessedRows,
+                                    result.SuccessRows,
+                                    result.FailedRows,
+                                    workerInstanceId));
                         }
                     });
 
-                if (await _jobManager.CanDeleteFileAsync(args.JobId, workerInstanceId))
+                if (await ExecuteInTenantScopeAsync(args.TenantId, () => _jobManager.CanDeleteFileAsync(args.JobId, workerInstanceId)))
                 {
                     await TryDeleteFileAsync(job.FilePath);
                 }
@@ -187,7 +197,10 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
             {
                 var errorMessage = BuildErrorMessage(ex);
 
-                await _jobManager.MarkAsFailedAsync(args.JobId, errorMessage, workerInstanceId);
+                await ExecuteInTenantScopeAsync(
+                    args.TenantId,
+                    () => _jobManager.MarkAsFailedAsync(args.JobId, errorMessage, workerInstanceId));
+
                 await LogAndAuditAsync(ex, nameof(ExecuteAsync), new
                 {
                     args.JobId,
@@ -212,6 +225,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
         private async Task<ParallelProcessResult> ProcessRowsInParallelAsync(
             Guid jobId,
+            int? tenantId,
             string workerInstanceId,
             IReadOnlyList<DgiiExcelImportDto> rows,
             int alreadyProcessedRows,
@@ -225,12 +239,14 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
             if (alreadyProcessedRows >= totalRows)
             {
-                await _jobManager.SaveProgressSnapshotAsync(
-                    jobId,
-                    processedRows,
-                    successRows,
-                    failedRows,
-                    workerInstanceId);
+                await ExecuteInTenantScopeAsync(
+                    tenantId,
+                    () => _jobManager.SaveProgressSnapshotAsync(
+                        jobId,
+                        processedRows,
+                        successRows,
+                        failedRows,
+                        workerInstanceId));
 
                 return new ParallelProcessResult
                 {
@@ -250,6 +266,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
             var tasks = rowsToProcess.Select((row, index) =>
                 ProcessRowAsync(
                     jobId,
+                    tenantId,
                     workerInstanceId,
                     row,
                     alreadyProcessedRows + index + 1,
@@ -266,14 +283,16 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
             await Task.WhenAll(tasks);
 
-            await EnsureOwnershipAsync(jobId, workerInstanceId);
+            await EnsureOwnershipAsync(jobId, tenantId, workerInstanceId);
 
-            await _jobManager.SaveProgressSnapshotAsync(
-                jobId,
-                processedRows,
-                successRows,
-                failedRows,
-                workerInstanceId);
+            await ExecuteInTenantScopeAsync(
+                tenantId,
+                () => _jobManager.SaveProgressSnapshotAsync(
+                    jobId,
+                    processedRows,
+                    successRows,
+                    failedRows,
+                    workerInstanceId));
 
             return new ParallelProcessResult
             {
@@ -285,6 +304,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
         private async Task ProcessRowAsync(
             Guid jobId,
+            int? tenantId,
             string workerInstanceId,
             DgiiExcelImportDto row,
             int rowNumber,
@@ -302,9 +322,9 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
             try
             {
-                await EnsureOwnershipAsync(jobId, workerInstanceId);
+                await EnsureOwnershipAsync(jobId, tenantId, workerInstanceId);
 
-                var isCancellationRequested = await _jobManager.IsCancellationRequestedAsync(jobId);
+                var isCancellationRequested = await ExecuteInTenantScopeAsync(tenantId, () => _jobManager.IsCancellationRequestedAsync(jobId));
                 if (isCancellationRequested)
                 {
                     return;
@@ -312,7 +332,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
                 try
                 {
-                    await ProcessRowInIsolatedScopeAsync(row, rowNumber);
+                    await ProcessRowInIsolatedScopeAsync(tenantId, row, rowNumber);
                     incrementSuccess();
                 }
                 catch (Exception ex)
@@ -321,7 +341,10 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
                     var errorMessage = BuildErrorMessage(ex);
 
-                    await _jobManager.AppendRowErrorAsync(jobId, rowNumber, errorMessage, workerInstanceId);
+                    await ExecuteInTenantScopeAsync(
+                        tenantId,
+                        () => _jobManager.AppendRowErrorAsync(jobId, rowNumber, errorMessage, workerInstanceId));
+
                     await LogAndAuditAsync(ex, nameof(ProcessRowAsync), new
                     {
                         jobId,
@@ -335,13 +358,14 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
                 {
                     var processed = incrementProcessed();
 
-                    // Checkpoint exacto por fila para poder reanudar sin duplicar trabajo ya confirmado.
-                    await _jobManager.SaveProgressSnapshotAsync(
-                        jobId,
-                        processedRowsRef(),
-                        successRowsRef(),
-                        failedRowsRef(),
-                        workerInstanceId);
+                    await ExecuteInTenantScopeAsync(
+                        tenantId,
+                        () => _jobManager.SaveProgressSnapshotAsync(
+                            jobId,
+                            processedRowsRef(),
+                            successRowsRef(),
+                            failedRowsRef(),
+                            workerInstanceId));
 
                     if (processed % ProgressSaveBatchSize == 0 || processed == totalRows)
                     {
@@ -349,12 +373,14 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
 
                         try
                         {
-                            await _jobManager.SaveProgressSnapshotAsync(
-                                jobId,
-                                processedRowsRef(),
-                                successRowsRef(),
-                                failedRowsRef(),
-                                workerInstanceId);
+                            await ExecuteInTenantScopeAsync(
+                                tenantId,
+                                () => _jobManager.SaveProgressSnapshotAsync(
+                                    jobId,
+                                    processedRowsRef(),
+                                    successRowsRef(),
+                                    failedRowsRef(),
+                                    workerInstanceId));
                         }
                         finally
                         {
@@ -370,6 +396,7 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
         }
 
         private async Task ProcessRowInIsolatedScopeAsync(
+            int? tenantId,
             DgiiExcelImportDto row,
             int rowNumber)
         {
@@ -379,14 +406,17 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
                 Scope = TransactionScopeOption.RequiresNew
             });
 
-            using var processor = _iocResolver.ResolveAsDisposable<IEcfVoucherWarehouseAppService>();
+            using (_unitOfWorkManager.Current.SetTenantId(tenantId))
+            {
+                using var processor = _iocResolver.ResolveAsDisposable<IEcfVoucherWarehouseAppService>();
 
-            await processor.Object.ProcessAsync(row, rowNumber);
+                await processor.Object.ProcessAsync(row, rowNumber, tenantId);
+            }
 
             await uow.CompleteAsync();
         }
 
-        private async Task RunHeartbeatLoopAsync(Guid jobId, string workerInstanceId, CancellationToken cancellationToken)
+        private async Task RunHeartbeatLoopAsync(Guid jobId, int? tenantId, string workerInstanceId, CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -399,10 +429,12 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
                         break;
                     }
 
-                    var renewed = await _jobManager.RenewLeaseAsync(
-                        jobId,
-                        workerInstanceId,
-                        TimeSpan.FromMinutes(LeaseDurationMinutes));
+                    var renewed = await ExecuteInTenantScopeAsync(
+                        tenantId,
+                        () => _jobManager.RenewLeaseAsync(
+                            jobId,
+                            workerInstanceId,
+                            TimeSpan.FromMinutes(LeaseDurationMinutes)));
 
                     if (!renewed)
                     {
@@ -429,14 +461,15 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
             }
         }
 
-        private async Task EnsureOwnershipAsync(Guid jobId, string workerInstanceId)
+        private async Task EnsureOwnershipAsync(Guid jobId, int? tenantId, string workerInstanceId)
         {
-            var isOwned = await _jobManager.IsOwnedByWorkerAsync(jobId, workerInstanceId);
+            var isOwned = await ExecuteInTenantScopeAsync(
+                tenantId,
+                () => _jobManager.IsOwnedByWorkerAsync(jobId, workerInstanceId));
 
             if (!isOwned)
             {
-                throw new OwnershipLostException(
-                    $"El worker {workerInstanceId} perdió la propiedad del job {jobId}.");
+                return;
             }
         }
 
@@ -454,6 +487,39 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Back
             }
 
             return Task.CompletedTask;
+        }
+
+        private async Task ExecuteInTenantScopeAsync(int? tenantId, Func<Task> action)
+        {
+            using (var uow = _unitOfWorkManager.Begin(new UnitOfWorkOptions
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.RequiresNew
+            }))
+            {
+                using (_unitOfWorkManager.Current.SetTenantId(tenantId))
+                {
+                    await action();
+                    await uow.CompleteAsync();
+                }
+            }
+        }
+
+        private async Task<T> ExecuteInTenantScopeAsync<T>(int? tenantId, Func<Task<T>> action)
+        {
+            using (var uow = _unitOfWorkManager.Begin(new UnitOfWorkOptions
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.RequiresNew
+            }))
+            {
+                using (_unitOfWorkManager.Current.SetTenantId(tenantId))
+                {
+                    var result = await action();
+                    await uow.CompleteAsync();
+                    return result;
+                }
+            }
         }
 
         private async Task LogAndAuditAsync(Exception ex, string methodName, object parameters = null)

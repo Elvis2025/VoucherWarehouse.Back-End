@@ -615,18 +615,20 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Serv
 
         private async Task<T> ExecuteReadAsync<T>(Func<IRepository<EcfVoucherDocumentJob, Guid>, Task<T>> action)
         {
-            using var uow = _unitOfWorkManager.Begin(new UnitOfWorkOptions
+            using (var uow = _unitOfWorkManager.Begin(new UnitOfWorkOptions
             {
                 IsTransactional = false,
                 Scope = TransactionScopeOption.RequiresNew
-            });
-
-            using var repository = _iocResolver.ResolveAsDisposable<IRepository<EcfVoucherDocumentJob, Guid>>();
-
-            var result = await action(repository.Object);
-
-            await uow.CompleteAsync();
-            return result;
+            }))
+            {
+                //using (_unitOfWorkManager.Current.SetTenantId(_abpSession.TenantId))
+                using (var repository = _iocResolver.ResolveAsDisposable<IRepository<EcfVoucherDocumentJob, Guid>>())
+                {
+                    var result = await action(repository.Object);
+                    await uow.CompleteAsync();
+                    return result;
+                }
+            }
         }
 
         private async Task HandleWriteFailureAsync(Guid jobId, Exception ex, string methodName, object parameters = null)
@@ -706,6 +708,39 @@ namespace IBS.VoucherWarehouse.Modules.VoucherWarehouse.EcfVoucherWarehouse.Serv
             return ex.InnerException == null
                 ? ex.Message
                 : $"{ex.Message} | Inner: {ex.InnerException.Message}";
+        }
+
+        private async Task ExecuteInTenantScopeAsync(int? tenantId, Func<Task> action)
+        {
+            using (var uow = _unitOfWorkManager.Begin(new UnitOfWorkOptions
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.RequiresNew
+            }))
+            {
+                using (_unitOfWorkManager.Current.SetTenantId(tenantId))
+                {
+                    await action();
+                    await uow.CompleteAsync();
+                }
+            }
+        }
+
+        private async Task<T> ExecuteInTenantScopeAsync<T>(int? tenantId, Func<Task<T>> action)
+        {
+            using (var uow = _unitOfWorkManager.Begin(new UnitOfWorkOptions
+            {
+                IsTransactional = false,
+                Scope = TransactionScopeOption.RequiresNew
+            }))
+            {
+                using (_unitOfWorkManager.Current.SetTenantId(tenantId))
+                {
+                    var result = await action();
+                    await uow.CompleteAsync();
+                    return result;
+                }
+            }
         }
     }
 }
